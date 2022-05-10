@@ -1,5 +1,6 @@
 import { Server } from 'socket.io'
 import AdonisServer from '@ioc:Adonis/Core/Server'
+import Env from '@ioc:Adonis/Core/Env'
 
 class Ws {
     public io: Server
@@ -16,7 +17,7 @@ class Ws {
         this.booted = true
         this.io = new Server(AdonisServer.instance!, {
             cors: {
-                origin: '*'
+                origin: (new RegExp(`http:\/\/${Env.get('HOST')}`))
             }
         })
     }
