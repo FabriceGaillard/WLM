@@ -1,7 +1,24 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, beforeCreate, beforeUpdate } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, beforeCreate } from '@ioc:Adonis/Lucid/Orm'
 import { v4 as uuidv4 } from 'uuid'
+
+export enum gender {
+    MALE = 'male',
+    FEMALE = 'female',
+    UNBINAY = 'unbinary',
+}
+
+export enum status {
+    ONLINE = 'online',
+    BUSY = 'busy',
+    BE_RIGHT_BACK = 'beRightBack',
+    AWAY = 'away',
+    ON_THE_PHONE = 'onThePhone',
+    OUT_TO_LUNCH = 'outToLunch',
+    APPEAR_OFFLINE = 'appearOffline'
+}
+
 export default class User extends BaseModel {
     public static selfAssignPrimaryKey = true
 
@@ -21,10 +38,37 @@ export default class User extends BaseModel {
     public username?: string
 
     @column()
-    public status: 'online' | 'busy' | 'beRightBack' | 'away' | 'onThePhone' | 'outToLunch' | 'appearOffline'
+    public personalMessage?: string
+
+    @column()
+    public status: status
 
     @column()
     public avatar: string
+
+    @column()
+    public firstName: string
+
+    @column()
+    public lastName: string
+
+    @column()
+    public gender: gender
+
+    @column()
+    public birthYear?: number
+
+    @column()
+    public alternateEmail: string
+
+    @column()
+    public country: string
+
+    @column()
+    public state?: string
+
+    @column()
+    public zipCode?: string
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
@@ -51,5 +95,10 @@ export default class User extends BaseModel {
          */
         const avatars = ['']
         user.avatar = avatars[~~(Math.random() * avatars.length)]
+    }
+
+    @beforeCreate()
+    public static setUsername(user: User) {
+        user.username = user.email
     }
 }
