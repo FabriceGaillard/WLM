@@ -1,28 +1,11 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { gender } from 'App/Models/User'
+import { DateTime } from 'luxon'
 
 export default class StoreUserValidator {
     constructor(protected ctx: HttpContextContract) { }
 
-    /*
-     * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
-     *
-     * For example:
-     * 1. The username must be of data type string. But then also, it should
-     *    not contain special characters or numbers.
-     *    ```
-     *     schema.string({}, [ rules.alpha() ])
-     *    ```
-     *
-     * 2. The email must be of data type string, formatted as a valid
-     *    email. But also, not used by any other user.
-     *    ```
-     *     schema.string({}, [
-     *       rules.email(),
-     *       rules.unique({ table: 'users', column: 'email' }),
-     *     ])
-     *    ```
-     */
     public schema = schema.create({
         email: schema.string({}, [
             rules.unique({ table: 'users', column: 'email' }),
@@ -33,7 +16,40 @@ export default class StoreUserValidator {
             rules.maxLength(180),
             rules.confirmed('passwordConfirmation'),
             rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[a-zA-Z\d\W]{12,}$/)
-        ])
+        ]),
+        firstName: schema.string(
+            { escape: true, trim: true },
+            [
+                rules.maxLength(255),
+                rules.minLength(1),
+                rules.alpha({ allow: ['space', 'dash'] })
+            ]
+        ),
+        lastName: schema.string(
+            { escape: true, trim: true },
+            [
+                rules.maxLength(255),
+                rules.minLength(1),
+                rules.alpha({ allow: ['space', 'dash'] })
+            ]
+        ),
+        gender: schema.enum(
+            Object.values(gender)
+        ),
+        birthYear: schema.number.nullableAndOptional([
+            rules.range(DateTime.now().year - 130, DateTime.now().year)
+        ]),
+        alternateEmail: schema.string({}, [
+            rules.email(),
+            rules.maxLength(255)
+        ]),
+        state: schema.string.nullableAndOptional(
+            { escape: true, trim: true },
+            [rules.maxLength(255), rules.alpha({ allow: ['space', 'dash'] })]
+        ),
+        zipCode: schema.string.nullableAndOptional({}, [
+            rules.regex(/\d{5}/)
+        ]),
     })
 
     /**
@@ -47,5 +63,8 @@ export default class StoreUserValidator {
      * }
      *
      */
-    public messages = {}
+    public messages = {
+        'zipCode.regex': 'zipCode must be equal to five numerics characters',
+        'password.regex': 'password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character'
+    }
 }
