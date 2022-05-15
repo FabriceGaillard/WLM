@@ -8,6 +8,8 @@ import RegisterValidator from 'App/Validators/Auth/RegisterValidator'
 import Route from '@ioc:Adonis/Core/Route'
 import { DateTime } from 'luxon'
 import InvalidSignedUrlException from 'App/Exceptions/Auth/InvalidSignedUrlException'
+import EmailValidator from 'App/Validators/Auth/EmailValidator'
+import ResetPasswordDemand from 'App/Mailers/ResetPasswordDemand'
 import ConfirmAccount from 'App/Mailers/ConfirmAccount'
 
 export default class AuthController {
@@ -55,5 +57,23 @@ export default class AuthController {
         }
 
         response.noContent()
+    }
+
+    public async resetPasswordDemand({ logger, request, response }: HttpContextContract) {
+        const payload = await request.validate(EmailValidator)
+        const signedUrl = Route.makeSignedUrl('resetPassword', {
+            email: payload.email,
+            expiresIn: '30mins'
+        })
+
+        try {
+            const mailer = new ResetPasswordDemand(payload.email, signedUrl)
+            mailer.send()
+        } catch (error) {
+            logger.info(error)
+            return response.badRequest()
+        }
+
+        return response.noContent()
     }
 }

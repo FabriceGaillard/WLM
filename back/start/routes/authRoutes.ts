@@ -4,4 +4,5 @@ Route.group(() => {
     Route.post('/login', 'AuthController.login')
     Route.post('/register', 'AuthController.register')
     Route.get('/confirm/:email', 'AuthController.confirmAccount').as('confirmAccount')
+    Route.post('/reset-password-demand', 'AuthController.resetPasswordDemand')
 }).prefix('api/auth')
