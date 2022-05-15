@@ -10,7 +10,7 @@ export default class StoreUserValidator {
         email: schema.string({}, [
             rules.unique({ table: 'users', column: 'email' }),
             rules.maxLength(255),
-            rules.email()
+            rules.email(),
         ]),
         password: schema.string({}, [
             rules.maxLength(180),
@@ -21,7 +21,6 @@ export default class StoreUserValidator {
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.minLength(1),
                 rules.alpha({ allow: ['space', 'dash'] })
             ]
         ),
@@ -29,26 +28,26 @@ export default class StoreUserValidator {
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.minLength(1),
                 rules.alpha({ allow: ['space', 'dash'] })
             ]
         ),
         gender: schema.enum(
             Object.values(gender)
         ),
-        birthYear: schema.number.nullableAndOptional([
+        birthYear: schema.number.optional([
             rules.range(DateTime.now().year - 130, DateTime.now().year)
         ]),
         alternateEmail: schema.string({}, [
             rules.email(),
-            rules.maxLength(255)
+            rules.maxLength(255),
+            rules.different('email')
         ]),
-        state: schema.string.nullableAndOptional(
+        state: schema.string.optional(
             { escape: true, trim: true },
             [rules.maxLength(255), rules.alpha({ allow: ['space', 'dash'] })]
         ),
-        zipCode: schema.string.nullableAndOptional({}, [
-            rules.regex(/\d{5}/)
+        zipCode: schema.string.optional({}, [
+            rules.regex(/^(?:2A|2B|\d{2})\d{3}$/)
         ]),
     })
 
