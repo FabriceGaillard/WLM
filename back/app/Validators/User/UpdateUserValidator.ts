@@ -48,20 +48,25 @@ export default class UpdateUserValidator {
         gender: schema.enum.optional(
             Object.values(gender)
         ),
-        birthYear: schema.number.nullableAndOptional([
+        birthYear: schema.number.optional([
             rules.range(DateTime.now().year - 130, DateTime.now().year)
         ]),
         alternateEmail: schema.string.optional({}, [
             rules.email(),
-            rules.maxLength(255)
+            rules.maxLength(255),
+            rules.requiredIfExists('email'),
+            rules.different('email')
         ]),
-        state: schema.string.nullableAndOptional(
+        state: schema.string.optional(
             { escape: true, trim: true },
             [rules.maxLength(255), rules.alpha({ allow: ['space', 'dash'] })]
         ),
-        zipCode: schema.string.nullableAndOptional({}, [
-            rules.regex(/\d{5}/)
+        zipCode: schema.string.optional({}, [
+            rules.regex(/^(?:2A|2B|\d{2})\d{3}$/)
         ]),
+        confirmedAt: schema.date(({
+            format: 'iso',
+        }))
     })
 
     /**
