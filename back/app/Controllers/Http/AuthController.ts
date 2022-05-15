@@ -6,6 +6,9 @@ import User from 'App/Models/User'
 import LoginValidator from 'App/Validators/Auth/LoginValidator'
 import RegisterValidator from 'App/Validators/Auth/RegisterValidator'
 import Route from '@ioc:Adonis/Core/Route'
+import { DateTime } from 'luxon'
+import InvalidSignedUrlException from 'App/Exceptions/Auth/InvalidSignedUrlException'
+import ConfirmAccount from 'App/Mailers/ConfirmAccount'
 
 export default class AuthController {
     public async login({ auth, request }: HttpContextContract) {
@@ -36,5 +39,21 @@ export default class AuthController {
 
         await User.create(payload);
         return response.noContent()
+    }
+
+    public async confirmAccount({ request, response }: HttpContextContract) {
+        if (!request.hasValidSignature()) {
+            throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
+        }
+
+        const user = await User.findBy('email', request.param('email'))
+        if (user && user.confirmedAt !== null) {
+            await user.merge({ confirmedAt: DateTime.now() }).save()
+
+            const mailer = new ConfirmAccount(user)
+            mailer.send()
+        }
+
+        response.noContent()
     }
 }

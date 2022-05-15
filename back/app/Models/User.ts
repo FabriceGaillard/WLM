@@ -70,6 +70,9 @@ export default class User extends BaseModel {
     @column()
     public zipCode?: string
 
+    @column.dateTime()
+    public confirmedAt?: DateTime
+
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
 
@@ -100,5 +103,10 @@ export default class User extends BaseModel {
     @beforeCreate()
     public static setUsername(user: User) {
         user.username = user.email
+    }
+
+    @beforeCreate()
+    public static setStatus(user: User) {
+        user.status = status.ONLINE
     }
 }
