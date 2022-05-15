@@ -24,6 +24,8 @@ export default class UsersSchema extends BaseSchema {
             table.string('state', 255).nullable()
             table.string('zip_code', 5).nullable()
 
+            table.timestamp('confirmed_at').nullable()
+
             table.timestamp('created_at').notNullable()
             table.timestamp('updated_at').notNullable()
         })
