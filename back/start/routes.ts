@@ -1,1 +1,1 @@
-import './routes/user'
+import './routes/userRoutes'
