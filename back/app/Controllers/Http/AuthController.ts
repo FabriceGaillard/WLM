@@ -10,7 +10,10 @@ import { DateTime } from 'luxon'
 import InvalidSignedUrlException from 'App/Exceptions/Auth/InvalidSignedUrlException'
 import EmailValidator from 'App/Validators/Auth/EmailValidator'
 import ResetPasswordDemand from 'App/Mailers/ResetPasswordDemand'
+import ResetPasswordValidator from 'App/Validators/Auth/ResetPasswordValidator'
+import IdenticalPasswordException from 'App/Exceptions/Auth/IdenticalPasswordException'
 import ConfirmAccount from 'App/Mailers/ConfirmAccount'
+import ConfirmResetPassword from 'App/Mailers/ConfirmResetPassword'
 
 export default class AuthController {
     public async login({ auth, request }: HttpContextContract) {
@@ -75,5 +78,25 @@ export default class AuthController {
         }
 
         return response.noContent()
+    }
+
+    public async resetPassword({ request, response }: HttpContextContract) {
+        if (!request.hasValidSignature()) {
+            throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
+        }
+        const payload = await request.validate(ResetPasswordValidator)
+
+        const user = await User.findByOrFail('email', request.param('email'))
+
+        if (await Hash.verify(user.password, payload.password)) {
+            throw new IdenticalPasswordException('Identical passwords.')
+        }
+
+        await user!.merge({ password: payload.password }).save()
+
+        const mailer = new ConfirmResetPassword(user)
+        mailer.send()
+
+        response.noContent()
     }
 }
