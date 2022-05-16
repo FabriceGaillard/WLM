@@ -28,6 +28,15 @@ const RegisterGender = () => {
                         />
                         <label htmlFor="female">Female</label>
                     </div>
+                    <div className='register-container__radio__gender'>
+                        <input
+                        type="radio"
+                        name="unbinary"
+                        id="unbinary"
+                        value="unbinary"
+                        />
+                        <label htmlFor="unbinary">Unbinary</label>
+                    </div>
                 </div>
             </div>
         </div>
