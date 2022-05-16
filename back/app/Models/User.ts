@@ -109,4 +109,9 @@ export default class User extends BaseModel {
     public static setStatus(user: User) {
         user.status = status.ONLINE
     }
+
+    @beforeCreate()
+    public static setCountry(user: User) {
+        user.country = 'france'
+    }
 }
