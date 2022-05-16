@@ -25,6 +25,7 @@ const Register = () => {
                 <RegisterGender/>
                 <RegisterZipOrBirth isZip={false}/>
                 <RegisterCaptcha/>
+                <button type='submit' name="userInfos">Envoyer</button>
             </form>
         </div>
     );
