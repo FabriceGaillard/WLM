@@ -1,4 +1,3 @@
-import { React } from 'react';
 import userStatus from '../../data.js/userStatus';
 
 const LoginStatus = () => {
@@ -8,7 +7,9 @@ const LoginStatus = () => {
       <label htmlFor="selectStatus">Statut :</label>
       <select id="selectStatus">
         {userStatus
-          .map((status, index) => <option key={index} value={status}>{status}</option>)}
+          .map((status, index) => (
+            <option key={index} value={status}>{status}</option>
+          ))}
       </select>
     </div>
   );

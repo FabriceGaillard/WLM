@@ -1,5 +1,3 @@
-import React from 'react';
-
 const LoginImage = () => {
   return (
     <div className="img__container">

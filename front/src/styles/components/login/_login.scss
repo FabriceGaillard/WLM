@@ -1,107 +1,13 @@
-$clr-input-border: #aab7c7;
-$clr-connect-btn-font: #3141ad;
-$clr-connect-btn-bg: #e0e8f0;
-$clr-delete-saved-password-font: #3588ea;
+@use "../../abstracts/" as *;
 
 .login__container {
-  font-size: 12px;
-  font-family: "Calibri", "Trebuchet MS", sans-serif;
-  border: 1px solid #55759c;
-  height: 700px;
-  width: 400px;
-  background: url("https://i.imgur.com/esmNUqn.png");
+  @include flex($justify: center, $align: center);
+  font-size: $font-login-size;
+  font-family: $font-login;
+  border: 1px solid $border-login-container;
+  height: 864px;
+  width: 623px;
+  background: $bg-login;
   background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-
-  .img__container {
-    margin-inline: auto;
-    height: 100px;
-    width: 100px;
-    margin-bottom: 10px;
-    border: 1px solid #d8d9d9;
-    padding: 1px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 62px;
-    height: 388px;
-    width: 226px;
-  }
-
-  input {
-    border: 1px solid $clr-input-border;
-    padding-block: 2px;
-
-    &[type="mail"],
-    &[type="text"] {
-      margin-top: -10px;
-    }
-  }
-
-  .remember__container {
-    display: flex;
-    align-items: center;
-  }
-
-  #selectStatus {
-    width: 80px;
-    background-color: transparent;
-    border: 1px solid transparent;
-
-    &:hover {
-      border: 1px solid $clr-input-border;
-    }
-
-    option[value="online"] {
-      background: url("https://i.imgur.com/WEeGnKG.png");
-    }
-    option[value="busy"] {
-      background-color: orange;
-    }
-    option[value="brb"] {
-      background-color: blue;
-    }
-    option[value="afk"] {
-      background-color: grey;
-    }
-    option[value="phone"] {
-      background-color: pink;
-    }
-    option[value="eating"] {
-      background-color: lime;
-    }
-    option[value="offline"] {
-      background-color: purple;
-    }
-  }
-
-  #delete-saved__password {
-    background-color: transparent;
-    border: none;
-    color: $clr-delete-saved-password-font;
-    text-align: left;
-    margin-left: 15px;
-  }
-
-  #connect__btn {
-    width: fit-content;
-    margin: auto;
-    border-radius: 1px;
-    border-bottom: solid 1px grey;
-    border-width: 0 0 1px 0;
-    box-shadow: 0 0 0 1px white, 0 0 0 2px $clr-input-border;
-    color: $clr-connect-btn-font;
-    background-color: $clr-connect-btn-bg;
-    margin-top: 10px;
-  }
+  @include flex($justify: center);
 }

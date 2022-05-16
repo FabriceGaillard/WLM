@@ -1,2 +1,9 @@
-@import "./components/app";
-@import "./components/login/login";
+@use "./components/app";
+@use "./settings/base";
+
+@use "./components/login/login";
+@use "./components/login/login_image";
+@use "./components/login/form/login_form";
+@use "./components/login/form/login_form_email";
+@use "./components/login/form/login_form_status";
+@use "./components/login/form/login_form_connect_btn";

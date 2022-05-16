@@ -1,5 +1,3 @@
-import React from 'react';
-
 const LoginAutoContainer = () => {
   return (
     <div className="auto-login__container">

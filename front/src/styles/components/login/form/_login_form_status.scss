@@ -1,0 +1,33 @@
+@use "../../../abstracts/" as *;
+
+#selectStatus {
+  width: 80px;
+  background-color: transparent;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid $bg-login-input-border;
+  }
+  // not working right now, needs more testing
+  option[value="online"] {
+    background: url("https://i.imgur.com/WEeGnKG.png");
+  }
+  option[value="busy"] {
+    background-color: orange;
+  }
+  option[value="brb"] {
+    background-color: blue;
+  }
+  option[value="afk"] {
+    background-color: grey;
+  }
+  option[value="phone"] {
+    background-color: pink;
+  }
+  option[value="eating"] {
+    background-color: lime;
+  }
+  option[value="offline"] {
+    background-color: purple;
+  }
+}
