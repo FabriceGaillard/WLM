@@ -1,0 +1,19 @@
+.register-wrapper{
+    border:1px solid red;
+    padding:20px;
+    display: flex;
+    flex-direction: column;
+}
+.register-container{
+    display: flex;
+    padding:10px;
+    &__label{
+        width:250px;
+        display: flex;
+        justify-content: flex-end;
+        border:1px solid green;
+    }
+    &__radio{
+        display: flex;
+    }
+}
