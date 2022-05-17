@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const RegisterZipOrBirth = ({isZip}) => {
+    const regex = new RegExp(/^(?:2A|2B|\d{2})\d{3}$/)
+    const [isZipTrue, setIsZipTrue]=useState(false)
+
+    const checkZip = (value)=>{
+        //CHECK IF THIS INPUT GETS ZIPCODE VALUE
+        if(isZip === true){
+            if(regex.test(value)){
+                setIsZipTrue(true)
+                console.log(isZipTrue)
+            }
+            else{
+                setIsZipTrue(false)
+                console.log(isZipTrue)
+            }
+        }
+    }
     const returnStr = ()=>{
         if(isZip === true)return "zipCode"
         if(isZip === false)return "birthYear"
@@ -17,6 +33,7 @@ const RegisterZipOrBirth = ({isZip}) => {
                 type="text"
                 name={returnStr}
                 id={returnStr}
+                onChange={(e)=>checkZip(e.target.value)}
                 />
             </div>
         </div>

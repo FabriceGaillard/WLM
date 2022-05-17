@@ -1,6 +1,5 @@
 import React from 'react';
-
-const RegisterRegion = () => {
+const RegisterRegion = ({allDepartments}) => {
     return (
         <div className='register-region'>
             <div className='register-container'>
@@ -10,10 +9,15 @@ const RegisterRegion = () => {
                     </label>
                 </div>
                 <select name='region' id="region">
-                    <option value="loire">Loire</option>
-                    <option value="drôme">Drôme</option>
-                    <option value="ardèche">Ardèche</option>
-                    <option value="isère">Isère</option>
+                    <option value="">Choose your department</option>
+                    {allDepartments.map(item=>(
+                        <option 
+                        key={item[0]} 
+                        value={item[1]}
+                        >
+                            {item[1]} - {`(${item[0]})`}
+                        </option>
+                    ))}
                 </select>
             </div>
         </div>

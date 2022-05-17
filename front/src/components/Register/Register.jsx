@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+//COMPONENTS
 import {RegisterMail, 
     RegisterPassword, 
     RegisterIdentity,
@@ -8,8 +9,11 @@ import {RegisterMail,
     RegisterGender,
     RegisterCaptcha
 } from "./register_components"
+//DATA
+import * as region from "../../data.js/french_departments"
 
 const Register = () => {
+    const allDepartments = Object.entries(region.departments)
     return (
         <div className='register-wrapper'>
             <form className='register'>
@@ -20,7 +24,7 @@ const Register = () => {
                 <RegisterIdentity whichOne={"firstName"}/>
                 <RegisterIdentity whichOne={"lastName"}/>
                 <RegisterCountry/>
-                <RegisterRegion/>
+                <RegisterRegion allDepartments={allDepartments}/>
                 <RegisterZipOrBirth isZip={true}/>
                 <RegisterGender/>
                 <RegisterZipOrBirth isZip={false}/>
