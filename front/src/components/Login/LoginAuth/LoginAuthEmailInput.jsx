@@ -1,6 +1,9 @@
 import ArrowIcon from '../../../icons/dropDownArrow';
+import { fakeEmailList } from '../../../data.js/tempData';
 
-const LoginAuthEmailInput = ({ handleEmailList, emailPlaceHolder }) => {
+const LoginAuthEmailInput = (props) => {
+
+  const { handleEmailList, emailValue, setEmailValue } = props;
 
   return (
     <>
@@ -8,10 +11,10 @@ const LoginAuthEmailInput = ({ handleEmailList, emailPlaceHolder }) => {
       <div className="email-input__container">
         <input
           type="email"
-          list="mailList"
-          id="emailLogin"
-          placeholder={emailPlaceHolder}
           autoComplete="off"
+          id="emailLogin"
+          value={emailValue || fakeEmailList[0]}
+          onChange={({ target }) => setEmailValue(target.value)}
         />
         <button onClick={handleEmailList}>
           < ArrowIcon />

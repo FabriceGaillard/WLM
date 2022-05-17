@@ -1,14 +1,11 @@
 import { useState, useRef } from 'react';
 import { LoginAuthEmailList, LoginAuthEmailInput } from '../loginIndex';
-import { fakeEmailList } from '../../../data.js/tempData';
-import clickOutside from '../../../helpers/clickOutside';
 
 const LoginAuthEmail = () => {
 
   const [showEmailsList, setShowEmailsList] = useState(false);
-  const [emailPlaceHolder, setEmailPlaceHolder] = useState(fakeEmailList[0] || '');
   const [dropDownButtonTarget, setDropDownButtonTarget] = useState(null);
-  const listContainerRef = useRef();
+  const [emailValue, setEmailValue] = useState(null);
 
   const handleEmailList = event => {
     event.preventDefault();
@@ -16,31 +13,19 @@ const LoginAuthEmail = () => {
     setShowEmailsList(previous => !previous);
   };
 
-  const useAnotherId = () => {
-    console.log('Utiliser un autre identifiant Windows Live ID');
-    setShowEmailsList(false);
-  };
-
-  clickOutside(listContainerRef, setShowEmailsList, dropDownButtonTarget);
-
   return (
     <div className="login-email-__container">
       <LoginAuthEmailInput
         handleEmailList={handleEmailList}
-        emailPlaceHolder={emailPlaceHolder}
+        emailValue={emailValue}
+        setEmailValue={setEmailValue}
       />
       {showEmailsList && (
-        <ul className="login-email__list" ref={listContainerRef}>
-          {fakeEmailList.map((email, idx) => (
-            <LoginAuthEmailList
-              key={idx}
-              email={email}
-              setShowEmailsList={setShowEmailsList}
-              setEmailPlaceHolder={setEmailPlaceHolder}
-            />
-          ))}
-          <li onClick={useAnotherId}>Utiliser un autre identifiant Windows Live ID</li>
-        </ul>
+        <LoginAuthEmailList
+          setShowEmailsList={setShowEmailsList}
+          dropDownButtonTarget={dropDownButtonTarget}
+          setEmailValue={setEmailValue}
+        />
       )}
     </div>
   );
