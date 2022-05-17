@@ -1,13 +1,18 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { LoginAuthEmailList, LoginAuthEmailInput } from '../loginIndex';
 import { fakeEmailList } from '../../../data.js/tempData';
+import clickOutside from '../../../helpers/clickOutside';
 
 const LoginAuthEmail = () => {
+
   const [showEmailsList, setShowEmailsList] = useState(false);
   const [emailPlaceHolder, setEmailPlaceHolder] = useState(fakeEmailList[0] || '');
+  const [dropDownButtonTarget, setDropDownButtonTarget] = useState(null);
+  const listContainerRef = useRef();
 
   const handleEmailList = event => {
     event.preventDefault();
+    setDropDownButtonTarget(event.target);
     setShowEmailsList(previous => !previous);
   };
 
@@ -16,6 +21,8 @@ const LoginAuthEmail = () => {
     setShowEmailsList(false);
   };
 
+  clickOutside(listContainerRef, setShowEmailsList, dropDownButtonTarget);
+
   return (
     <div className="login-email-__container">
       <LoginAuthEmailInput
@@ -23,7 +30,7 @@ const LoginAuthEmail = () => {
         emailPlaceHolder={emailPlaceHolder}
       />
       {showEmailsList && (
-        <ul className="login-email__list">
+        <ul className="login-email__list" ref={listContainerRef}>
           {fakeEmailList.map((email, idx) => (
             <LoginAuthEmailList
               key={idx}

@@ -15,6 +15,7 @@
     &[type="text"] {
       width: 100%;
       box-sizing: border-box;
+      padding: 3px;
     }
 
     &:focus {
@@ -30,6 +31,10 @@
 
 .remember__container {
   @include flex($align: center);
+
+  input {
+    margin-right: 4px;
+  }
 }
 
 #delete-saved__password {

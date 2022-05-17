@@ -11,7 +11,7 @@ import {
 const Login = () => {
   return (
     <div className="login__container">
-      <form className="login__container__form">
+      <form className="login__container__form" noValidate>
         <LoginImage />
         <LoginAuth />
         <LoginStatus />
@@ -20,7 +20,6 @@ const Login = () => {
         <LoginSubmit />
       </form>
     </div>
-
   );
 };
 
