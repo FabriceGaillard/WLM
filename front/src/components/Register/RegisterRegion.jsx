@@ -1,5 +1,12 @@
 import React from 'react';
-const RegisterRegion = ({allDepartments}) => {
+const RegisterRegion = ({allDepartments, user, setUser}) => {
+    //FUNCTION THAT STORE OPTION VALUE
+    //THAT IS TO SAY DEPARTMENT NAME
+    const storeDepartment = (value)=>{
+        let newUser = [...user]
+        newUser[0].state = value
+        setUser(()=>newUser)
+    }
     return (
         <div className='register-region'>
             <div className='register-container'>
@@ -8,7 +15,11 @@ const RegisterRegion = ({allDepartments}) => {
                         Department: 
                     </label>
                 </div>
-                <select name='region' id="region">
+                <select 
+                name='region' 
+                id="region"
+                onClick={(e)=>storeDepartment(e.target.value)}
+                >
                     <option value="">Choose your department</option>
                     {allDepartments.map(item=>(
                         <option 
