@@ -10,7 +10,7 @@ const RegisterPaswword = ({whichOne}) => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor={`password-${returnStr}`}>
-                        {whichOne === "create" ? "Create a password : " : "Retype password : "}
+                        {whichOne === "create" ? "Create a password:" : "Retype password:"}
                     </label>
                 </div>
                 <input

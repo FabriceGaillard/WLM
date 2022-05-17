@@ -6,7 +6,7 @@ const RegisterGender = () => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor="gender">
-                        Gender : 
+                        Gender: 
                     </label>
                 </div>
                 <div className='register-container__radio'>

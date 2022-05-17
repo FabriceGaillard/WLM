@@ -6,7 +6,7 @@ const RegisterRegion = () => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor="region">
-                        Department : 
+                        Department: 
                     </label>
                 </div>
                 <select name='region' id="region">

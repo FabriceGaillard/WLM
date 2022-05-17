@@ -10,7 +10,7 @@ const RegisterMail = ({label}) => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor={`email-${returnStr}`}>
-                        {label === "first" ? "Email : " : "Alternate email : "}
+                        {label === "first" ? "Email: " : "Alternate email: "}
                     </label>
                 </div>
                 <input

@@ -10,7 +10,7 @@ const RegisterZipOrBirth = ({isZip}) => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor={returnStr}>
-                        {isZip === true ? "ZIP code : " : "Birth year : "} 
+                        {isZip === true ? "ZIP code: " : "Birth year: "} 
                     </label>
                 </div>
                 <input

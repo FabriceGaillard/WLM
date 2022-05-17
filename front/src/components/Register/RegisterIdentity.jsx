@@ -10,7 +10,7 @@ const RegisterIdentity = ({whichOne}) => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor={`identity-${returnStr}`}>
-                        {whichOne === "firstName" ? "First name : " : "Last name : "}
+                        {whichOne === "firstName" ? "First name: " : "Last name: "}
                     </label>
                 </div>
                 <input

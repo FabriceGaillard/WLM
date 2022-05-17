@@ -6,7 +6,7 @@ const RegisterCountry = () => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor="country">
-                        Country : 
+                        Country: 
                     </label>
                 </div>
                 <input
