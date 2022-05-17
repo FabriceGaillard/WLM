@@ -17,6 +17,7 @@ const RegisterIdentity = ({whichOne}) => {
                 type="text"
                 name={`identity-${returnStr}`}
                 id={`identity-${returnStr}`}
+                required
                 />
             </div>
         </div>

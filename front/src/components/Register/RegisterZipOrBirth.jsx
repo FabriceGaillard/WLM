@@ -41,6 +41,7 @@ const RegisterZipOrBirth = ({isZip, user, setUser}) => {
                 name={returnStr}
                 id={returnStr}
                 onBlur={(e)=>checkZip(e.target.value)}
+                required
                 />
             </div>
             {zipError === true && <span>Veuillez inscrire un code postal valide</span>}

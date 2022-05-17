@@ -43,9 +43,9 @@ const RegisterPaswword = ({whichOne, user, setUser}) => {
                 id={`password-${returnStr}`}
                 maxLength="180"
                 onBlur={(e)=>storePassword(e.target.value)}
+                required
                 />
             </div>
-            {console.log(passwordError)}
             {whichOne === "create" && 
                 (<>
                     {passwordError !== {} && <span>{passwordError[0]}</span>}
