@@ -1,31 +1,47 @@
 import React, {useState} from 'react';
 
-const RegisterPaswword = ({whichOne, user, setUser}) => {
+const RegisterPaswword = ({whichOne, user, setUser, isPassConfirmed}) => {
     const regex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[a-zA-Z\d\W]{12,}$/)
     const [passwordError, setPasswordError]=useState({})
+
     const storePassword = (value)=>{
+        //GLOBAL STATE WHERE ALL USER INFOS ARE STORED
         let newUser = [...user]
-        if(whichOne === "create" && newUser[0].password === ""){
-            if(regex.test(value)){
-                newUser[0].password = value
-                setUser(()=>newUser)
+        //STATE TO STORE VALUE OF PASSWORD INPUT
+        //IN ORDER TO COMPARE BOTH CREATE AND RETYPE INPUT
+        //BEFORE TO STORE THE RIGHT VALUE TO THE GLOBAL STATE
+        let passCheck = [...isPassConfirmed]
+        setPasswordError({})
+        //CREATE PASSWORD INPUT
+        if(whichOne === "create"){
+            setPasswordError({})
+            //IF CREATE PASSWORD VALUE DOES MATCH REGEX
+            if(regex.test(value)){    
                 setPasswordError({})
+                passCheck[0].create = value
             }
             else{
                 setPasswordError({0 : "Le mot de passe ne respecte pas le format requis"})
             }
         }
-        if(whichOne === "reType" && newUser[0].password !== ""){
-            if(regex.test(value) && value === newUser[0].password){
-                setPasswordError({})
-            }
-            else{
+        //RETYPE PASSWORD INPUT
+        if(whichOne === "reType"){
+            setPasswordError({})
+            //IF CURRENT VALUE DOESN'T MATCH
+            //CREATE PASSWORD VALUE
+            if(passCheck[0].create != "" && value != passCheck[0].create){
                 setPasswordError({1 : "Le mot de passe doit correspondre au premier champ au dessus"})
+                //IF USER FILLS RETYPE PASSWORD INPUT FIRST
+            } else if(passCheck[0].create == "" && value != passCheck[0].create){
+                setPasswordError({1 : "Aucun mot de passe renseigné au préalable"})
             }
-        }else if(whichOne === "reType" && newUser[0].password === ""){
-            setPasswordError({1 : "Aucun mot de passe renseingé dans le champ de création"})
+            //IF BOTH CREATE PASSWORD VALUE
+            //AND RETYPE PASSWORD VALUE ARE EQUAL
+            if(value === passCheck[0].create){
+                newUser[0].password = passCheck[0].create
+                setUser(()=>newUser)
+            }
         }
-
     }
     const returnStr = ()=>{
         if(whichOne === "create")return "create"
@@ -44,18 +60,18 @@ const RegisterPaswword = ({whichOne, user, setUser}) => {
                 name={`password-${returnStr}`}
                 id={`password-${returnStr}`}
                 maxLength="180"
-                onBlur={(e)=>storePassword(e.target.value)}
+                onChange={(e)=>storePassword(e.target.value)}
                 required
                 />
             </div>
             {whichOne === "create" && 
                 (<>
-                    {passwordError !== {} && <span>{passwordError[0]}</span>}
+                    {passwordError[0] && <span>{passwordError[0]}</span>}
                 </>) 
             }
             {whichOne === "reType" && 
                 (<>
-                    {passwordError !== {} && <span>{passwordError[1]}</span>}
+                    {passwordError[1] && <span>{passwordError[1]}</span>}
                 </>) 
             }
         </div>

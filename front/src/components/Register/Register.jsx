@@ -25,6 +25,7 @@ const Register = () => {
         zipCode : ""
     }])
     const allDepartments = Object.entries(region.departments)
+    const [isPassConfirmed]=useState([{create : ""}])
     return (
         <div className='register-wrapper'>
             <form className='register'>
@@ -37,11 +38,13 @@ const Register = () => {
                 whichOne={"create"} 
                 user={user} 
                 setUser={setUser}
+                isPassConfirmed={isPassConfirmed}
                 />
                 <RegisterPassword 
                 whichOne={"reType"} 
                 user={user} 
                 setUser={setUser}
+                isPassConfirmed={isPassConfirmed}
                 />
                 <RegisterMail 
                 label={"alternate"} 
