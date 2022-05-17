@@ -22,6 +22,8 @@ const RegisterPaswword = ({whichOne, user, setUser}) => {
             else{
                 setPasswordError({1 : "Le mot de passe doit correspondre au premier champ au dessus"})
             }
+        }else if(whichOne === "reType" && newUser[0].password === ""){
+            setPasswordError({1 : "Aucun mot de passe renseingé dans le champ de création"})
         }
 
     }
