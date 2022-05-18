@@ -106,4 +106,8 @@ export default class AuthController {
 
         response.noContent()
     }
+
+    public async logout({ auth }: HttpContextContract) {
+        await auth.use('web').logout()
+    }
 }

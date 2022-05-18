@@ -6,4 +6,5 @@ Route.group(() => {
     Route.get('/confirm/:email', 'AuthController.confirmAccount').as('confirmAccount')
     Route.post('/reset-password-demand', 'AuthController.resetPasswordDemand')
     Route.patch('/reset-password/:email', 'AuthController.resetPassword').as('resetPassword')
+    Route.get('/logout', 'AuthController.logout')
 }).prefix('api/auth')
