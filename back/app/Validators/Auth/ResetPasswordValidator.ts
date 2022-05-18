@@ -42,5 +42,7 @@ export default class ResetPasswordValidator {
      * }
      *
      */
-    public messages = {}
+    public messages = {
+        'password.regex': 'password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character'
+    }
 }

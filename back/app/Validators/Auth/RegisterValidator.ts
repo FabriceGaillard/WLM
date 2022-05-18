@@ -44,7 +44,10 @@ export default class StoreUserValidator {
         ]),
         state: schema.string.optional(
             { escape: true, trim: true },
-            [rules.maxLength(255), rules.alpha({ allow: ['space', 'dash'] })]
+            [
+                rules.maxLength(255),
+                rules.alpha({ allow: ['space', 'dash'] })
+            ]
         ),
         zipCode: schema.string.optional({}, [
             rules.regex(/^(?:2A|2B|\d{2})\d{3}$/)
@@ -64,6 +67,6 @@ export default class StoreUserValidator {
      */
     public messages = {
         'zipCode.regex': 'zipCode must be equal to five numerics characters',
-        'password.regex': 'password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character'
+        'password.regex': 'password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne alphabetic character\nOne special character'
     }
 }
