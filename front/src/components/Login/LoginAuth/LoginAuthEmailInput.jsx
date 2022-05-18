@@ -16,7 +16,7 @@ const LoginAuthEmailInput = (props) => {
           value={emailValue || fakeEmailList[0]}
           onChange={({ target }) => setEmailValue(target.value)}
         />
-        <button onClick={handleEmailList}>
+        <button className="dropdown_btn" onClick={handleEmailList}>
           < ArrowIcon />
         </button>
       </div>

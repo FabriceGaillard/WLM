@@ -1,9 +1,13 @@
 @use "./components/app";
 @use "./settings/base";
 
+@use "./components/login/common/login_dropdown_btn";
+
 @use "./components/login/login";
-@use "./components/login/login_image";
-@use "./components/login/form/login_form";
-@use "./components/login/form/login_form_email";
-@use "./components/login/form/login_form_status";
-@use "./components/login/form/login_form_connect_btn";
+@use "./components/login/avatar";
+@use "./components/login/form";
+@use "./components/login/email";
+@use "./components/login/connect_btn";
+
+@use "./components/login/status/status";
+@use "./components/login/status/status_list";

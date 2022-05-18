@@ -1,7 +1,7 @@
 @use "../../abstracts/" as *;
 
 .login__container {
-  @include flex($justify: center, $align: center);
+  @include flex($justify: center);
   font-size: $font-login-size;
   font-family: $font-login;
   border: 1px solid $border-login-container;
@@ -9,5 +9,4 @@
   width: 623px;
   background: $bg-login;
   background-size: 100% 100%;
-  @include flex($justify: center);
 }

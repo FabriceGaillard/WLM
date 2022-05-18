@@ -1,0 +1,28 @@
+@use "../../../abstracts/" as *;
+
+.status__container {
+  margin-bottom: 40px;
+  position: relative;
+
+  .status-title,
+  .status-select {
+    display: inline-block;
+  }
+
+  .status-select {
+    position: relative;
+    border: solid 1px $bg-login-input-border;
+    padding: 3px 20px 3px 3px;
+    margin-left: 2px;
+  }
+}
+
+#selectStatus {
+  width: 80px;
+  background-color: transparent;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid $bg-login-input-border;
+  }
+}

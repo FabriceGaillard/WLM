@@ -1,4 +1,4 @@
-@use "../../../abstracts/" as *;
+@use "../../abstracts/" as *;
 
 .login__container__form {
   @include flex($flow: nowrap column);
