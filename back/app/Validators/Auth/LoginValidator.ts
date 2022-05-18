@@ -9,6 +9,7 @@ export default class LoginValidator {
             rules.email(),
         ]),
         password: schema.string(),
+        remember: schema.boolean.optional()
     })
 
     /**

@@ -14,19 +14,22 @@ import ResetPasswordValidator from 'App/Validators/Auth/ResetPasswordValidator'
 import IdenticalPasswordException from 'App/Exceptions/Auth/IdenticalPasswordException'
 import ConfirmAccount from 'App/Mailers/ConfirmAccount'
 import ConfirmResetPassword from 'App/Mailers/ConfirmResetPassword'
+import InvalidAccountException from 'App/Exceptions/Auth/InvalidAccountException'
 
 export default class AuthController {
     public async login({ auth, request }: HttpContextContract) {
         const payload = await request.validate(LoginValidator)
-        try {
-            const user: User = await auth.use('web').attempt(payload.email, payload.password)
-            if (Hash.needsReHash(user.password)) {
-                user.password = await Hash.make(payload.password)
-            }
-            return user;
-        } catch (e) {
-            throw new InvalidCredentialException('Invalid credentials.', 400, 'E_INVALID_CREDENTIALS')
+
+        const user = await User.findBy('email', payload.email)
+        if (!user) throw new InvalidCredentialException('Invalid credentials.')
+        if (!user?.confirmedAt) throw new InvalidAccountException('Invalid account.')
+
+        if (Hash.needsReHash(user.password)) {
+            user.password = await Hash.make(payload.password)
         }
+
+        await auth.use('web').login(user)
+        return user;
     }
 
     public async register({ logger, request, response }: HttpContextContract) {
@@ -52,9 +55,10 @@ export default class AuthController {
         }
 
         const user = await User.findBy('email', request.param('email'))
-        if (user && user.confirmedAt !== null) {
-            await user.merge({ confirmedAt: DateTime.now() }).save()
+        if (!user) throw new InvalidCredentialException('Invalid credentials.')
 
+        if (user.confirmedAt === null) {
+            await user.merge({ confirmedAt: DateTime.now() }).save()
             const mailer = new ConfirmAccount(user)
             mailer.send()
         }
@@ -86,10 +90,13 @@ export default class AuthController {
         }
         const payload = await request.validate(ResetPasswordValidator)
 
-        const user = await User.findByOrFail('email', request.param('email'))
+        const user = await User.findBy('email', request.param('email'))
+        if (!user) {
+            throw new InvalidCredentialException('Invalid credentials.')
+        }
 
         if (await Hash.verify(user.password, payload.password)) {
-            throw new IdenticalPasswordException('Identical passwords.')
+            throw new IdenticalPasswordException('Identical of previous passwords.')
         }
 
         await user!.merge({ password: payload.password }).save()
@@ -99,4 +106,5 @@ export default class AuthController {
 
         response.noContent()
     }
+
 }
