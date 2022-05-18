@@ -1,20 +1,29 @@
-import { useRef } from 'react';
+// HOOKS
+import { useRef, useContext } from 'react';
+// CONTEXT
+import loginContext from '../../../contexts/LoginContext';
+// DATA
 import { fakeEmailList } from '../../../data.js/tempData';
+// HELPERS
 import clickOutside from '../../../helpers/clickOutside';
 
 const LoginAuthEmailList = (props) => {
-  const { setShowEmailsList, dropDownButtonTarget, setEmailValue } = props;
+  const { setShowEmailsList, dropDownButtonTarget } = props;
+
+  const { setResetForm, formUpdate, setFormUpdate } = useContext(loginContext);
 
   const listContainerRef = useRef();
 
   const handleClick = ({ target }) => {
     const { innerText: targetEmail } = target;
-    setEmailValue(targetEmail);
+    setFormUpdate({ ...formUpdate, email: targetEmail });
     setShowEmailsList(false);
   };
 
   const useAnotherId = () => {
+
     console.log('Utiliser un autre identifiant Windows Live ID');
+    setResetForm(true);
     setShowEmailsList(false);
   };
 

@@ -1,6 +1,9 @@
-import clickOutside from '../../../helpers/clickOutside';
-import statusList from '../../../data.js/statusList';
+// HOOKS
 import { useRef } from 'react';
+// HELPERS
+import clickOutside from '../../../helpers/clickOutside';
+// DATA
+import statusList from '../../../data.js/statusList';
 
 const LoginStatusList = (props) => {
 

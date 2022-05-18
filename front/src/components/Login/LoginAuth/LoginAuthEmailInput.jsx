@@ -1,9 +1,14 @@
+// HOOKS
+import { useContext } from 'react';
+// ICONS
 import ArrowIcon from '../../../icons/dropDownArrow';
-import { fakeEmailList } from '../../../data.js/tempData';
+// CONTEXT
+import loginContext from '../../../contexts/LoginContext';
 
 const LoginAuthEmailInput = (props) => {
 
-  const { handleEmailList, emailValue, setEmailValue } = props;
+  const { handleEmailList } = props;
+  const { resetForm, formUpdate, setFormUpdate } = useContext(loginContext);
 
   return (
     <>
@@ -13,10 +18,10 @@ const LoginAuthEmailInput = (props) => {
           type="email"
           autoComplete="off"
           id="emailLogin"
-          value={emailValue || fakeEmailList[0]}
-          onChange={({ target }) => setEmailValue(target.value)}
+          value={formUpdate.email}
+          onChange={({ target }) => setFormUpdate({ ...formUpdate, email: target.value })}
         />
-        <button className="dropdown_btn" onClick={handleEmailList}>
+        <button type="button" className="dropdown_btn" onClick={handleEmailList}>
           < ArrowIcon />
         </button>
       </div>

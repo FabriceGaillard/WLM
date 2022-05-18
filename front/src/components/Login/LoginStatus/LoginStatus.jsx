@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
+// HOOKS
+import { useState } from 'react';
+// COMPONENTS
+import { LoginStatusList } from '../loginIndex';
+// DATA
 import statusList from '../../../data.js/statusList';
+// ICONS
 import ArrowIcon from '../../../icons/dropDownArrow';
-import LoginStatusList from './LoginStatusList';
 
 const LoginStatus = () => {
 
@@ -9,9 +13,8 @@ const LoginStatus = () => {
   const [showStatusList, setShowStatusList] = useState(false);
   const [dropDownButtonTarget, setDropDownButtonTarget] = useState(null);
 
-  const handleStatusList = event => {
-    event.preventDefault();
-    setDropDownButtonTarget(event.target);
+  const handleStatusList = ({ target }) => {
+    setDropDownButtonTarget(target);
     setShowStatusList(previous => !previous);
   };
 
@@ -20,7 +23,7 @@ const LoginStatus = () => {
       <div className="status-title">Statut :</div>
       <div className="status-select">
         {currentStatus}
-        <button className='dropdown_btn' onClick={handleStatusList}>
+        <button type="button" className='dropdown_btn' onClick={handleStatusList}>
           < ArrowIcon />
         </button>
       </div>

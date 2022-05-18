@@ -12,7 +12,7 @@
     padding-block: 2px;
 
     &[type="email"],
-    &[type="text"] {
+    &[type="password"] {
       width: 100%;
       box-sizing: border-box;
       padding: 3px;
@@ -37,10 +37,14 @@
   }
 }
 
-#delete-saved__password {
+.delete-saved {
   background-color: transparent;
   border: none;
   color: $font-login-delete-saved-password-font;
   text-align: left;
   margin-left: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

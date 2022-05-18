@@ -1,3 +1,4 @@
+// COMPONENTS
 import { LoginAuthEmail, LoginAuthPassword } from '../loginIndex';
 
 const LoginAuth = () => {

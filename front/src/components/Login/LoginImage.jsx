@@ -1,12 +1,21 @@
+// HOOKS
+import { useContext } from 'react';
+// CONTEXT
+import loginContext from '../../contexts/LoginContext';
+
 const LoginImage = () => {
+
+  const { formUpdate } = useContext(loginContext);
+
   return (
     <div className="img__container">
       <img
-        src="https://i.imgur.com/iRH7qc0.png"
+        src={formUpdate.avatar}
         className="avatar"
       />
     </div>
   );
+
 };
 
 export default LoginImage;
