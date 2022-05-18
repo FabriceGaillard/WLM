@@ -32,6 +32,11 @@ export default class AuthController {
         return user;
     }
 
+    public async me({ auth }: HttpContextContract) {
+        await auth.use('web').authenticate()
+        return auth.use('web').user
+    }
+
     public async register({ logger, request, response }: HttpContextContract) {
         const payload = await request.validate(RegisterValidator)
         const signedUrl = Route.makeSignedUrl('confirmAccount', {
