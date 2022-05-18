@@ -24,11 +24,11 @@ export default class AuthController {
         if (!user) throw new InvalidCredentialException('Invalid credentials.')
         if (!user?.confirmedAt) throw new InvalidAccountException('Invalid account.')
 
+        await auth.use('web').attempt(payload.email, payload.password, payload.remember)
+
         if (Hash.needsReHash(user.password)) {
             user.password = await Hash.make(payload.password)
         }
-
-        await auth.use('web').login(user)
         return user;
     }
 
@@ -106,5 +106,4 @@ export default class AuthController {
 
         response.noContent()
     }
-
 }
