@@ -5,7 +5,7 @@ export default class IdenticalPasswordException extends Exception {
     public async handle(_: this, { response }: HttpContextContract) {
         response.badRequest({
             errors: [{
-                message: 'Identical passwords.'
+                message: 'Identical of previous passwords.'
             }]
         })
     }

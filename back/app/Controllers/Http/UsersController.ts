@@ -8,13 +8,13 @@ export default class UsersController {
     }
 
     public async show({ request }: HttpContextContract) {
-        return await User.findOrFail(request.params().id)
+        return await User.find(request.params().id)
     }
 
     public async update({ request }: HttpContextContract) {
         const payload = await request.validate(UpdateUserValidator)
-        const user = await User.findOrFail(request.params().id)
-        await user.merge(payload).save()
+        const user = await User.find(request.params().id)
+        await user?.merge(payload).save()
         return user
     }
 
