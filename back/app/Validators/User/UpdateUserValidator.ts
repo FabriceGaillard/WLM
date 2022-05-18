@@ -63,10 +63,7 @@ export default class UpdateUserValidator {
         ),
         zipCode: schema.string.optional({}, [
             rules.regex(/^(?:2A|2B|\d{2})\d{3}$/)
-        ]),
-        confirmedAt: schema.date.optional(({
-            format: 'iso',
-        }))
+        ])
     })
 
     /**
