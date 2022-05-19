@@ -3,7 +3,7 @@
 1.  [Get latest version of postgres](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) and install it.
 
     > :rice: !
-    > During installation you will have to choose a password. Keep it carefully, it will be necessary later.
+    > During installation you will have to choose a password. Keep it carefully, it will be necessary later. Let all things to default config.
 
 2.  Create a **.env file** (_into back folder_) and define all properties defined into readme.example.env
 
