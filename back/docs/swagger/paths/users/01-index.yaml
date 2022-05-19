@@ -1,0 +1,13 @@
+/users:
+  get:
+    summary: Return all users.
+    responses:
+      '200':
+        links:
+          index:
+            operationId: getUser
+        description: Return all users.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'

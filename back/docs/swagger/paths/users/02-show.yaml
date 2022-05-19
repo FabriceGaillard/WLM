@@ -1,0 +1,17 @@
+/users/{id}:
+  get:
+    summary: something
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the user
+        schema:
+          type: string
+          format: uuid
+          minimum: 1
+    responses:
+      '200':
+        description: OK
+      '404':
+        description: Not Found

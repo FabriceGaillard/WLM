@@ -8,7 +8,8 @@
         "start": "node server.js",
         "lint": "eslint . --ext=.ts",
         "format": "prettier --write .",
-        "db:init": "node ace db:init"
+        "db:init": "node ace db:init",
+        "doc:generate": "swagger-jsdoc -d ./docs/swagger/definition.json ./docs/swagger/**/*.yaml -o ./docs/swagger-spec.yaml"
     },
     "eslintConfig": {
         "extends": [

@@ -1,0 +1,161 @@
+openapi: 3.0.3
+info:
+  title: WLM API
+  version: 1.0.0
+  description: A sample API
+paths:
+  /login:
+    post:
+      summary: login
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users:
+    get:
+      summary: Return all users.
+      responses:
+        '200':
+          links:
+            index:
+              operationId: getUser
+          description: Return all users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  '/users/{id}':
+    get:
+      summary: something
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the user
+          schema:
+            type: string
+            format: uuid
+            minimum: 1
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        email:
+          type: string
+          format: email
+          example: exemple@domain.com
+          maxLength: 255
+          description: This field must be unique, an error will be thrown if it is not.
+        rememberMeToken:
+          type: string
+          readOnly: true
+        username:
+          type: string
+          maxLength: 255
+          example: aUsername
+        personalMessage:
+          type: string
+          maxLength: 255
+          example: A randum personal message
+        status:
+          type: string
+          enum:
+            - online
+            - busy
+            - beRightBack
+            - away
+            - onThePhone
+            - outToLunch
+            - appearOffline
+          example: online
+        avatar:
+          type: string
+          maxLength: 255
+          format: url
+          example: /my-path/my-avatar-file.jpg
+        firstName:
+          type: string
+          maxLength: 255
+          pattern: /[a-zA-Z -]{,255}/
+          example: aFirstName
+        lastName:
+          type: string
+          maxLength: 255
+          pattern: /[a-zA-Z -]{,255}/
+          example: aLastName
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+            - unbinary
+          example: unbinary
+        birthYear:
+          type: number
+          minimum: 1892
+          maximum: 2022
+          nullable: true
+          example: 1990
+        alternateEmail:
+          type: string
+          format: email
+          maxLength: 255
+          pattern: /[a-zA-Z -]{,255}/
+          description: This field must different of email
+          example: anAlternativeMail@domain.com
+        country:
+          type: string
+          maxLength: 255
+          default: france
+          example: france
+        state:
+          type: string
+          maxLength: 255
+          nullable: true
+          example: loire
+        zipCode:
+          type: string
+          maxLength: 5
+          pattern: /^(?:2A|2B|\d{2})\d{3}$/
+          nullable: true
+          example: 42100
+        confimedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+tags:
+  - name: auth
+    description: Everything about Authentication
+  - name: users
+    description: Everything about Users
