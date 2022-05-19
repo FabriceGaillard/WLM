@@ -1,0 +1,37 @@
+@use "../../../abstracts/" as *;
+
+.login__container {
+  input[type="checkbox"] {
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: $bg-login-checkbox;
+    border: solid 1px $border-login-checkbox;
+    margin-right: 4px;
+    width: 13px;
+    aspect-ratio: 1/1;
+
+    &:hover::before {
+      border-color: $border-login-checkbox-before-hover;
+      box-shadow: 0 0 0 1px $box-shadow-login-checkbox-before-hover;
+    }
+
+    &:checked::after {
+      background: url("./assets/checkbox/checkbox_icon.png") center no-repeat;
+    }
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+    }
+
+    &::before {
+      inset: 1px;
+      border: solid 1px $border-login-checkbox-before;
+    }
+    &::after {
+      inset: 0px;
+    }
+  }
+}

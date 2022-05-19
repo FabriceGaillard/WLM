@@ -27,20 +27,20 @@
       color: $font-login-input-placeholder;
     }
   }
+
+  .auto-login__container {
+    @include flex($align: center);
+  }
 }
 
 .remember__container {
   @include flex($align: center);
-
-  input {
-    margin-right: 4px;
-  }
 }
 
 .delete-saved {
   background-color: transparent;
   border: none;
-  color: $font-login-delete-saved-password-font;
+  color: $font-login-delete-saved;
   text-align: left;
   margin-left: 15px;
 

@@ -1,13 +1,26 @@
 $bg-login: url("./assets/background_gradient.png");
 $bg-login-input-border: #aab7c7;
-$bg-login-connect-btn: #e0e8f0;
-$bg-connect-btn-border: grey;
 $bg-login-email-drop: #f2f2f2;
 $bg-login-email-drop-hover: #91c9f7;
-$bg-login-status-list-hover: #0078d7;
-$border-login-status-list: #a0a0a0;
 $border-login-container: #55759c;
 $border-login-img-container: #d8d9d9;
-$font-login-delete-saved-password-font: #3588ea;
-$font-login-connect-btn-font: #3141ad;
+
+// FONT COLORS
+$font-login-delete-saved: #3588ea;
 $font-login-input-placeholder: black;
+
+// CHECKBOX COLORS
+$bg-login-checkbox: #f8f8f8;
+$border-login-checkbox: #888888;
+$border-login-checkbox-before: #d8d8d8;
+$border-login-checkbox-before-hover: #88d0f8;
+$box-shadow-login-checkbox-before-hover: #c8e8f0;
+
+// STATUS LIST
+$bg-login-status-list-hover: #0078d7;
+$border-login-status-list: #a0a0a0;
+
+// CONNECT BUTTON
+$bg-login-connect-btn: #e0e8f0;
+$bg-connect-btn-border: grey;
+$font-login-connect-btn-font: #3141ad;
