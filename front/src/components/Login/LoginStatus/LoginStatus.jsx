@@ -27,14 +27,12 @@ const LoginStatus = () => {
           < ArrowIcon />
         </button>
       </div>
-
-      {showStatusList && (
-        <LoginStatusList
-          setShowStatusList={setShowStatusList}
-          setCurrenStatus={setCurrenStatus}
-          dropDownButtonTarget={dropDownButtonTarget}
-        />
-      )}
+      <LoginStatusList
+        classShow={showStatusList ? "show-list" : "hide-list"}
+        setShowStatusList={setShowStatusList}
+        setCurrenStatus={setCurrenStatus}
+        dropDownButtonTarget={dropDownButtonTarget}
+      />
     </div>
   );
 

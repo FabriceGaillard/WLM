@@ -7,7 +7,7 @@ import statusList from '../../../data.js/statusList';
 
 const LoginStatusList = (props) => {
 
-  const { setCurrenStatus, setShowStatusList, dropDownButtonTarget } = props;
+  const { setCurrenStatus, setShowStatusList, dropDownButtonTarget, classShow } = props;
 
   const statusContainerRef = useRef();
 
@@ -20,7 +20,7 @@ const LoginStatusList = (props) => {
   clickOutside(statusContainerRef, setShowStatusList, dropDownButtonTarget);
 
   return (
-    <ul className="login-status__list" ref={statusContainerRef}>
+    <ul className={"login-status__list " + classShow} ref={statusContainerRef}>
       {statusList
         .map((status, index) => (
           <li key={index} onClick={handleClick}>
