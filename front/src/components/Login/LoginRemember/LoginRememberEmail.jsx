@@ -10,11 +10,16 @@ const LoginRememberEmail = () => {
 
   const handleRememberEmailAndStatus = () => {
     const { checked } = emailCheckRef.current;
-    setFormUpdate(prev => ({ ...prev, rememberEmail: checked }));
+    setFormUpdate(prev => ({
+      ...prev,
+      rememberEmail: checked,
+      ...prev.rememberPassword && !checked && { rememberPassword: false }
+    }));
     // adding seleted email & status to storage or cookies 
   };
 
   const handleForgetEmailAndStatus = () => {
+    console.log('Forget email and status');
     // deleting seleted email & status from storage or cookies 
   };
 

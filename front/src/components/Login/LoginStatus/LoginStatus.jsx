@@ -21,12 +21,12 @@ const LoginStatus = () => {
   return (
     <div className="status__container">
       <div className="status-title">Statut :</div>
-      <div className="status-select">
+      <button className={`status-select${showStatusList ? " border" : ""}`} onClick={handleStatusList}>
         {currentStatus}
-        <button type="button" className='dropdown_btn' onClick={handleStatusList}>
+        <div type="button" className='dropdown'>
           < ArrowIcon />
-        </button>
-      </div>
+        </div>
+      </button>
       <LoginStatusList
         classShow={showStatusList ? "show-list" : "hide-list"}
         setShowStatusList={setShowStatusList}

@@ -11,9 +11,18 @@
 
   .status-select {
     position: relative;
-    border: solid 1px $bg-login-input-border;
+    background-color: transparent;
     padding: 3px 20px 3px 3px;
     margin-left: 2px;
+    border: solid 1px transparent;
+
+    &:hover {
+      border: solid 1px $bg-login-input-border;
+    }
+  }
+
+  .border {
+    border: solid 1px $bg-login-input-border;
   }
 }
 
