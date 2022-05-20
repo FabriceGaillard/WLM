@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const RegisterIdentity = ({whichOne}) => {
+const RegisterIdentity = ({whichOne, user, setUser}) => {
+    const regex = new RegExp(/^(?:(?!×Þß÷þ)[A-zÀ-ÿ -])+$/)
+    let newUser = [...user]
+    const[identityError, setIdentityError]=useState("")
+    const checkIdentity = (value)=>{ 
+        setIdentityError("")
+        if(value){
+            if(regex.test(value)){
+                newUser[0][whichOne] = value
+                setUser(newUser)
+            }
+            else{
+                setIdentityError(`Votre ${whichOne === "firstName" ? "prénom" : "nom"} doit correspondre au format requis`)
+            }
+        }
+        else{
+            setIdentityError(`Veuillez renseigner un ${whichOne === "firstName" ? "prénom" : "nom"}`)
+        }
+    }
     const returnStr = ()=> {
         if(whichOne === "firstName")return "firstName"
         if(whichOne === "lastName")return "lastName"
@@ -17,9 +35,12 @@ const RegisterIdentity = ({whichOne}) => {
                 type="text"
                 name={`identity-${returnStr}`}
                 id={`identity-${returnStr}`}
+                maxLength="255"
+                onBlur={(e)=>checkIdentity(e.target.value)}
                 required
                 />
             </div>
+            {identityError != "" && (<><span>{identityError}</span></>)}
         </div>
     );
 };

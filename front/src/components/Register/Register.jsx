@@ -26,6 +26,7 @@ const Register = () => {
     }])
     const allDepartments = Object.entries(region.departments)
     const [isPassConfirmed]=useState([{create : ""}])
+    console.log("Les données de l'utilisateur : ", user)
     return (
         <div className='register-wrapper'>
             <form className='register'>
