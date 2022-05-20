@@ -1,0 +1,41 @@
+/register:
+  post:
+    summary: register
+    tags:
+      - auth
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/registerValidator'
+    responses:
+      '201':
+        description: Created
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      rule:
+                        type: string
+                        example: regex
+                      field:
+                        type: string
+                        example: password
+                      message:
+                        type: string
+                        example: password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne alphabetic character\nOne special character
+                      args:
+                        type: object
+                        properties:
+                          choices:
+                            type: array
+                    required: [rule, field, message]
