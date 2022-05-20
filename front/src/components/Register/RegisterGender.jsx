@@ -1,6 +1,7 @@
 import React from 'react';
 
 const RegisterGender = () => {
+    const allGender = ["male", "female", "unbinary"]
     return (
         <div className='register-gender'>
             <div className='register-container'>
@@ -10,33 +11,18 @@ const RegisterGender = () => {
                     </label>
                 </div>
                 <div className='register-container__radio'>
-                    <div className='register-container__radio__gender'>
-                        <input
-                        type="radio"
-                        name="male"
-                        id="male"
-                        value="male"
-                        />
-                        <label htmlFor="male">Male</label>
-                    </div>
-                    <div className='register-container__radio__gender'>
-                        <input
-                        type="radio"
-                        name="female"
-                        id="female"
-                        value="female"
-                        />
-                        <label htmlFor="female">Female</label>
-                    </div>
-                    <div className='register-container__radio__gender'>
-                        <input
-                        type="radio"
-                        name="unbinary"
-                        id="unbinary"
-                        value="unbinary"
-                        />
-                        <label htmlFor="unbinary">Unbinary</label>
-                    </div>
+                    {allGender.map(elem=>(
+                        <div key={elem} className='register-container__radio__gender'>
+                            <input
+                            type="radio"
+                            name={elem}
+                            id={elem}
+                            value={elem}
+                            />
+                            <label htmlFor={elem}>{elem.charAt(0).toUpperCase() + elem.slice(1)}</label>
+                        </div>
+                    ))}
+                    
                 </div>
             </div>
         </div>

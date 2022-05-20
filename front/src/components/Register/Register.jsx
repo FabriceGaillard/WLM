@@ -25,6 +25,8 @@ const Register = () => {
         zipCode : ""
     }])
     const allDepartments = Object.entries(region.departments)
+    //ALLOW TO CHECK VALUE OF RETYPE PASSWORD
+    //WITH CREATE PASSWORD PREVIOUSLY STORE HERE
     const [isPassConfirmed]=useState([{create : ""}])
     console.log("Les données de l'utilisateur : ", user)
     return (
