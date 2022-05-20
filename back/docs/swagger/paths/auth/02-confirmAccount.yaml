@@ -1,0 +1,31 @@
+/confirmAccount/{email}?signature={signature}:
+  post:
+    summary: confirm account via signed url
+    tags:
+      - auth
+    parameters:
+      - in: path
+        name: email
+        required: true
+        schema:
+          type: string
+          format: email
+          example: exemple@domain.com
+      - in: path
+        name: signature
+        required: true
+        schema:
+          type: string
+    responses:
+      '204':
+        description: No Content
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Signature is missing or URL was tampered.
