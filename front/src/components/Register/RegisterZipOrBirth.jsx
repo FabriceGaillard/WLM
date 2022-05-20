@@ -1,23 +1,46 @@
 import React, { useState } from 'react';
 
 const RegisterZipOrBirth = ({isZip, user, setUser}) => {
+    //COPY OF GLOBAL STATE
+    let newUser = [...user]
     //REGEX TO FILTER ZIPCODE VALUE
-    const regex = new RegExp(/^(?:2A|2B|\d{2})\d{3}$/)
+    const regexZip = new RegExp(/^(?:2A|2B|\d{2})\d{3}$/)
+    const regexBirth = new RegExp(/^[\d]{4}$/)
     //STATE TO ALLOW TO DISPLAY ERROR MESSAGE
-    const [zipError, setZipError]=useState(false)
+    const [zipError, setZipError]=useState("")
+    const [birthError, setBirthError]=useState("")
 
     const checkZip = (value)=>{
         //CHECK IF THIS INPUT GETS ZIPCODE VALUE
         //OR BIRTH YEAR VALUE
-        if(isZip === true){
-            if(regex.test(value)){
-                setZipError(false)
-                let newUser = [...user]
-                newUser[0].zipCode = value
-                setUser(()=>newUser)
+        if(value){
+            setZipError("")
+            setBirthError("")
+            if(isZip === true){
+                if(regexZip.test(value)){
+                    newUser[0].zipCode = value
+                    setUser(()=>newUser)
+                }
+                else{
+                    setZipError("Le code postal ne respecte pas le format requis")
+                }
             }
             else{
-                setZipError(true)
+                setBirthError("")
+                if(regexBirth.test(value)){
+                    newUser[0].birthYear = value
+                    setUser(()=>newUser)
+                }
+                else{
+                    setBirthError("L'année de naissance ne respecte pas le format requis")
+                }
+            }
+        }
+        else{
+            if(isZip === true){
+                setZipError("Vous devez renseigner un code postal")
+            } else if(isZip === false){
+                setBirthError("Vous devez renseigner une année de naissance")
             }
         }
     }
@@ -44,7 +67,8 @@ const RegisterZipOrBirth = ({isZip, user, setUser}) => {
                 required
                 />
             </div>
-            {zipError === true && <span>Veuillez inscrire un code postal valide</span>}
+            {zipError != "" && <span>{zipError}</span>}
+            {birthError != "" && <span>{birthError}</span>}
         </div>
     );
 };

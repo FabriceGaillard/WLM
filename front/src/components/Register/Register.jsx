@@ -19,7 +19,7 @@ const Register = () => {
         firstName : "",
         lastName : "",
         gender : "",
-        birthYear : 0,
+        birthYear : "",
         alternateEmail : "",
         state : "",
         zipCode : ""
