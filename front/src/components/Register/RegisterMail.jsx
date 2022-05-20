@@ -1,53 +1,52 @@
 import React,{useState} from 'react';
 
 const RegisterMail = ({label, user, setUser}) => {
-    //STATE TO DISPLAY ERROR MESSAGE ABOUT EMAIL AND ALTERNATE EMAIL
     const [emailError, setEmailError]=useState({})
-    //FUNCTION TO CHECK EMAIL AND ALTERNATE EMAIL VALUES
-    const checkEmail = (target)=>{
-        //COPY OF USER STATE IN PARENT COMPONENT REGISTER
-        const newUser = [...user]
+    const newUser = [...user]
+    const checkEmail = (target)=>{ 
         //STORED VALIDITY OBJECT TO GET TYPEMISMATCH PROPERTY
         const check = target.validity
-        //ABOUT EMAIL INPUT
-        if(label === "first" && check.typeMismatch === true){
-            setEmailError({first : "Votre email ne respecte pas le format requis"})
-        } else if(label === "first" && check.typeMismatch === false){
+        if(label === "first"){
             setEmailError({})
-            //IF ALTERNATE EMAIL IS EQUAL TO EMPTY STRING
-            //OR DIFFERENT FROM CURRENT VALUE OF EMAIL INPUT
-            if(newUser[0].alternateEmail === "" || newUser[0].alternateEmail != target.value){
-                newUser[0].email = target.value
-                setUser(()=>newUser)
-                setEmailError({})
+            if(target.value){
+                if(check.typeMismatch === true){
+                    setEmailError({[`${label}`] : "Votre email principal ne respecte pas le format requis"})
+                }else if(check.typeMismatch === false){
+                    if(newUser[0].alternateEmail != target.value){
+                        newUser[0].email = target.value
+                        setUser(()=>newUser)
+                        setEmailError({})
+                    }else if(newUser[0].alternateEmail == target.value){
+                        setEmailError({[`${label}`] : "Votre email principal doit être différent de l'email secondaire"})
+                    }
+                }
             }
-            //IF ALTERNATE EMAIL VALUE IS EQUAL TO
-            //FIRST EMAIL VALUE
-            if(newUser[0].alternateEmail === target.value){
-                setEmailError({first : "Votre email principal doit être différent de l'email secondaire"})
-            }
+            else{
+                setEmailError({[`${label}`] : "Vous devez renseigner un email principal"})
+            } 
         }
-        //ABOUT ALTERNATE EMAIL INPUT
-        if(label === "alternate" && check.typeMismatch === true){
-            setEmailError({alternate : "Votre email ne respecte pas le format requis"})
-        }else if(label === "alternate" && check.typeMismatch === false){
+        if(label === "alternate"){
             setEmailError({})
-            //IF FIRST EMAIL IS EQUAL TO EMPTY STRING
-            //WHEN ALTERNATE EMAIL INPUT IS FILLED
-            if(newUser[0].email === "" && target.value != ""){
-                newUser[0].alternateEmail = target.value
-                setUser(()=>newUser)
-                setEmailError({alternate : "Pensez à renseigner un email principal"})
+            if(target.value){
+                if(check.typeMismatch === true){
+                    setEmailError({[`${label}`] : "Votre email secondaire ne respecte pas le format requis"})
+                }else if(check.typeMismatch === false){
+                    if(newUser[0].email != target.value){
+                        newUser[0].alternateEmail = target.value
+                        setUser(()=>newUser)
+                        setEmailError({})
+                    } else if(newUser[0].email === target.value){
+                        setEmailError({[`${label}`] : "Votre email secondaire doit être différent de l'email principal"})
+                    }
+                    if(newUser[0].email === ""){
+                        setEmailError({})
+                        setEmailError({[`${label}`] : "Renseignez un email principal en premier"})
+                    }
+                }
             }
-            //IF FIRST EMAIL ISN'T EQUAL TO EMPTY STRING
-            //BUT DIFFERENT FROM ALTERNATE EMAIL WHEN AE INPUT IS FILLED
-            if(newUser[0].email != target.value && newUser[0].email != ""){
-                newUser[0].alternateEmail = target.value
-                setUser(()=>newUser)
-            }
-            //IF FIRST EMAIL IS EQUAL TO ALTERNATE EMAIL
-            if(newUser[0].email === target.value){
-                setEmailError({alternate : "Votre email secondaire doit être différent de l'email principal"})
+            else{
+                setEmailError({})
+                setEmailError({[`${label}`] : "Vous devez renseigner un email secondaire"})
             }
         }
     }
