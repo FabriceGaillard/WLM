@@ -8,7 +8,7 @@
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/User'
+            $ref: '#/components/schemas/loginValidator'
 
     responses:
       '200':
@@ -17,3 +17,16 @@
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example:
+                    oneOf:
+                      - Invalid credentials.
+                      - Invalid account.
