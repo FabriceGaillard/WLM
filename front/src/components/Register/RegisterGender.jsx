@@ -1,7 +1,12 @@
 import React from 'react';
 
-const RegisterGender = () => {
+const RegisterGender = ({user, setUser}) => {
     const allGender = ["male", "female", "unbinary"]
+    let newUser = [...user]
+    const checkGender = (value)=>{
+        newUser[0].gender = value
+        setUser(newUser)
+    }
     return (
         <div className='register-gender'>
             <div className='register-container'>
@@ -18,6 +23,9 @@ const RegisterGender = () => {
                             name={elem}
                             id={elem}
                             value={elem}
+                            onChange={(e)=>checkGender(e.target.value)}
+                            checked={user.some(item => item.gender === elem)}
+                            required
                             />
                             <label htmlFor={elem}>{elem.charAt(0).toUpperCase() + elem.slice(1)}</label>
                         </div>
