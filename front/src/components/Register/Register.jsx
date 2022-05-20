@@ -28,7 +28,9 @@ const Register = () => {
     //ALLOW TO CHECK VALUE OF RETYPE PASSWORD
     //WITH CREATE PASSWORD PREVIOUSLY STORE HERE
     const [isPassConfirmed]=useState([{create : ""}])
-    console.log("Les données de l'utilisateur : ", user)
+    const submitForm = (data)=>{
+        console.log("Voici le formulaire : ", data)
+    }
     return (
         <div className='register-wrapper'>
             <form className='register'>
@@ -84,7 +86,7 @@ const Register = () => {
                 setUser={setUser}
                 />
                 <RegisterCaptcha/>
-                <button type='submit' name="userInfos">Envoyer</button>
+                <button type='submit' name="userInfos" onSubmit={(data)=>submitForm(data)}>Envoyer</button>
             </form>
         </div>
     );

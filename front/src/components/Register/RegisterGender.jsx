@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const RegisterGender = ({user, setUser}) => {
     const allGender = ["male", "female", "unbinary"]
     let newUser = [...user]
+    const [genderError, setGenderError]=useState("")
+
+    const onBlurRadio = ()=>{
+        setGenderError("")
+        if(user[0].gender === ""){
+            setGenderError("Vous devez choisir un genre")
+        }
+    }
     const checkGender = (value)=>{
-        newUser[0].gender = value
-        setUser(newUser)
+        setGenderError("")
+        if(value){
+            newUser[0].gender = value
+            setUser(newUser)
+        }
     }
     return (
         <div className='register-gender'>
@@ -24,15 +35,15 @@ const RegisterGender = ({user, setUser}) => {
                             id={elem}
                             value={elem}
                             onChange={(e)=>checkGender(e.target.value)}
+                            onBlur={onBlurRadio}
                             checked={user.some(item => item.gender === elem)}
-                            required
                             />
                             <label htmlFor={elem}>{elem.charAt(0).toUpperCase() + elem.slice(1)}</label>
                         </div>
                     ))}
-                    
                 </div>
             </div>
+            {genderError != "" && <span className='mesk'>{genderError}</span>}
         </div>
     );
 };
