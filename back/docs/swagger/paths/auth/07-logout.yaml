@@ -1,0 +1,8 @@
+/auth/logout:
+  get:
+    summary: Logout current authenticated user
+    tags:
+      - Authentication
+    responses:
+      '204':
+        description: No Content
