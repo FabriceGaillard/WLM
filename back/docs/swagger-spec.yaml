@@ -2,42 +2,234 @@ openapi: 3.0.3
 info:
   title: WLM API
   version: 1.0.0
-  description: A sample API
+  description: Remake of Windows Live Messenger (7.1)
+servers:
+  - url: http://localhost:3333/api
+    description: API url
 paths:
-  /login:
+  /auth/register:
     post:
-      summary: login
+      summary: Register a new user
       tags:
-        - auth
+        - Authentication
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/registerValidator"
       responses:
-        '200':
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        rule:
+                          type: string
+                          example: regex
+                        field:
+                          type: string
+                          example: password
+                        message:
+                          type: string
+                          example: password must contain 12 character minimum with at least:\nOne
+                            minuscule\nOne majuscule\nOne numeric\nOne
+                            alphabetic character\nOne special character
+                        args:
+                          type: object
+                          properties:
+                            choices:
+                              type: array
+                      required:
+                        - rule
+                        - field
+                        - message
+  "/auth/confirmAccount/{email}?signature={signature}":
+    get:
+      summary: Confirm account via signed url
+      tags:
+        - Authentication
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+            example: bot@example.com
+        - in: path
+          name: signature
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example:
+                            oneOf:
+                              - Signature is missing or URL was tampered.
+  /auth/login:
+    post:
+      summary: Login a user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/loginValidator"
+      responses:
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example:
+                            oneOf:
+                              - Invalid credentials.
+                              - Invalid account.
+  /auth/me:
+    get:
+      summary: Get authenticated user informations
+      tags:
+        - Authentication
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "204":
+          description: No content
+  /auth/reset-password-demand:
+    post:
+      summary: Demand to reset password
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/emailValidator"
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+  "/auth/reset-password/{email}?signature={signature}":
+    patch:
+      summary: Reset password of a user
+      tags:
+        - Authentication
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+            format: email
+            example: bot@example.com
+        - in: path
+          name: signature
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/resetPasswordValidator"
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example:
+                            oneOf:
+                              - Signature is missing or URL was tampered.
+                              - Invalid credentials.
+                              - Identical of previous passwords.
+  /auth/logout:
+    get:
+      summary: Logout current authenticated user
+      tags:
+        - Authentication
+      responses:
+        "204":
+          description: No Content
   /users:
     get:
-      summary: Return all users.
+      summary: Return all users
+      tags:
+        - Users
       responses:
-        '200':
-          links:
-            index:
-              operationId: getUser
+        "200":
           description: Return all users.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-  '/users/{id}':
+                $ref: "#/components/schemas/User"
+  "/users/{id}":
     get:
-      summary: something
+      summary: Show a user
+      tags:
+        - Users
       parameters:
         - name: id
           in: path
@@ -46,12 +238,45 @@ paths:
           schema:
             type: string
             format: uuid
-            minimum: 1
       responses:
-        '200':
+        "200":
           description: OK
-        '404':
+        "404":
           description: Not Found
+    put:
+      summary: Update a user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateUserValidator"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "204":
+          description: No Content
+    delete:
+      summary: Delete a user
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the user
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: OK
 components:
   schemas:
     User:
@@ -154,8 +379,207 @@ components:
           type: string
           format: date-time
           readOnly: true
+    emailValidator:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: bot@example.com
+      required:
+        - email
+    loginValidator:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: bot@example.com
+        password:
+          type: string
+          example: TESTtest1234.
+        remember:
+          type: boolean
+          example: true
+      required:
+        - email
+        - password
+    registerValidator:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: bot@example.com
+          maxLength: 255
+          description: This field must be unique, an error will be thrown if it is not.
+        password:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: TESTtest1234.
+        passwordConfirmation:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: TESTtest1234.
+          description: Must be equal to password field
+        firstName:
+          type: string
+          maxLength: 255
+          pattern: /^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/
+          example: bot
+        lastName:
+          type: string
+          maxLength: 255
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: example
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+            - unbinary
+          example: unbinary
+        birthYear:
+          type: number
+          minimum: 1892
+          maximum: 2022
+          example: 2004
+        alternateEmail:
+          type: string
+          format: email
+          maxLength: 255
+          description: This field must different of email
+          example: anAlternativeMail@domain.com
+        state:
+          type: string
+          maxLength: 255
+          nullable: true
+          pattern: /^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/
+          example: loire
+        zipCode:
+          type: string
+          maxLength: 5
+          pattern: /^(?:2A|2B|\d{2})\d{3}$/
+          example: 42100
+      required:
+        - email
+        - password
+        - passwordConfirmation
+        - firstName
+        - lastName
+        - gender
+        - alternateEmail
+    resetPasswordValidator:
+      type: object
+      properties:
+        password:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: TESTtest1234.
+        passwordConfirmation:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: TESTtest1234.
+          description: Must be equal to password field
+      required:
+        - password
+        - passwordConfirmation
+    updateUserValidator:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: exemple@domain.com
+          maxLength: 255
+          description: This field must be unique, an error will be thrown if it is not.
+        password:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: testTest1234.
+        passwordConfirmation:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: testTest1234.
+          description: Must be equal to password field
+        username:
+          type: string
+          maxLength: 255
+          example: aUsername
+        status:
+          enum:
+            - online
+            - busy
+            - beRightBack
+            - away
+            - onThePhone
+            - outToLunch
+            - appearOffline
+          maxLength: 255
+          example: online
+        personalMessage:
+          type: string
+          maxLength: 255
+          example: My personal message
+        firstName:
+          type: string
+          maxLength: 255
+          pattern: /^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/
+          example: aFirstName
+        lastName:
+          type: string
+          maxLength: 255
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: aLastName
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+            - unbinary
+          example: unbinary
+        birthYear:
+          type: number
+          minimum: 1892
+          maximum: 2022
+          example: 1990
+        alternateEmail:
+          type: string
+          format: email
+          maxLength: 255
+          description: This field must different of email
+          example: anAlternativeMail@domain.com
+        state:
+          type: string
+          maxLength: 255
+          nullable: true
+          pattern: /^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/
+          example: loire
+        zipCode:
+          type: string
+          maxLength: 5
+          pattern: /^(?:2A|2B|\d{2})\d{3}$/
+          example: 42100
 tags:
-  - name: auth
+  - name: Authentication
     description: Everything about Authentication
-  - name: users
+  - name: Users
     description: Everything about Users
