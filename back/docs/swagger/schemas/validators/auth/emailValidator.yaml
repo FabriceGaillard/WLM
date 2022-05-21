@@ -1,0 +1,10 @@
+components:
+  schemas:
+    emailValidator:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: bot@example.com
+      required: [email]
