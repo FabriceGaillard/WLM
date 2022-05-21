@@ -35,14 +35,14 @@ export default class UpdateUserValidator {
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.alpha({ allow: ['space', 'dash'] })
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
             ]
         ),
         lastName: schema.string.optional(
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.alpha({ allow: ['space', 'dash'] })
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
             ]
         ),
         gender: schema.enum.optional(
@@ -59,7 +59,10 @@ export default class UpdateUserValidator {
         ]),
         state: schema.string.optional(
             { escape: true, trim: true },
-            [rules.maxLength(255), rules.alpha({ allow: ['space', 'dash'] })]
+            [
+                rules.maxLength(255),
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
+            ]
         ),
         zipCode: schema.string.optional({}, [
             rules.regex(/^(?:2A|2B|\d{2})\d{3}$/)

@@ -51,7 +51,7 @@ export default class AuthController {
         }
 
         await User.create(payload);
-        return response.noContent()
+        return response.created()
     }
 
     public async confirmAccount({ request, response }: HttpContextContract) {

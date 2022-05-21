@@ -15,20 +15,20 @@ export default class StoreUserValidator {
         password: schema.string({}, [
             rules.maxLength(180),
             rules.confirmed('passwordConfirmation'),
-            rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[a-zA-Z\d\W]{12,}$/)
+            rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/)
         ]),
         firstName: schema.string(
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.alpha({ allow: ['space', 'dash'] })
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
             ]
         ),
         lastName: schema.string(
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.alpha({ allow: ['space', 'dash'] })
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
             ]
         ),
         gender: schema.enum(
@@ -46,7 +46,7 @@ export default class StoreUserValidator {
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.alpha({ allow: ['space', 'dash'] })
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
             ]
         ),
         zipCode: schema.string.optional({}, [

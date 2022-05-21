@@ -1,7 +1,7 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
 import execa from 'execa'
 
-export default class Init extends BaseCommand {
+export default class InitDatabase extends BaseCommand {
     /**
      * Command name is used to run the command
      */

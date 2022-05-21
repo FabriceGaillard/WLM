@@ -11,7 +11,7 @@ export default class UsersSchema extends BaseSchema {
             table.string('remember_me_token').nullable()
 
             table.string('username', 255).nullable()
-            table.string('personalMessage', 255).nullable()
+            table.string('personal_message', 255).nullable()
             table.enum('status', Object.values(status)).defaultTo(status.ONLINE)
             table.string('avatar', 255).notNullable()
 
