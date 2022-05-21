@@ -1,8 +1,8 @@
-/login:
+/auth/login:
   post:
-    summary: login
+    summary: Login a user
     tags:
-      - auth
+      - Authentication
     requestBody:
       required: true
       content:
@@ -24,9 +24,14 @@
             schema:
               type: object
               properties:
-                message:
-                  type: string
-                  example:
-                    oneOf:
-                      - Invalid credentials.
-                      - Invalid account.
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example:
+                          oneOf:
+                            - Invalid credentials.
+                            - Invalid account.

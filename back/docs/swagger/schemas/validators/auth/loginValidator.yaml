@@ -6,9 +6,11 @@ components:
         email:
           type: string
           format: email
-          example: exemple@domain.com
+          example: bot@example.com
         password:
           type: string
+          example: TESTtest1234.
         remember:
           type: boolean
+          example: true
       required: [email, password]
