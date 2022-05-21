@@ -1,0 +1,16 @@
+/users/{id}:
+  delete:
+    summary: Delete a user
+    tags:
+      - Users
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the user
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '204':
+        description: OK
