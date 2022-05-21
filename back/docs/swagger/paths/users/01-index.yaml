@@ -1,6 +1,8 @@
 /users:
   get:
-    summary: Return all users.
+    summary: Return all users
+    tags:
+      - Users
     responses:
       '200':
         description: Return all users.

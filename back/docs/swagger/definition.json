@@ -3,6 +3,12 @@
     "info": {
         "title": "WLM API",
         "version": "1.0.0",
-        "description": "A sample API"
-    }
+        "description": "Remake of Windows Live Messenger (7.1)"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3333/api",
+            "description": "API url"
+        }
+    ]
 }

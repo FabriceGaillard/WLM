@@ -1,8 +1,8 @@
-/me:
+/auth/me:
   get:
-    summary: Get authenticated user infos
+    summary: Get authenticated user informations
     tags:
-      - auth
+      - Authentication
     responses:
       '200':
         description: OK

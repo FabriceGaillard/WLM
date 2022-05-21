@@ -1,6 +1,8 @@
 /users/{id}:
   get:
-    summary: something
+    summary: Show a user
+    tags:
+      - Users
     parameters:
       - name: id
         in: path
@@ -9,7 +11,6 @@
         schema:
           type: string
           format: uuid
-          minimum: 1
     responses:
       '200':
         description: OK
