@@ -8,7 +8,7 @@ import loginContext from '../../../contexts/LoginContext';
 const LoginAuthEmailInput = (props) => {
 
   const { handleEmailList } = props;
-  const { formUpdate, setFormUpdate } = useContext(loginContext);
+  const { formUpdate, setFormUpdate, isConnecting } = useContext(loginContext);
 
   return (
     <>
@@ -17,6 +17,7 @@ const LoginAuthEmailInput = (props) => {
         <input
           type="email"
           id="emailLogin"
+          disabled={isConnecting}
           value={formUpdate.email}
           onChange={({ target }) => setFormUpdate({ ...formUpdate, email: target.value })}
         />

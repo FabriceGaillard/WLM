@@ -1,0 +1,26 @@
+@use "../../../abstracts/" as *;
+
+.login__container {
+  input:disabled {
+    color: $login-disabled-text-border;
+  }
+
+  .disabled {
+    .login-email-__container,
+    .login-password__container,
+    .status__container,
+    button {
+      color: $login-disabled-text-border;
+      pointer-events: none;
+    }
+
+    svg {
+      color: $font-login-disabled-icon;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      border-color: $login-disabled-text-border;
+    }
+  }
+}

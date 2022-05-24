@@ -12,21 +12,21 @@ const LoginRemember = () => {
   return (
 
     <div className="login-remember__container">
-      {isConnecting
-        ? (
-          <div className="connecting-gif__container">
-            <div>Connexion...</div>
-            <img className="connecting-gif" src="./assets/loading_anim.gif" alt="connecting gif animation" />
-          </div>
-        )
-        : (
-          <>
-            <LoginRememberEmail />
-            <LoginRememberPassword />
-            <LoginAuto />
-          </>
-        )
-      }
+      {!isConnecting && (
+        <>
+          <LoginRememberEmail />
+          <LoginRememberPassword />
+          <LoginAuto />
+        </>
+      )}
+      <div className={`connecting-gif__container ${isConnecting ? "display-flex" : "display-none"}`}>
+        <div>Connexion...</div>
+        <img
+          className="connecting-gif"
+          src="./assets/loading_anim.gif"
+          alt="connecting gif animation"
+        />
+      </div>
     </div>
   );
 

@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <loginContext.Provider value={providerValues}>
       <div className="login__container">
-        <form className="login__container__form" ref={formRef} onSubmit={handleSubmit}>
+        <form className={`login__container__form ${isConnecting ? "disabled" : ""}`} ref={formRef} onSubmit={handleSubmit}>
           <LoginImage />
           <LoginAuth />
           <LoginStatus />

@@ -28,7 +28,7 @@ const LoginStatus = () => {
         </div>
       </button>
       <LoginStatusList
-        classShow={showStatusList ? "show-list" : "hide-list"}
+        classShow={showStatusList ? "display-flex" : "display-none"}
         setShowStatusList={setShowStatusList}
         setCurrenStatus={setCurrenStatus}
         dropDownButtonTarget={dropDownButtonTarget}
