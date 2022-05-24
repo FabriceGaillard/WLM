@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 // COMPONENTS
 import {
   LoginAuth,
-  LoginAuto,
   LoginImage,
   LoginRemember,
   LoginStatus,
@@ -18,7 +17,16 @@ const Login = () => {
 
   const [formUpdate, setFormUpdate] = useState({ ...formLoginData });
   const [resetForm, setResetForm] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
   const formRef = useRef();
+  const providerValues = {
+    resetForm,
+    setResetForm,
+    formUpdate,
+    setFormUpdate,
+    isConnecting,
+    setIsConnecting
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -33,14 +41,13 @@ const Login = () => {
   }, [resetForm]);
 
   return (
-    <loginContext.Provider value={{ resetForm, setResetForm, formUpdate, setFormUpdate }}>
+    <loginContext.Provider value={providerValues}>
       <div className="login__container">
         <form className="login__container__form" ref={formRef} onSubmit={handleSubmit}>
           <LoginImage />
           <LoginAuth />
           <LoginStatus />
           <LoginRemember />
-          <LoginAuto />
           <LoginSubmit />
         </form>
       </div>

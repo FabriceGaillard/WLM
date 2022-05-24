@@ -13,17 +13,17 @@ const LoginStatus = () => {
   const [showStatusList, setShowStatusList] = useState(false);
   const [dropDownButtonTarget, setDropDownButtonTarget] = useState(null);
 
-  const handleStatusList = ({ target }) => {
-    setDropDownButtonTarget(target);
+  const handleStatusList = ({ currentTarget }) => {
+    setDropDownButtonTarget(currentTarget);
     setShowStatusList(previous => !previous);
   };
 
   return (
     <div className="status__container">
       <div className="status-title">Statut :</div>
-      <button className={`status-select${showStatusList ? " border" : ""}`} onClick={handleStatusList}>
+      <button type="button" className={`status-select${showStatusList ? " border" : ""}`} onClick={handleStatusList}>
         {currentStatus}
-        <div type="button" className='dropdown'>
+        <div className='dropdown' id="dropDownStatus">
           < ArrowIcon />
         </div>
       </button>
@@ -32,6 +32,7 @@ const LoginStatus = () => {
         setShowStatusList={setShowStatusList}
         setCurrenStatus={setCurrenStatus}
         dropDownButtonTarget={dropDownButtonTarget}
+        showStatusList={showStatusList}
       />
     </div>
   );

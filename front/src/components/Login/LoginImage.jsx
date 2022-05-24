@@ -11,6 +11,7 @@ const LoginImage = () => {
     <div className="img__container">
       <img
         src={formUpdate.avatar}
+        alt="user's avatar"
         className="avatar"
       />
     </div>

@@ -14,9 +14,12 @@
     position: absolute;
     inset: 0;
     @include translate-center;
-    pointer-events: none;
     width: 65%;
     height: 65%;
     font-size: 2rem;
   }
+}
+
+#dropDownStatus {
+  pointer-events: none;
 }

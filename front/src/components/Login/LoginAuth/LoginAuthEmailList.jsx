@@ -1,5 +1,5 @@
 // HOOKS
-import { useRef, useContext } from 'react';
+import { useRef, useContext, useEffect } from 'react';
 // CONTEXT
 import loginContext from '../../../contexts/LoginContext';
 // DATA
@@ -27,7 +27,26 @@ const LoginAuthEmailList = (props) => {
     setShowEmailsList(false);
   };
 
-  clickOutside(listContainerRef, setShowEmailsList, dropDownButtonTarget);
+  const clickOutsideHandler = e => {
+    const options = [
+      listContainerRef,
+      setShowEmailsList,
+      dropDownButtonTarget,
+      e.target
+    ];
+
+    clickOutside(...options);
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', clickOutsideHandler);
+
+    return () => {
+      document.removeEventListener('click', clickOutsideHandler);
+    };
+  }, []);
+
+
 
   return (
     <ul className="login-email__list" ref={listContainerRef}>

@@ -1,5 +1,5 @@
 // HOOKS
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 // HELPERS
 import clickOutside from '../../../helpers/clickOutside';
 // DATA
@@ -17,7 +17,26 @@ const LoginStatusList = (props) => {
     setShowStatusList(false);
   };
 
-  clickOutside(statusContainerRef, setShowStatusList, dropDownButtonTarget);
+  const clickOutsideStatusHandler = e => {
+    const options = [
+      statusContainerRef,
+      setShowStatusList,
+      dropDownButtonTarget,
+      e.target,
+    ];
+    clickOutside(...options);
+  };
+
+  useEffect(() => {
+    if (dropDownButtonTarget) {
+      document.addEventListener('click', clickOutsideStatusHandler);
+    }
+
+    return () => {
+      document.removeEventListener('click', clickOutsideStatusHandler);
+
+    };
+  }, [dropDownButtonTarget]);
 
   return (
     <ul className={"login-status__list " + classShow} ref={statusContainerRef}>
@@ -25,8 +44,8 @@ const LoginStatusList = (props) => {
         .map((status, index) => (
           <li key={index} onClick={handleClick}>
             <div className="status-img__container">
-              <img className="notHover" src={status.icon} />
-              <img className="hover" src={status.inconHover} />
+              <img className="notHover" src={status.icon} alt="status icon" />
+              <img className="hover" src={status.inconHover} alt="status icon hovered" />
             </div>
             <span>{status.sentence}</span>
           </li>
