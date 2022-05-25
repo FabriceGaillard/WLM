@@ -19,7 +19,11 @@
         "./start/routes",
         "./start/kernel",
         "./start/bouncer",
-        "./database/CamelCaseNamingStrategy"
+        "./database/CamelCaseNamingStrategy",
+        {
+            "file": "./start/validator",
+            "environment": ["web"]
+        }
     ],
     "providers": [
         "./providers/AppProvider",

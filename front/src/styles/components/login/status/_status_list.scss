@@ -1,0 +1,49 @@
+@use "../../../abstracts/" as *;
+
+.login-status__list {
+  @include flex($flow: column);
+  position: absolute;
+  z-index: 1;
+  gap: 5px;
+  background-color: $bg-login-email-drop;
+  border: 1px solid $border-login-status-list;
+  width: 200px;
+  padding: 2px;
+  left: 40px;
+
+  li {
+    @include flex($align: center);
+    height: 20px;
+    line-height: 20px;
+
+    &:hover {
+      background-color: $bg-login-status-list-hover;
+      color: white;
+      cursor: default;
+    }
+
+    &:hover .notHover {
+      visibility: hidden;
+    }
+
+    .status-img__container {
+      position: relative;
+      height: 18px;
+      width: 17px;
+      img {
+        position: absolute;
+      }
+      .notHover {
+        z-index: 2;
+      }
+
+      .hover {
+        z-index: 1;
+      }
+    }
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}

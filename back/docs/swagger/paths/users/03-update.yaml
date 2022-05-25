@@ -1,0 +1,20 @@
+/users/{id}:
+  put:
+    summary: Update a user
+    tags:
+      - Users
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/updateUserValidator'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      '204':
+        description: No Content

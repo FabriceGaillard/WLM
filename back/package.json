@@ -7,7 +7,9 @@
         "build": "node ace build --production",
         "start": "node server.js",
         "lint": "eslint . --ext=.ts",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "db:init": "node ace db:init",
+        "doc:generate": "swagger-jsdoc -d ./docs/swagger/definition.json ./docs/swagger/**/*.yaml -o ./public/doc/swagger-spec.yaml"
     },
     "eslintConfig": {
         "extends": [
@@ -61,6 +63,7 @@
         "@adonisjs/repl": "^3.1.10",
         "@adonisjs/session": "^6.2.2",
         "@types/socket.io": "^3.0.2",
+        "@types/swagger-jsdoc": "^6.0.1",
         "luxon": "^2.4.0",
         "pg": "^8.7.3",
         "phc-argon2": "^1.1.3",
@@ -68,6 +71,7 @@
         "reflect-metadata": "^0.1.13",
         "socket.io": "^4.5.0",
         "source-map-support": "^0.5.21",
+        "swagger-jsdoc": "^6.2.1",
         "uuid": "^8.3.2"
     }
 }

@@ -1,0 +1,16 @@
+@use "../../abstracts/" as *;
+
+.img__container {
+  margin-inline: auto;
+  height: 100px;
+  width: 100px;
+  margin-bottom: 10px;
+  border: 1px solid $border-login-img-container;
+  padding: 1px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

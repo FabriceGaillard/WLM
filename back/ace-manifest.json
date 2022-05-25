@@ -1,5 +1,17 @@
 {
   "commands": {
+    "db:init": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/database/InitDatabase",
+      "commandName": "db:init",
+      "description": "Initilization of wlm database",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",

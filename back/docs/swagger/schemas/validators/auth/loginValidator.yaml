@@ -1,0 +1,16 @@
+components:
+  schemas:
+    loginValidator:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: bot@example.com
+        password:
+          type: string
+          example: TESTtest1234.
+        remember:
+          type: boolean
+          example: true
+      required: [email, password]

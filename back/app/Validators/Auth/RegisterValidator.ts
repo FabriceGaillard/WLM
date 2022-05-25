@@ -10,45 +10,47 @@ export default class StoreUserValidator {
         email: schema.string({}, [
             rules.unique({ table: 'users', column: 'email' }),
             rules.maxLength(255),
-            rules.email()
+            rules.email(),
         ]),
         password: schema.string({}, [
             rules.maxLength(180),
             rules.confirmed('passwordConfirmation'),
-            rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[a-zA-Z\d\W]{12,}$/)
+            rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/)
         ]),
         firstName: schema.string(
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.minLength(1),
-                rules.alpha({ allow: ['space', 'dash'] })
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
             ]
         ),
         lastName: schema.string(
             { escape: true, trim: true },
             [
                 rules.maxLength(255),
-                rules.minLength(1),
-                rules.alpha({ allow: ['space', 'dash'] })
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
             ]
         ),
         gender: schema.enum(
             Object.values(gender)
         ),
-        birthYear: schema.number.nullableAndOptional([
+        birthYear: schema.number.optional([
             rules.range(DateTime.now().year - 130, DateTime.now().year)
         ]),
         alternateEmail: schema.string({}, [
             rules.email(),
-            rules.maxLength(255)
+            rules.maxLength(255),
+            rules.different('email')
         ]),
-        state: schema.string.nullableAndOptional(
+        state: schema.string.optional(
             { escape: true, trim: true },
-            [rules.maxLength(255), rules.alpha({ allow: ['space', 'dash'] })]
+            [
+                rules.maxLength(255),
+                rules.regex(/^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$/)
+            ]
         ),
-        zipCode: schema.string.nullableAndOptional({}, [
-            rules.regex(/\d{5}/)
+        zipCode: schema.string.optional({}, [
+            rules.regex(/^(?:2A|2B|\d{2})\d{3}$/)
         ]),
     })
 
@@ -65,6 +67,6 @@ export default class StoreUserValidator {
      */
     public messages = {
         'zipCode.regex': 'zipCode must be equal to five numerics characters',
-        'password.regex': 'password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character'
+        'password.regex': 'password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne alphabetic character\nOne special character'
     }
 }
