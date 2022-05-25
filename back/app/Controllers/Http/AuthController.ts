@@ -44,7 +44,7 @@ export default class AuthController {
         })
         try {
             const mailer = new VerifyEmail(payload.email, signedUrl)
-            mailer.send()
+            await mailer.send()
         } catch (error) {
             logger.info(error)
             return response.badRequest()
@@ -65,7 +65,7 @@ export default class AuthController {
         if (user.confirmedAt === null) {
             await user.merge({ confirmedAt: DateTime.now() }).save()
             const mailer = new ConfirmAccount(user)
-            mailer.send()
+            await mailer.send()
         }
 
         response.noContent()
@@ -80,7 +80,7 @@ export default class AuthController {
 
         try {
             const mailer = new ResetPasswordDemand(payload.email, signedUrl)
-            mailer.send()
+            await mailer.send()
         } catch (error) {
             logger.info(error)
             return response.badRequest()
@@ -107,7 +107,7 @@ export default class AuthController {
         await user!.merge({ password: payload.password }).save()
 
         const mailer = new ConfirmResetPassword(user)
-        mailer.send()
+        await mailer.send()
 
         response.noContent()
     }
