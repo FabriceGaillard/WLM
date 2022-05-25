@@ -28,12 +28,12 @@ const RegisterCaptcha = ({captchaString, setCaptchaString, isCaptchaOk, setIsCap
         setCaptchaError("")
         if(captchaInput.current.value === captchaString){
             setIsCaptchaOk(true)
-            console.log("Validation ok : ",captchaString)
+            console.log("Validation ok : ",captchaString, isCaptchaOk)
         }
         else{
             setIsCaptchaOk(false)
             setCaptchaError("Votre saisie doit être identique au captcha")
-            console.log("Fail: ",captchaString)
+            console.log("Fail: ",captchaString, isCaptchaOk)
         }
     }
 
