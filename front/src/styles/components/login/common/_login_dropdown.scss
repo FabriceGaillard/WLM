@@ -1,0 +1,25 @@
+@use "../../../abstracts/" as *;
+
+.dropdown {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 20px;
+  @include flex($align: center, $justify: center);
+  background-color: transparent;
+  border: none;
+
+  svg {
+    position: absolute;
+    inset: 0;
+    @include translate-center;
+    width: 65%;
+    height: 65%;
+    font-size: 2rem;
+  }
+}
+
+#dropDownStatus {
+  pointer-events: none;
+}

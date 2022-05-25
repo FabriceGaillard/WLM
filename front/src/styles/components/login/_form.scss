@@ -1,0 +1,65 @@
+@use "../../abstracts/" as *;
+
+.login__container__form {
+  @include flex($flow: nowrap column);
+  gap: 10px;
+  padding-top: 62px;
+  height: 388px;
+  width: 226px;
+
+  input {
+    border: 1px solid $bg-login-input-border;
+    padding-block: 2px;
+
+    &[type="email"],
+    &[type="password"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 3px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      opacity: 1;
+      color: $font-login-input-placeholder;
+    }
+  }
+
+  .auto-login__container {
+    @include flex($align: center);
+  }
+}
+
+.login-remember__container {
+  position: relative;
+  @include flex($flow: nowrap column, $justify: flex-end);
+  gap: 10px;
+  min-height: 86px;
+}
+
+.remember__container {
+  @include flex($align: center);
+}
+
+.delete-saved {
+  background-color: transparent;
+  border: none;
+  color: $font-login-delete-saved;
+  text-align: left;
+  margin-left: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.connecting-gif__container {
+  @include flex($flow: nowrap column, $justify: flex-end, $align: center);
+  .connecting-gif {
+    height: 40px;
+    width: 40px;
+  }
+}

@@ -1,0 +1,29 @@
+@use "../../abstracts/" as *;
+
+.login-email-__container {
+  .email-input__container {
+    position: relative;
+  }
+
+  .login-email__list {
+    @include flex($flow: column);
+    position: absolute;
+    z-index: 1;
+    gap: 5px;
+    background-color: $bg-login-email-drop;
+    border: 1px solid $border-login-img-container;
+    width: 341px;
+    padding: 2px;
+
+    li {
+      padding-left: 30px;
+      height: 20px;
+      line-height: 20px;
+
+      &:hover {
+        background-color: $bg-login-email-drop-hover;
+        cursor: default;
+      }
+    }
+  }
+}

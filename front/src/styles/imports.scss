@@ -1,1 +1,16 @@
-@import "./components/app";
+@use "./components/app";
+@use "./settings/base";
+
+@use "./components/login/common/login_dropdown";
+@use "./components/login/common/checkbox";
+@use "./components/login/common/disabled";
+@use "./components/login/common/classes";
+
+@use "./components/login/login";
+@use "./components/login/avatar";
+@use "./components/login/form";
+@use "./components/login/email";
+@use "./components/login/connect_btn";
+
+@use "./components/login/status/status";
+@use "./components/login/status/status_list";
