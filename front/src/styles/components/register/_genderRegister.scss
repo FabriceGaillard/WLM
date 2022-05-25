@@ -1,0 +1,12 @@
+.register-container{
+    &__radio{
+        display: flex;
+        // border:1px solid blue;
+        &__gender{
+            // border:1px solid green;
+            display: flex;
+            align-items: center;
+            margin-right: 5px;
+        }
+    }
+}

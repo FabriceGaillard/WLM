@@ -64,6 +64,7 @@ const RegisterZipOrBirth = ({isZip, user, setUser}) => {
                 name={returnStr}
                 id={returnStr}
                 onBlur={(e)=>checkZip(e.target.value)}
+                placeholder={isZip === false && "Example: 1980"}
                 required
                 />
             </div>

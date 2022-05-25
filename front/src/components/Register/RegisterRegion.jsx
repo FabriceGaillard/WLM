@@ -20,7 +20,7 @@ const RegisterRegion = ({allDepartments, user, setUser}) => {
             <div className='register-container'>
                 <div className='register-container__label'>
                     <label htmlFor="region">
-                        Department: 
+                        State: 
                     </label>
                 </div>
                 <select 
@@ -29,7 +29,7 @@ const RegisterRegion = ({allDepartments, user, setUser}) => {
                 onClick={(e)=>storeDepartment(e.target.value)}
                 onBlur={checkState}
                 >
-                    <option value="">Choose your department</option>
+                    <option value="">Choose your state</option>
                     {allDepartments.map(item=>(
                         <option 
                         key={item[0]} 

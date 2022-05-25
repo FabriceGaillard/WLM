@@ -12,7 +12,7 @@ const RegisterCaptcha = ({captchaString, setCaptchaString, isCaptchaOk, setIsCap
     useEffect(()=>{
         setCaptchaError("")
         setCaptchaString("")
-        captchaInput.current.value = faker.random.alphaNumeric(5)
+        captchaInput.current.value = faker.random.alphaNumeric(6)
     },[isChanged])
     //LISTEN CLICK ON GENERATE NEW CAPTCHA BUTTON
     const changeCaptcha = ()=>{
@@ -39,17 +39,19 @@ const RegisterCaptcha = ({captchaString, setCaptchaString, isCaptchaOk, setIsCap
 
     return (
         <div className='register-captcha'>
-            <div className="register-container">
-                <div className="register-container__captcha">
-                    <input 
+            <div className="captcha-wrapper">
+                <div className="captcha-wrapper__captcha">
+                    <input
+                    className="captcha-wrapper__captcha--text"
                     type="text" 
                     style={{backgroundColor: "grey", textDecorationLine: "line-through"}}
                     ref={captchaInput}
                     />    
                     <input type="button" value="Générer captcha" onClick={changeCaptcha}/>
                 </div>
-                <div className="register-container__captcha">
-                    <input 
+                <div className="captcha-wrapper__captcha">
+                    <input
+                    className="captcha-wrapper__captcha--text" 
                     type="text" 
                     onChange={(e)=>storeCaptcha(e.target.value)}
                     />

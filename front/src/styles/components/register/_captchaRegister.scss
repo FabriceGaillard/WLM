@@ -1,0 +1,26 @@
+.captcha-wrapper{
+    padding:10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    // border:1px solid red;
+    &__captcha{
+        display: flex;
+        justify-content: space-between;
+        // border:1px solid green;
+        width:70%;
+        padding-right: 25%;
+        &--text{
+            text-align: center;
+            font-size: 1.3em;
+        }
+    }
+    &__captcha:nth-child(2){
+        margin-top:10px;
+    }
+    &__captcha > input {
+        padding: 10px 0px;
+        border: none;
+        width:45%;
+    }
+}

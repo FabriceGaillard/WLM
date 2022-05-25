@@ -34,6 +34,7 @@ const Register = () => {
     //ALLOW TO SEND FORM IF CAPTCHA STORED IS THE SAME THAN 
     //PROVIDED IN RELATED INPUT
     const [isCaptchaOk, setIsCaptchaOk]=useState(false)
+    console.log(isCaptchaOk)
     const submitForm = (e, data)=>{
         e.preventDefault()
         console.log("Voici le formulaire : ", data)

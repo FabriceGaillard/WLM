@@ -1,12 +1,24 @@
+.register-wrapper{
+    border:1px solid red;
+    height:100%;
+    // font-family: "Arial", "Trebuchet MS", sans-serif;
+    font-family: 'Microsft sans', sans-serif;
+    font-size: 10pt;
+    padding:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .register{
     // border:1px solid rgb(105, 182, 167);
     width:50%;
-}
-.register-wrapper{
-    border:1px solid red;
-    padding:20px;
     display: flex;
     flex-direction: column;
+}
+.register > button {
+    width: 15%;
+    padding: 10px 5px;
+    margin-left: auto;
 }
 .register-container{
     display: flex;
@@ -18,8 +30,5 @@
         justify-content: flex-end;
         padding-right: 5px;
         // border:1px solid green;
-    }
-    &__radio{
-        display: flex;
     }
 }
