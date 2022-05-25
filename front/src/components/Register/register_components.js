@@ -1,0 +1,8 @@
+export {default as RegisterMail} from "./RegisterMail"
+export {default as RegisterPassword} from "./RegisterPassword"
+export {default as RegisterIdentity} from "./RegisterIdentity"
+export {default as RegisterCountry} from "./RegisterCountry"
+export {default as RegisterRegion} from "./RegisterRegion"
+export {default as RegisterZipOrBirth} from "./RegisterZipOrBirth"
+export {default as RegisterGender} from "./RegisterGender"
+export {default as RegisterCaptcha} from "./RegisterCaptcha"

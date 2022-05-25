@@ -16,7 +16,6 @@ const LoginImage = () => {
       />
     </div>
   );
-
 };
 
 export default LoginImage;
