@@ -11,7 +11,7 @@ export default class UserSeeder extends BaseSeeder {
                 status: status.ONLINE,
                 firstName: 'example',
                 lastName: 'bot',
-                gender: gender.UNBINAY,
+                gender: gender.UNBINARY,
                 alternateEmail: 'bot@example.com',
                 confirmedAt: DateTime.now(),
                 personalMessage: "Hello i'm a bot"

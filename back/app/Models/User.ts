@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 export enum gender {
     MALE = 'male',
     FEMALE = 'female',
-    UNBINAY = 'unbinary',
+    UNBINARY = 'unbinary',
 }
 
 export enum status {
