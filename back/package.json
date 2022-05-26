@@ -9,7 +9,7 @@
         "lint": "eslint . --ext=.ts",
         "format": "prettier --write .",
         "db:init": "node ace db:init",
-        "doc:generate": "swagger-jsdoc -d ./docs/swagger/definition.json ./docs/swagger/**/*.yaml -o ./public/doc/swagger-spec.yaml"
+        "doc:generate": "swagger-jsdoc -d ./docs/swagger/definition.json ./docs/swagger/**/*.yaml -o ./public/api/swagger-spec.yaml"
     },
     "eslintConfig": {
         "extends": [
