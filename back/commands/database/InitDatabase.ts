@@ -30,31 +30,11 @@ export default class InitDatabase extends BaseCommand {
 
     public async run() {
         const spinner = this.logger.await('Database initialisation')
-
-        const { default: Database } = await import('@ioc:Adonis/Lucid/Database')
-        const { default: Env } = await import('@ioc:Adonis/Core/Env')
-
-        const database = 'postgres';
-        Database.manager.add(
-            database,
-            {
-                client: Env.get('DB_CONNECTION'),
-                connection: {
-                    host: Env.get('PG_HOST'),
-                    port: Env.get('PG_PORT'),
-                    user: Env.get('PG_USER'),
-                    password: Env.get('PG_PASSWORD'),
-                    database: database
-                },
-                healthCheck: true
-            }
-        );
-
         spinner.stop()
 
-        const postgres = Database.connection(database)
-        await postgres.rawQuery('DROP DATABASE IF EXISTS wlm')
-        await postgres.rawQuery('CREATE DATABASE wlm')
+        await execa.node('ace', ['db:wipe'], {
+            stdio: 'inherit',
+        })
 
         await execa.node('ace', ['migration:run'], {
             stdio: 'inherit',
