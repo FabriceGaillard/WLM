@@ -22,11 +22,7 @@ const corsConfig: CorsConfig = {
   |
   */
     enabled: (request) => {
-        console.log(request.header('origin'))
-        const origin = request.header('origin')
-        return !!origin
-            && (origin!.startsWith(`http://${Env.get('HOST')}`) || origin!.startsWith('http://127.0.0.1'))
-            && request.url().startsWith('/api')
+        return request.url().startsWith('/api') || request.url().startsWith('/assets')
     },
 
     // You can also use a function that return true or false.
@@ -51,7 +47,7 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-    origin: true,
+    origin: [`http://${Env.get('HOST')}`, 'http://127.0.0.1'],
 
     /*
   |--------------------------------------------------------------------------
