@@ -93,11 +93,9 @@ export default class User extends BaseModel {
 
     @beforeCreate()
     public static setAvatar(user: User) {
-        /**
-         * Il faudrat ici définir les chemins vers les avatars par défaut
-         */
-        const avatars = ['']
-        user.avatar = avatars[~~(Math.random() * avatars.length)]
+        const path = 'assets/avatars/default/'
+        const avatars = Array.from(Array(11).keys())
+        user.avatar = path + avatars[~~(Math.random() * avatars.length)] + '.jpg'
     }
 
     @beforeCreate()
