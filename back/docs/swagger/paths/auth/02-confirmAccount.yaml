@@ -1,4 +1,4 @@
-/auth/confirmAccount/{email}?signature={signature}:
+/auth/verify/{email}?signature={signature}:
   get:
     summary: Confirm account via signed url
     tags:

@@ -71,7 +71,7 @@ export default class User extends BaseModel {
     public zipCode?: string
 
     @column.dateTime()
-    public confirmedAt?: DateTime
+    public verifiedAt?: DateTime
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime

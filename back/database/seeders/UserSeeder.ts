@@ -13,7 +13,7 @@ export default class UserSeeder extends BaseSeeder {
                 lastName: 'bot',
                 gender: gender.UNBINARY,
                 alternateEmail: 'bot@example.com',
-                confirmedAt: DateTime.now(),
+                verifiedAt: DateTime.now(),
                 personalMessage: "Hello i'm a bot"
             }
         ];

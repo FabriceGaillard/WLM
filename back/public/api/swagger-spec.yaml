@@ -55,7 +55,7 @@ paths:
                         - rule
                         - field
                         - message
-  "/auth/confirmAccount/{email}?signature={signature}":
+  "/auth/verify/{email}?signature={signature}":
     get:
       summary: Confirm account via signed url
       tags:
@@ -291,7 +291,7 @@ components:
         email:
           type: string
           format: email
-          example: exemple@domain.com
+          example: bot@example.com
           maxLength: 255
           description: This field must be unique, an error will be thrown if it is not.
         rememberMeToken:
@@ -367,7 +367,7 @@ components:
           pattern: /^(?:2A|2B|\d{2})\d{3}$/
           nullable: true
           example: 42100
-        confimedAt:
+        verifiedAt:
           type: string
           format: date-time
           readOnly: true

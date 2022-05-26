@@ -22,7 +22,7 @@ export default class AuthController {
 
         const user = await User.findBy('email', payload.email)
         if (!user) throw new InvalidCredentialException('Invalid credentials.')
-        if (!user?.confirmedAt) throw new InvalidAccountException('Invalid account.')
+        if (!user?.verifiedAt) throw new InvalidAccountException('Invalid account.')
 
         await auth.use('web').attempt(payload.email, payload.password, payload.remember)
 
@@ -39,7 +39,7 @@ export default class AuthController {
 
     public async register({ logger, request, response }: HttpContextContract) {
         const payload = await request.validate(RegisterValidator)
-        const signedUrl = Route.makeSignedUrl('confirmAccount', {
+        const signedUrl = Route.makeSignedUrl('verifyEmail', {
             email: payload.email,
         })
         try {
@@ -54,7 +54,7 @@ export default class AuthController {
         return response.created()
     }
 
-    public async confirmAccount({ request, response }: HttpContextContract) {
+    public async verify({ request, response }: HttpContextContract) {
         if (!request.hasValidSignature()) {
             throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
         }
@@ -62,8 +62,8 @@ export default class AuthController {
         const user = await User.findBy('email', request.param('email'))
         if (!user) throw new InvalidCredentialException('Invalid credentials.')
 
-        if (user.confirmedAt === null) {
-            await user.merge({ confirmedAt: DateTime.now() }).save()
+        if (user.verifiedAt === null) {
+            await user.merge({ verifiedAt: DateTime.now() }).save()
             const mailer = new ConfirmAccount(user)
             await mailer.send()
         }
