@@ -22,8 +22,10 @@ const corsConfig: CorsConfig = {
   |
   */
     enabled: (request) => {
-        return !!request.header('origin')
-            && request.header('origin')!.startsWith(`http://${Env.get('HOST')}`)
+        console.log(request.header('origin'))
+        const origin = request.header('origin')
+        return !!origin
+            && (origin!.startsWith(`http://${Env.get('HOST')}`) || origin!.startsWith('http://127.0.0.1'))
             && request.url().startsWith('/api')
     },
 
