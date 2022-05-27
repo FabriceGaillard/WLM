@@ -19,11 +19,12 @@ const RegisterRegion = ({allDepartments, user, setUser}) => {
         <div className='register-region'>
             <div className='register-container'>
                 <div className='register-container__label'>
-                    <label htmlFor="region">
+                    <label htmlFor="region" className='register-label'>
                         State: 
                     </label>
                 </div>
-                <select 
+                <select
+                className='input-width' 
                 name='region' 
                 id="region"
                 onClick={(e)=>storeDepartment(e.target.value)}

@@ -58,19 +58,22 @@ const RegisterMail = ({label, user, setUser}) => {
         <div className='register-email'>
             <div className='register-container'>
                 <div className='register-container__label'>
-                    <label htmlFor={`email-${returnStr}`}>
+                    <label htmlFor={`email-${returnStr}`} className='register-label'>
                         {label === "first" ? "Email: " : "Alternate email: "}
                     </label>
                 </div>
-                <input
-                type="email"
-                name={`email-${returnStr}`}
-                id={`email-${returnStr}`}
-                placeholder='exemple@gmail.com'
-                maxLength="255"
-                onBlur={(e)=>checkEmail(e.target)}
-                required
-                />
+                <div className='input-border'>
+                    <input
+                    className='input-width-mail'
+                    type="email"
+                    name={`email-${returnStr}`}
+                    id={`email-${returnStr}`}
+                    placeholder='exemple@gmail.com'
+                    maxLength="255"
+                    onBlur={(e)=>checkEmail(e.target)}
+                    required
+                    />
+                </div>
             </div>
             {label === "first" && <span>{emailError.first}</span>}
             {label === "alternate" && <span>{emailError.alternate}</span>}

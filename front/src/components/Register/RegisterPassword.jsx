@@ -38,6 +38,7 @@ const RegisterPaswword = ({whichOne, user, setUser, isPassConfirmed}) => {
             }else if(passCheck[0].create != ""){
                 if(passCheck[0].create === value){
                     newUser[0].password = passCheck[0].create
+                    newUser[0].passwordConfirmation = passCheck[0].create
                     setUser(()=>newUser)
                 }
                 else{
@@ -54,11 +55,12 @@ const RegisterPaswword = ({whichOne, user, setUser, isPassConfirmed}) => {
         <div className='register-password'>
             <div className='register-container'>
                 <div className='register-container__label'>
-                    <label htmlFor={`password-${returnStr}`}>
+                    <label htmlFor={`password-${returnStr}`} className='register-label'>
                         {whichOne === "create" ? "Create a password:" : "Retype password:"}
                     </label>
                 </div>
                 <input
+                className='input-width'
                 type="password"
                 name={`password-${returnStr}`}
                 id={`password-${returnStr}`}

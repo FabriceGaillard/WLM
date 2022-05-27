@@ -12,7 +12,12 @@
         padding-right: 25%;
         &--text{
             text-align: center;
-            font-size: 1.3em;
+            font-size: 1.4em;
+            border: none;
+        }
+        &--write{
+            text-align: center;
+            font-size: 1.4em;
         }
     }
     &__captcha:nth-child(2){
@@ -20,7 +25,6 @@
     }
     &__captcha > input {
         padding: 10px 0px;
-        border: none;
         width:45%;
     }
 }

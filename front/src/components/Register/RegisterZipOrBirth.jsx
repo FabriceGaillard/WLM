@@ -55,11 +55,12 @@ const RegisterZipOrBirth = ({isZip, user, setUser}) => {
         <div className='register-zipCode'>
             <div className='register-container'>
                 <div className='register-container__label'>
-                    <label htmlFor={returnStr}>
+                    <label htmlFor={returnStr} className='register-label'>
                         {isZip === true ? "ZIP code: " : "Birth year: "} 
                     </label>
                 </div>
                 <input
+                className='input-width'
                 type="text"
                 name={returnStr}
                 id={returnStr}

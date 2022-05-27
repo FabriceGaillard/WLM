@@ -27,11 +27,12 @@ const RegisterIdentity = ({whichOne, user, setUser}) => {
         <div className='register-identity'>
             <div className='register-container'>
                 <div className='register-container__label'>
-                    <label htmlFor={`identity-${returnStr}`}>
+                    <label htmlFor={`identity-${returnStr}`} className='register-label'>
                         {whichOne === "firstName" ? "First name: " : "Last name: "}
                     </label>
                 </div>
                 <input
+                className='input-width'
                 type="text"
                 name={`identity-${returnStr}`}
                 id={`identity-${returnStr}`}

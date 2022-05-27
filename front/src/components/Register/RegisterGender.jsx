@@ -22,9 +22,9 @@ const RegisterGender = ({user, setUser}) => {
         <div className='register-gender'>
             <div className='register-container'>
                 <div className='register-container__label'>
-                    <label htmlFor="gender">
+                    <div className='register-label'>
                         Gender: 
-                    </label>
+                    </div>
                 </div>
                 <div className='register-container__radio'>
                     {allGender.map(elem=>(
@@ -38,7 +38,12 @@ const RegisterGender = ({user, setUser}) => {
                             onBlur={onBlurRadio}
                             checked={user.some(item => item.gender === elem)}
                             />
-                            <label htmlFor={elem}>{elem.charAt(0).toUpperCase() + elem.slice(1)}</label>
+                            <label htmlFor={elem} className="label-gender">
+                                <div className='label-gender__radio'>
+                                    <div className='gender-dot'></div>
+                                </div>
+                            </label>
+                            <div className="writing-gender">{elem.charAt(0).toUpperCase() + elem.slice(1)}</div>
                         </div>
                     ))}
                 </div>
