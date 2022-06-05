@@ -20,10 +20,10 @@ export default class UpdateUserValidator {
             { escape: true, trim: true },
             [rules.maxLength(255)]
         ),
-        avatar: schema.string.optional(
-            { escape: true, trim: true },
-            [rules.maxLength(255)]
-        ),
+        avatar: schema.file.optional({
+            size: '2mb',
+            extnames: ['jpg', 'jpeg', 'gif', 'png', 'webp']
+        }),
         status: schema.enum.optional(
             Object.values(status)
         ),
