@@ -6,6 +6,10 @@ Route.group(() => {
     Route.get('/verify/:email', 'AuthController.verify').as('verifyEmail')
     Route.post('/reset-password-demand', 'AuthController.resetPasswordDemand')
     Route.patch('/reset-password/:email', 'AuthController.resetPassword').as('resetPassword')
-    Route.get('/logout', 'AuthController.logout')
-    Route.get('/me', 'AuthController.me')
 }).prefix('api/auth')
+
+Route.group(() => {
+    Route.get('/me', 'AuthController.me')
+    Route.get('/logout', 'AuthController.logout')
+}).prefix('api/auth').middleware(['auth'])
+
