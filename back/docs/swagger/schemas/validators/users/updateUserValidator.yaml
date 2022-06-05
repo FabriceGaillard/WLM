@@ -72,3 +72,7 @@ components:
           maxLength: 5
           pattern: /^(?:2A|2B|\d{2})\d{3}$/
           example: 42100
+        avatar:
+          type: string
+          format: binary
+          description: max size of file = 2mb, Extension accepted = jpeg,jpg,gif,webp,png
