@@ -4,13 +4,18 @@ import StoreContactValidator from 'App/Validators/Contact/StoreContactValidator'
 
 export default class ContactsController {
     public async index({ auth }: HttpContextContract) {
-        return await Contact.query().where('userId', auth.user!.id)
+        await auth.user!.load('contacts')
+        return auth.user!.contacts.map(contact => contact)
     }
 
     public async show({ auth, request }: HttpContextContract) {
-        return await Contact.query()
-            .where('userId', auth.user!.id)
-            .andWhere('contactId', request.params().id)
+        const contact = await Contact.query()
+            .where('contactId', request.params().id)
+            .andWhere('userId', auth.user!.id)
+            .preload('contact')
+            .first()
+
+        return contact?.contact
     }
 
     public async store({ auth, request, response }: HttpContextContract) {
