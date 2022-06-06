@@ -225,13 +225,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/user"
-    post:
-      summary: Add a contact
-      tags:
-        - Contacts
-      responses:
-        "201":
-          description: Created
   "/contacts/{id}":
     get:
       summary: Show a contact of authenticated a contact (a user)
@@ -250,6 +243,21 @@ paths:
           description: OK
         "404":
           description: Not Found
+    post:
+      summary: Add a contact
+      tags:
+        - Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the user
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: Created
     delete:
       summary: Delete a contact
       tags:
@@ -265,18 +273,6 @@ paths:
       responses:
         "204":
           description: OK
-  /users:
-    get:
-      summary: Return all users
-      tags:
-        - Users
-      responses:
-        "200":
-          description: Return all users.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
   "/users/{id}":
     put:
       summary: Update a user

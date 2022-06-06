@@ -1,8 +1,16 @@
-/contacts:
+/contacts/{id}:
   post:
     summary: Add a contact
     tags:
       - Contacts
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the user
+        schema:
+          type: string
+          format: uuid
     responses:
       '201':
         description: Created
