@@ -225,16 +225,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/user"
-  "/users/{id}":
-    get:
-      summary: Show a user
+    post:
+      summary: Add a contact
       tags:
-        - Users
+        - Contacts
+      responses:
+        "201":
+          description: Created
+  "/contacts/{id}":
+    get:
+      summary: Show a contact of authenticated a contact (a user)
+      tags:
+        - Contacts
       parameters:
         - name: id
           in: path
           required: true
-          description: uuid of the user
+          description: uuid of the contact (a user)
           schema:
             type: string
             format: uuid
@@ -243,6 +250,34 @@ paths:
           description: OK
         "404":
           description: Not Found
+    delete:
+      summary: Delete a contact
+      tags:
+        - Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the contact
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: OK
+  /users:
+    get:
+      summary: Return all users
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Return all users.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  "/users/{id}":
     put:
       summary: Update a user
       tags:
@@ -285,34 +320,6 @@ paths:
       responses:
         "204":
           description: OK
-  "/contacts/{id}":
-    delete:
-      summary: Delete a contact
-      tags:
-        - Contacts
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: uuid of the contact
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "204":
-          description: OK
-  /users:
-    get:
-      summary: Return all users
-      tags:
-        - Users
-      responses:
-        "200":
-          description: Return all users.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
 components:
   schemas:
     Contact:

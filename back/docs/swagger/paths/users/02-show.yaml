@@ -1,18 +1,18 @@
-/users/{id}:
-  get:
-    summary: Show a user
-    tags:
-      - Users
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: uuid of the user
-        schema:
-          type: string
-          format: uuid
-    responses:
-      '200':
-        description: OK
-      '404':
-        description: Not Found
+#/users/{id}:
+#  get:
+#    summary: Show a user
+#    tags:
+#      - Users
+#    parameters:
+#      - name: id
+#        in: path
+#        required: true
+#        description: uuid of the user
+#        schema:
+#          type: string
+#          format: uuid
+#    responses:
+#      '200':
+#        description: OK
+#      '404':
+#        description: Not Found

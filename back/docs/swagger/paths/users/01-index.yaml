@@ -1,12 +1,12 @@
-/users:
-  get:
-    summary: Return all users
-    tags:
-      - Users
-    responses:
-      '200':
-        description: Return all users.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
+#/users:
+#  get:
+#    summary: Return all users
+#    tags:
+#      - Users
+#    responses:
+#      '200':
+#        description: Return all users.
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/User'

@@ -1,0 +1,8 @@
+/contacts:
+  post:
+    summary: Add a contact
+    tags:
+      - Contacts
+    responses:
+      '201':
+        description: Created
