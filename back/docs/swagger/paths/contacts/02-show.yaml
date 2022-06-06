@@ -1,13 +1,13 @@
-/users/{id}:
+/contacts/{id}:
   get:
-    summary: Show a user
+    summary: Show a contact of authenticated a contact (a user)
     tags:
-      - Users
+      - Contacts
     parameters:
       - name: id
         in: path
         required: true
-        description: uuid of the user
+        description: uuid of the contact (a user)
         schema:
           type: string
           format: uuid
