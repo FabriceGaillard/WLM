@@ -1,5 +1,8 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
 import execa from 'execa'
+import Drive from '@ioc:Adonis/Core/Drive'
+
+import { AVATAR_UPLOAD_DIR } from 'App/Controllers/Http/UsersController'
 
 export default class InitDatabase extends BaseCommand {
     /**
@@ -31,6 +34,8 @@ export default class InitDatabase extends BaseCommand {
     public async run() {
         const spinner = this.logger.await('Database initialisation')
         spinner.stop()
+
+        Drive.delete(AVATAR_UPLOAD_DIR)
 
         await execa.node('ace', ['db:wipe'], {
             stdio: 'inherit',
