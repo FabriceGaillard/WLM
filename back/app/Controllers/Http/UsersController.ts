@@ -6,13 +6,21 @@ import Drive from '@ioc:Adonis/Core/Drive'
 export const AVATAR_UPLOAD_DIR = 'avatar'
 export default class UsersController {
 
+
+    /* Cette fonctionnalité n'est peut-être plus utile puisqu'il est maintenant possible
+    d'avoir les informations des contacts d'un utilisateur
+    
     public async index() {
         return await User.all()
     }
+    */
+
+    /* Cette fonctionnalité n'est peut-être plus utile puisqu'il est maintenant possible
+    d'avoir les informations des contacts d'un utilisateur
 
     public async show({ request }: HttpContextContract) {
         return await User.find(request.params().id)
-    }
+    } */
 
     public async update({ request, response, bouncer }: HttpContextContract) {
         const { avatar, ...payload } = await request.validate(UpdateUserValidator)
