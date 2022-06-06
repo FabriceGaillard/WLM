@@ -213,18 +213,18 @@ paths:
       responses:
         "204":
           description: No Content
-  /users:
+  /contacts:
     get:
-      summary: Return all users
+      summary: Return all contacts of authenticated user
       tags:
-        - Users
+        - Contacts
       responses:
         "200":
-          description: Return all users.
+          description: Return all contacts of authenticated user.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: "#/components/schemas/user"
   "/users/{id}":
     get:
       summary: Show a user
@@ -285,8 +285,59 @@ paths:
       responses:
         "204":
           description: OK
+  "/contacts/{id}":
+    delete:
+      summary: Delete a contact
+      tags:
+        - Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the contact
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: OK
+  /users:
+    get:
+      summary: Return all users
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Return all users.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
 components:
   schemas:
+    Contact:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        contactId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
     User:
       type: object
       properties:

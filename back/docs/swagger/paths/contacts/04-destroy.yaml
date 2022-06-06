@@ -1,0 +1,16 @@
+/contacts/{id}:
+  delete:
+    summary: Delete a contact
+    tags:
+      - Contacts
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the contact
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '204':
+        description: OK

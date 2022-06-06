@@ -1,0 +1,12 @@
+/contacts:
+  get:
+    summary: Return all contacts of authenticated user
+    tags:
+      - Contacts
+    responses:
+      '200':
+        description: Return all contacts of authenticated user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
