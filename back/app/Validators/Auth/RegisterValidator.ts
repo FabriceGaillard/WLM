@@ -9,7 +9,6 @@ export default class StoreUserValidator {
     public schema = schema.create({
         email: schema.string({}, [
             rules.unique({ table: 'users', column: 'email' }),
-            rules.maxLength(255),
             rules.email(),
         ]),
         password: schema.string({}, [
@@ -39,7 +38,6 @@ export default class StoreUserValidator {
         ]),
         alternateEmail: schema.string({}, [
             rules.email(),
-            rules.maxLength(255),
             rules.different('email')
         ]),
         state: schema.string.optional(
