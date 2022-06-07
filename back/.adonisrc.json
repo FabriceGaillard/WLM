@@ -22,7 +22,7 @@
         "./database/CamelCaseNamingStrategy",
         {
             "file": "./start/validator",
-            "environment": ["web"]
+            "environment": ["web", "test"]
         }
     ],
     "providers": [
@@ -40,6 +40,11 @@
             {
                 "name": "functional",
                 "files": ["tests/functional/**/*.spec(.ts|.js)"],
+                "timeout": 60000
+            },
+            {
+                "name": "unit",
+                "files": ["tests/unit/**/*.spec(.ts|.js)"],
                 "timeout": 60000
             }
         ]
