@@ -1,0 +1,22 @@
+components:
+  schemas:
+    UnprocessableEntity:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              rule:
+                type: string
+              field:
+                type: string
+              message:
+                type: string
+              args:
+                type: object
+                properties:
+                  choices:
+                    type: array
+            required: [rule, field, message]

@@ -27,25 +27,4 @@
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                errors:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      rule:
-                        type: string
-                        example: regex
-                      field:
-                        type: string
-                        example: password
-                      message:
-                        type: string
-                        example: password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne alphabetic character\nOne special character
-                      args:
-                        type: object
-                        properties:
-                          choices:
-                            type: array
-                    required: [rule, field, message]
+              $ref: '#/components/schemas/UnprocessableEntity'
