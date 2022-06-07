@@ -36,33 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        rule:
-                          type: string
-                          example: regex
-                        field:
-                          type: string
-                          example: password
-                        message:
-                          type: string
-                          example: password must contain 12 character minimum with at least:\nOne
-                            minuscule\nOne majuscule\nOne numeric\nOne
-                            alphabetic character\nOne special character
-                        args:
-                          type: object
-                          properties:
-                            choices:
-                              type: array
-                      required:
-                        - rule
-                        - field
-                        - message
+                $ref: "#/components/schemas/UnprocessableEntity"
   "/auth/verify/{email}?signature={signature}":
     get:
       summary: Confirm account via signed url
@@ -84,6 +58,10 @@ paths:
       responses:
         "204":
           description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
         "400":
           description: Bad Request
           content:
@@ -137,6 +115,12 @@ paths:
                             oneOf:
                               - Invalid credentials.
                               - Invalid account.
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   /auth/me:
     get:
       summary: Get authenticated user informations
@@ -151,6 +135,10 @@ paths:
                 $ref: "#/components/schemas/User"
         "204":
           description: No content
+          content:
+            application/json:
+              schema:
+                type: object
   /auth/reset-password-demand:
     post:
       summary: Demand to reset password
@@ -165,8 +153,16 @@ paths:
       responses:
         "204":
           description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
         "400":
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
   "/auth/reset-password/{email}?signature={signature}":
     patch:
       summary: Reset password of a user
@@ -194,6 +190,10 @@ paths:
       responses:
         "204":
           description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
         "400":
           description: Bad Request
           content:
@@ -221,6 +221,10 @@ paths:
       responses:
         "204":
           description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
   /contacts:
     get:
       summary: Return all contacts of authenticated user
@@ -249,8 +253,16 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
         "404":
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
     post:
       summary: Add a contact
       tags:
@@ -266,6 +278,10 @@ paths:
       responses:
         "201":
           description: Created
+          content:
+            application/json:
+              schema:
+                type: object
     delete:
       summary: Delete a contact
       tags:
@@ -281,6 +297,10 @@ paths:
       responses:
         "204":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
   "/users/{id}":
     put:
       summary: Update a user
@@ -309,6 +329,10 @@ paths:
                 $ref: "#/components/schemas/User"
         "204":
           description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
     delete:
       summary: Delete a user
       tags:
@@ -324,6 +348,10 @@ paths:
       responses:
         "204":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   schemas:
     Contact:
@@ -349,6 +377,29 @@ components:
           type: string
           format: date-time
           readOnly: true
+    UnprocessableEntity:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              rule:
+                type: string
+              field:
+                type: string
+              message:
+                type: string
+              args:
+                type: object
+                properties:
+                  choices:
+                    type: array
+            required:
+              - rule
+              - field
+              - message
     User:
       type: object
       properties:
@@ -362,10 +413,10 @@ components:
           type: string
           format: email
           example: bot@example.com
-          maxLength: 255
           description: This field must be unique, an error will be thrown if it is not.
         rememberMeToken:
           type: string
+          nullable: true
           readOnly: true
         username:
           type: string
@@ -389,17 +440,16 @@ components:
         avatar:
           type: string
           maxLength: 255
-          format: url
           example: /my-path/my-avatar-file.jpg
         firstName:
           type: string
           maxLength: 255
-          pattern: /[a-zA-Z -]{,255}/
+          pattern: ^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$
           example: aFirstName
         lastName:
           type: string
           maxLength: 255
-          pattern: /[a-zA-Z -]{,255}/
+          pattern: ^(?:(?!×Þß÷þ)[A-Za-zÀ-ÿ' -])+$
           example: aLastName
         gender:
           type: string
@@ -417,8 +467,6 @@ components:
         alternateEmail:
           type: string
           format: email
-          maxLength: 255
-          pattern: /[a-zA-Z -]{,255}/
           description: This field must different of email
           example: anAlternativeMail@domain.com
         country:
@@ -657,3 +705,5 @@ tags:
     description: Everything about Authentication
   - name: Users
     description: Everything about Users
+  - name: Contacts
+    description: Everything about Contacts
