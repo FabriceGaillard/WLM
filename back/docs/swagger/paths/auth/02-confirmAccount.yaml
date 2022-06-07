@@ -19,6 +19,10 @@
     responses:
       '204':
         description: No Content
+        content:
+          application/json:
+            schema:
+              type: object
       '400':
         description: Bad Request
         content:

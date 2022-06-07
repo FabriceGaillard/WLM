@@ -14,3 +14,7 @@
     responses:
       '204':
         description: OK
+        content:
+          application/json:
+            schema:
+              type: object

@@ -12,3 +12,7 @@
               $ref: '#/components/schemas/User'
       '204':
         description: No content
+        content:
+          application/json:
+            schema:
+              type: object

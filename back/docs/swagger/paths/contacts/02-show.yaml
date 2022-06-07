@@ -14,5 +14,13 @@
     responses:
       '200':
         description: OK
+        content:
+          application/json:
+            schema:
+              type: object
       '404':
         description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object

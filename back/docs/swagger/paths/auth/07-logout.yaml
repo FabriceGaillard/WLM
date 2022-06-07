@@ -6,3 +6,7 @@
     responses:
       '204':
         description: No Content
+        content:
+          application/json:
+            schema:
+              type: object

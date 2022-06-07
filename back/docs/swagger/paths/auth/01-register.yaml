@@ -12,8 +12,16 @@
     responses:
       '201':
         description: Created
+        content:
+          application/json:
+            schema:
+              type: object
       '400':
         description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
       '422':
         description: Unprocessable Entity
         content:

@@ -21,8 +21,16 @@ paths:
       responses:
         "201":
           description: Created
+          content:
+            application/json:
+              schema:
+                type: object
         "400":
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
         "422":
           description: Unprocessable Entity
           content:
@@ -224,7 +232,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/user"
+                $ref: "#/components/schemas/User"
   "/contacts/{id}":
     get:
       summary: Show a contact of authenticated a contact (a user)
