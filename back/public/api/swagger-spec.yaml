@@ -133,7 +133,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-        "204":
+        "401":
           description: No content
           content:
             application/json:
