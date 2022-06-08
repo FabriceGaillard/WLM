@@ -318,13 +318,15 @@ test.group('Auth register', (group) => {
         })
     })
 
-    test(`it should register ${validEmail} user`, async ({ client, assert }) => {
+    test(`it should register ${validEmail} like an unverified account`, async ({ client, assert }) => {
         const response = await client.post('/api/auth/register').json(validBody)
         response.assertAgainstApiSpec()
         response.assertStatus(201)
 
         const user = await User.findBy('email', validEmail)
         assert.exists(user)
+
+        assert.isNull(user!.verifiedAt)
     })
 
     test('it should FAIL (422) when email is not unique', async ({ client }) => {
