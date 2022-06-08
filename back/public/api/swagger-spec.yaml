@@ -364,6 +364,22 @@ paths:
             application/json:
               schema:
                 type: object
+        "401":
+          description: No content
+          content:
+            application/json:
+              schema:
+                type: object
+        "403":
+          description: No content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
 components:
   schemas:
     Contact:

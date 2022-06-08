@@ -22,7 +22,7 @@ export default class UsersController {
         return await User.find(request.params().id)
     } */
 
-    public async update({ request, response, bouncer }: HttpContextContract) {
+    public async update({ request, bouncer }: HttpContextContract) {
         const { avatar, ...payload } = await request.validate(UpdateUserValidator)
         const user = await User.find(request.params().id)
 
@@ -42,10 +42,10 @@ export default class UsersController {
         return user
     }
 
-    public async destroy({ request, bouncer }: HttpContextContract) {
+    public async destroy({ request, bouncer, response }: HttpContextContract) {
         const user = await User.find(request.params().id)
 
-        if (!user) return
+        if (!user) return response.noContent()
 
         await bouncer
             .with('UserPolicy')
@@ -54,6 +54,6 @@ export default class UsersController {
         await Drive.delete(user.avatar)
         await user.delete()
 
-        return
+        return response.noContent()
     }
 }
