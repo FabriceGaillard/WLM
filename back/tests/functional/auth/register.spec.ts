@@ -2,21 +2,10 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
 import { DateTime } from 'luxon'
-
+import { registerBody } from '../helpers/AuthenticationHelper'
 const ENDPOINT = 'api/auth/register'
 const validEmail = "fabou291@gmail.com"
-const validBody = {
-    "email": validEmail,
-    "password": "TESTtest1234.",
-    "passwordConfirmation": "TESTtest1234.",
-    "firstName": "Fab",
-    "lastName": "G",
-    "gender": "male",
-    "birthYear": "2022",
-    "alternateEmail": "test@bot.com",
-    "state": "Somewhere",
-    "zipCode": "2A090",
-}
+
 
 test.group('Auth register', (group) => {
 
@@ -29,7 +18,7 @@ test.group('Auth register', (group) => {
     test('it should FAIL (422) when email is not a valid email', async ({ client }) => {
         const invalidEmail = 'anInvalidEmail@@gmail.com.fr'
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             email: invalidEmail
         })
         response.assertAgainstApiSpec()
@@ -47,7 +36,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when alternate email is invalid', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             alternateEmail: 'anInvalidEmail@@gmail.com.fr'
         })
         response.assertAgainstApiSpec()
@@ -65,7 +54,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when alternatel email is identic of email', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             email: validEmail,
             alternateEmail: validEmail,
         })
@@ -85,7 +74,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when password is invalid', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             password: 'anInvalidPassword',
             passwordConfirmation: 'anInvalidPassword',
         })
@@ -104,7 +93,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when password is over 180 characters', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             password: 'anInvalidPasswordOver180Character+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++',
             passwordConfirmation: 'anInvalidPasswordOver180Character+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
         })
@@ -124,7 +113,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when confirmedPassword is different of password', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             passwordConfirmation: 'anInvalidPassword'
         })
         response.assertAgainstApiSpec()
@@ -140,7 +129,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when firstName did not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             firstName: '02Fabrice'
         })
         response.assertAgainstApiSpec()
@@ -156,7 +145,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when firstName is over 255 character', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             firstName: 'anInvalidFirstNameOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
         })
         response.assertAgainstApiSpec()
@@ -175,7 +164,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when lastName did not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             lastName: '02G'
         })
         response.assertAgainstApiSpec()
@@ -191,7 +180,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when lastName is over 255 character', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             lastName: 'anInvalidLastNameOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
         })
         response.assertAgainstApiSpec()
@@ -210,7 +199,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when gender is not in range of specified value', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             gender: 'anInvalidGender'
         })
         response.assertAgainstApiSpec()
@@ -233,7 +222,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when birthyear is not between before 130 year and today', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             birthYear: 1800
         })
         response.assertAgainstApiSpec()
@@ -253,7 +242,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when birthyear is not a digital value', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             birthYear: 'stringValue'
         })
         response.assertAgainstApiSpec()
@@ -269,7 +258,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when state did not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             state: '678invalidState'
         })
         response.assertAgainstApiSpec()
@@ -285,7 +274,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when state is over 255 characters', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             state: 'invalidStateOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
         })
         response.assertAgainstApiSpec()
@@ -304,7 +293,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when zipCode did not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             zipCode: '2C678'
         })
         response.assertAgainstApiSpec()
@@ -319,7 +308,7 @@ test.group('Auth register', (group) => {
     })
 
     test(`it should register ${validEmail} like an unverified account`, async ({ client, assert }) => {
-        const response = await client.post('/api/auth/register').json(validBody)
+        const response = await client.post('/api/auth/register').json(registerBody)
         response.assertAgainstApiSpec()
         response.assertStatus(201)
 
@@ -331,7 +320,7 @@ test.group('Auth register', (group) => {
 
     test('it should FAIL (422) when email is not unique', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
-            ...validBody,
+            ...registerBody,
             email: 'bot@example.com'
         })
         response.assertAgainstApiSpec()
@@ -350,7 +339,7 @@ test.group('Auth register', (group) => {
     test('it should return 400 status code error when email sending fails', async ({ client }) => {
         const email = "bot@test.com"
         const response = await client.post('/api/auth/register').json({
-            ...validBody,
+            ...registerBody,
             email
         })
         response.assertAgainstApiSpec()
@@ -360,7 +349,7 @@ test.group('Auth register', (group) => {
     test('it should not register user when email sending fails', async ({ client, assert }) => {
         const email = "bot@test.com"
         await client.post('/api/auth/register').json({
-            ...validBody,
+            ...registerBody,
             email
         })
 

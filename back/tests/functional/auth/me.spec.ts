@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import { bot } from 'Database/seeders/UserSeeder'
-import AuthenticationHelper from '../helpers/Authenticationhelper'
+import AuthenticationHelper from '../helpers/AuthenticationHelper'
 
 const ENDPOINT = 'api/auth/me'
 
