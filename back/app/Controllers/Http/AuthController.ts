@@ -79,6 +79,7 @@ export default class AuthController {
         })
 
         try {
+            await User.findByOrFail('email', payload.email)
             const mailer = new ResetPasswordDemand(payload.email, signedUrl)
             await mailer.send()
         } catch (error) {

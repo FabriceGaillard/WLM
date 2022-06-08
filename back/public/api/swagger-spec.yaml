@@ -163,6 +163,12 @@ paths:
             application/json:
               schema:
                 type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   "/auth/reset-password/{email}?signature={signature}":
     patch:
       summary: Reset password of a user
