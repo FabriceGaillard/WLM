@@ -1,6 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
-import { registerBody } from '../helpers/AuthenticationHelper'
+import User from 'App/Models/User'
+import { bot } from 'Database/seeders/UserSeeder'
 
 const ENDPOINT = 'api/auth/verify'
 const params = 'fabou291@gmail.com?signature=eyJtZXNzYWdlIjoiL2FwaS9hdXRoL3ZlcmlmeS9mYWJvdTI5MUBnbWFpbC5jb20ifQ.IsJzBnr9LwWyNyhP1F0S9nE1sEF_Hcj795x1edfRgdU'
@@ -39,7 +40,7 @@ test.group('Auth confirmAccount', (group) => {
     })
 
     test('it should succeed (200)', async ({ client }) => {
-        await client.post('api/auth/register').json(registerBody)
+        await User.create({ ...bot, email: 'fabou291@gmail.com' })
         const response = await client.get(`${ENDPOINT}/${params}`)
         response.assertAgainstApiSpec()
         response.assertStatus(204)

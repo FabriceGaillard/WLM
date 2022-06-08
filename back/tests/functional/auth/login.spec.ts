@@ -20,8 +20,8 @@ test.group('Auth login', (group) => {
         response.assertAgainstApiSpec()
         response.assertStatus(200)
 
-        const user = await User.findBy('email', bot.email)
-        response.assertBody(user!.serialize())
+        const user = await User.findByOrFail('email', bot.email)
+        response.assertBody(user.serialize())
     })
 
     test(`it should login ${bot.email} and set rememberMeToken`, async ({ client, assert }) => {
@@ -31,8 +31,8 @@ test.group('Auth login', (group) => {
             remember: true
         })
 
-        const user = await User.findBy('email', bot.email)
-        assert.isNotNull(user!.rememberMeToken)
+        const user = await User.findByOrFail('email', bot.email)
+        assert.isNotNull(user.rememberMeToken)
     })
 
     test('it should FAIL (422) if email is invalid', async ({ client }) => {

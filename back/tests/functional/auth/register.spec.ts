@@ -2,10 +2,20 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
 import { DateTime } from 'luxon'
-import { registerBody } from '../helpers/AuthenticationHelper'
 const ENDPOINT = 'api/auth/register'
 const validEmail = "fabou291@gmail.com"
-
+const registerBody = {
+    "email": "fabou291@gmail.com",
+    "password": "TESTtest1234.",
+    "passwordConfirmation": "TESTtest1234.",
+    "firstName": "Fab",
+    "lastName": "G",
+    "gender": "male",
+    "birthYear": "2022",
+    "alternateEmail": "test@bot.com",
+    "state": "Somewhere",
+    "zipCode": "2A090",
+}
 
 test.group('Auth register', (group) => {
 
@@ -312,10 +322,8 @@ test.group('Auth register', (group) => {
         response.assertAgainstApiSpec()
         response.assertStatus(201)
 
-        const user = await User.findBy('email', validEmail)
-        assert.exists(user)
-
-        assert.isNull(user!.verifiedAt)
+        const user = await User.findByOrFail('email', validEmail)
+        assert.isNull(user.verifiedAt)
     })
 
     test('it should FAIL (422) when email is not unique', async ({ client }) => {
@@ -348,7 +356,7 @@ test.group('Auth register', (group) => {
 
     test('it should not register user when email sending fails', async ({ client, assert }) => {
         const email = "bot@test.com"
-        await client.post('/api/auth/register').json({
+        await client.post(ENDPOINT).json({
             ...registerBody,
             email
         })

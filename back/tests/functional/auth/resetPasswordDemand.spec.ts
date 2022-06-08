@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import User from 'App/Models/User'
 import { bot } from 'Database/seeders/UserSeeder'
-import { registerBody } from '../helpers/AuthenticationHelper'
 
 const ENDPOINT = 'api/auth/reset-password-demand'
 
@@ -48,7 +48,7 @@ test.group('Auth resetPasswordDemand', (group) => {
     })
 
     test('it should succeed (204)', async ({ client }) => {
-        await client.post('api/auth/register').json(registerBody)
+        await User.create({ ...bot, email: 'fabou291@gmail.com' })
         const response = await client.post(ENDPOINT).json({
             email: 'fabou291@gmail.com'
         })

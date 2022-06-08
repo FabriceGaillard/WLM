@@ -105,7 +105,7 @@ export default class AuthController {
             throw new IdenticalPasswordException('Identical of previous passwords.')
         }
 
-        await user!.merge({ password: payload.password }).save()
+        await user.merge({ password: payload.password }).save()
 
         try {
             const mailer = new ConfirmResetPassword(user)

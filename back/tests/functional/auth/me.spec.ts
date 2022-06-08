@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import User from 'App/Models/User'
 import { bot } from 'Database/seeders/UserSeeder'
-import AuthenticationHelper from '../helpers/AuthenticationHelper'
 
 const ENDPOINT = 'api/auth/me'
 
@@ -26,11 +26,7 @@ test.group('Auth me', (group) => {
     })
 
     test(`it should success (200), and return user`, async ({ client }) => {
-
-        const user = await AuthenticationHelper.authenticate(client, {
-            email: bot.email,
-            password: bot.password
-        })
+        const user = await User.findByOrFail('email', bot.email)
 
         const response = await client.get(ENDPOINT).loginAs(user)
         response.assertAgainstApiSpec()
