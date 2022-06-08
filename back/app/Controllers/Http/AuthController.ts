@@ -46,7 +46,7 @@ export default class AuthController {
             const mailer = new VerifyEmail(payload.email, signedUrl)
             await mailer.send()
         } catch (error) {
-            logger.info(error)
+            logger.warn(error)
             return response.badRequest()
         }
 
@@ -83,14 +83,14 @@ export default class AuthController {
             const mailer = new ResetPasswordDemand(payload.email, signedUrl)
             await mailer.send()
         } catch (error) {
-            logger.info(error)
+            logger.warn(error)
             return response.badRequest()
         }
 
         return response.noContent()
     }
 
-    public async resetPassword({ request, response }: HttpContextContract) {
+    public async resetPassword({ request, response, logger }: HttpContextContract) {
         if (!request.hasValidSignature()) {
             throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
         }
@@ -107,8 +107,14 @@ export default class AuthController {
 
         await user!.merge({ password: payload.password }).save()
 
-        const mailer = new ConfirmResetPassword(user)
-        await mailer.send()
+        try {
+            const mailer = new ConfirmResetPassword(user)
+            await mailer.send()
+        } catch (err) {
+            logger.warn(err)
+            return response.badRequest()
+        }
+
 
         response.noContent()
     }
