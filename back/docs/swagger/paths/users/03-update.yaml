@@ -30,3 +30,15 @@
           application/json:
             schema:
               type: object
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'
+      '400':
+        description: No Content
+        content:
+          application/json:
+            schema:
+              type: object

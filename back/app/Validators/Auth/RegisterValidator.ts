@@ -37,6 +37,7 @@ export default class StoreUserValidator {
             rules.range(DateTime.now().year - 130, DateTime.now().year)
         ]),
         alternateEmail: schema.string({}, [
+            rules.requiredIfExists('email'),
             rules.email(),
             rules.different('email')
         ]),

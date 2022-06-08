@@ -6,16 +6,6 @@ export default class UpdateUserValidator {
     constructor(protected ctx: HttpContextContract) { }
 
     public schema = schema.create({
-        email: schema.string.optional({}, [
-            rules.unique({ table: 'users', column: 'email' }),
-            rules.maxLength(255),
-            rules.email()
-        ]),
-        password: schema.string.optional({}, [
-            rules.maxLength(180),
-            rules.confirmed('passwordConfirmation'),
-            rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[a-zA-Z\d\W]{12,}$/)
-        ]),
         username: schema.string.optional(
             { escape: true, trim: true },
             [rules.maxLength(255)]
@@ -54,8 +44,6 @@ export default class UpdateUserValidator {
         alternateEmail: schema.string.optional({}, [
             rules.email(),
             rules.maxLength(255),
-            rules.requiredIfExists('email'),
-            rules.different('email')
         ]),
         state: schema.string.optional(
             { escape: true, trim: true },
@@ -82,6 +70,5 @@ export default class UpdateUserValidator {
      */
     public messages = {
         'zipCode.regex': 'zipCode must be equal to five numerics characters',
-        'password.regex': 'password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character'
     }
 }

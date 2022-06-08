@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import UpdateUserValidator from 'App/Validators/User/UpdateUserValidator'
 import Drive from '@ioc:Adonis/Core/Drive'
+import InvalidAlternateEmailException from 'App/Exceptions/User/InvalidAlternateEmailException'
 
 export const AVATAR_UPLOAD_DIR = 'avatar'
 export default class UsersController {
@@ -22,11 +23,15 @@ export default class UsersController {
         return await User.find(request.params().id)
     } */
 
-    public async update({ request, bouncer }: HttpContextContract) {
-        const { avatar, ...payload } = await request.validate(UpdateUserValidator)
+    public async update({ request, bouncer, response }: HttpContextContract) {
+        const { avatar, alternateEmail, ...payload } = await request.validate(UpdateUserValidator)
         const user = await User.find(request.params().id)
 
-        if (!user) return
+        if (!user) return response.noContent()
+
+        if (alternateEmail && user.email === alternateEmail) {
+            throw new InvalidAlternateEmailException('E_INVALID_ALTERNATE_EMAIL: alternameEmail cannot be identical of email.')
+        }
 
         await bouncer
             .with('UserPolicy')
