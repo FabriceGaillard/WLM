@@ -44,7 +44,48 @@ test.group('Auth register', (group) => {
         })
     })
 
-    test('it should FAIL (422) when alternate email is invalid', async ({ client }) => {
+    test('it should FAIL (422) when email is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            email: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "required",
+                    "field": "email",
+                    "message": "required validation failed"
+                },
+                {
+                    "rule": "different",
+                    "field": "alternateEmail",
+                    "message": "different validation failed",
+                },
+            ]
+        })
+    })
+
+    test('it should FAIL (422) when email is not unique', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            email: 'bot@example.com'
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "unique",
+                    "field": "email",
+                    "message": "unique validation failure"
+                },
+            ]
+        })
+    })
+
+    test('it should FAIL (422) when alternateEmail is invalid', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             alternateEmail: 'anInvalidEmail@@gmail.com.fr'
@@ -62,7 +103,25 @@ test.group('Auth register', (group) => {
         })
     })
 
-    test('it should FAIL (422) when alternatel email is identic of email', async ({ client }) => {
+    test('it should FAIL (422) when alternateEmail is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            alternateEmail: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "required",
+                    "field": "alternateEmail",
+                    "message": "required validation failed"
+                },
+            ]
+        })
+    })
+
+    test('it should FAIL (422) when alternatelEmail is identic of email', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             email: validEmail,
@@ -121,7 +180,25 @@ test.group('Auth register', (group) => {
         })
     })
 
-    test('it should FAIL (422) when confirmedPassword is different of password', async ({ client }) => {
+    test('it should FAIL (422) when password is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            password: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "required",
+                    "field": "password",
+                    "message": "required validation failed"
+                },
+            ]
+        })
+    })
+
+    test('it should FAIL (422) when passwordConfirmation is different of password', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             passwordConfirmation: 'anInvalidPassword'
@@ -137,7 +214,25 @@ test.group('Auth register', (group) => {
         })
     })
 
-    test('it should FAIL (422) when firstName did not respect regex format', async ({ client }) => {
+    test('it should FAIL (422) when passwordConfirmation is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            passwordConfirmation: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "confirmed",
+                    "field": "passwordConfirmation",
+                    "message": "confirmed validation failed",
+                },
+            ]
+        })
+    })
+
+    test('it should FAIL (422) when firstName do not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             firstName: '02Fabrice'
@@ -169,6 +264,24 @@ test.group('Auth register', (group) => {
                     "maxLength": 255
                 }
             }]
+        })
+    })
+
+    test('it should FAIL (422) when firstName is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            firstName: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "required",
+                    "field": "firstName",
+                    "message": "required validation failed"
+                },
+            ]
         })
     })
 
@@ -207,6 +320,24 @@ test.group('Auth register', (group) => {
         })
     })
 
+    test('it should FAIL (422) when lastName is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            lastName: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "required",
+                    "field": "lastName",
+                    "message": "required validation failed"
+                },
+            ]
+        })
+    })
+
     test('it should FAIL (422) when gender is not in range of specified value', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
@@ -227,6 +358,24 @@ test.group('Auth register', (group) => {
                     ],
                 },
             }]
+        })
+    })
+
+    test('it should FAIL (422) when gender is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            gender: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "required",
+                    "field": "gender",
+                    "message": "required validation failed"
+                },
+            ]
         })
     })
 
@@ -266,6 +415,16 @@ test.group('Auth register', (group) => {
         })
     })
 
+    test('it should SUCCEED (201) when birthYear is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            birthYear: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(201)
+        response.assertBody({})
+    })
+
     test('it should FAIL (422) when state did not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
@@ -301,7 +460,17 @@ test.group('Auth register', (group) => {
         })
     })
 
-    test('it should FAIL (422) when zipCode did not respect regex format', async ({ client }) => {
+    test('it should SUCCEED (201) when state is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            state: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(201)
+        response.assertBody({})
+    })
+
+    test('it should FAIL (422) when zipCode do not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             zipCode: '2C678'
@@ -317,6 +486,28 @@ test.group('Auth register', (group) => {
         })
     })
 
+    test('it should SUCCEED (201) when zipCode is missing', async ({ client }) => {
+        const response = await client.post(ENDPOINT).json({
+            ...registerBody,
+            zipCode: undefined
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(201)
+        response.assertBody({})
+    })
+
+    test('it should FAIL (400) when email sending fails', async ({ client, assert }) => {
+        const email = "bot@test.com"
+        const response = await client.post('/api/auth/register').json({
+            ...registerBody,
+            email
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(400)
+        const user = await User.findBy('email', email)
+        assert.notExists(user)
+    })
+
     test(`it should register ${validEmail} like an unverified account`, async ({ client, assert }) => {
         const response = await client.post('/api/auth/register').json(registerBody)
         response.assertAgainstApiSpec()
@@ -325,45 +516,4 @@ test.group('Auth register', (group) => {
         const user = await User.findByOrFail('email', validEmail)
         assert.isNull(user.verifiedAt)
     })
-
-    test('it should FAIL (422) when email is not unique', async ({ client }) => {
-        const response = await client.post(ENDPOINT).json({
-            ...registerBody,
-            email: 'bot@example.com'
-        })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "unique",
-                    "field": "email",
-                    "message": "unique validation failure"
-                },
-            ]
-        })
-    })
-
-    test('it should return 400 status code error when email sending fails', async ({ client }) => {
-        const email = "bot@test.com"
-        const response = await client.post('/api/auth/register').json({
-            ...registerBody,
-            email
-        })
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-    })
-
-    test('it should not register user when email sending fails', async ({ client, assert }) => {
-        const email = "bot@test.com"
-        await client.post(ENDPOINT).json({
-            ...registerBody,
-            email
-        })
-
-        const user = await User.findBy('email', email)
-        assert.notExists(user)
-    })
-
-
 })

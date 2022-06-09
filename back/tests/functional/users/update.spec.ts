@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
-import { bot } from 'Database/seeders/UserSeeder'
+import { bot } from 'Database/seeders/01-UserSeeder'
 import { DateTime } from 'luxon'
 const ENDPOINT = 'api/users'
 
@@ -23,6 +23,22 @@ test.group('Users update', (group) => {
             "errors": [{
                 "message": "E_INVALID_ALTERNATE_EMAIL: alternameEmail cannot be identical of email."
             }]
+        })
+    })
+
+    test('it should FAIL (422) when id is invalid', async ({ client }) => {
+        const user = await User.findByOrFail('email', bot.email)
+        const response = await client.put(`${ENDPOINT}/anInvalidUuid`).json({}).loginAs(user)
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "uuid",
+                    "field": "params.id",
+                    "message": "uuid validation failed",
+                },
+            ],
         })
     })
 

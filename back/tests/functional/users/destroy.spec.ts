@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
-import { bot } from 'Database/seeders/UserSeeder'
+import { bot } from 'Database/seeders/01-UserSeeder'
 const ENDPOINT = 'api/users'
 
 
@@ -17,6 +17,22 @@ test.group('Users destroy', (group) => {
         response.assertStatus(401)
     })
 
+    test('it should FAIL (422) when id is invalid', async ({ client }) => {
+        const user = await User.findByOrFail('email', bot.email)
+        const response = await client.put(`${ENDPOINT}/anInvalidUuid`).json({}).loginAs(user)
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "uuid",
+                    "field": "params.id",
+                    "message": "uuid validation failed",
+                },
+            ],
+        })
+    })
+
     test('it should FAIL (401) when user is not authenticated', async ({ client }) => {
         const response = await client.delete(`${ENDPOINT}/123e4567-e89b-12d3-a456-426614174000`)
         response.assertAgainstApiSpec()
@@ -30,11 +46,11 @@ test.group('Users destroy', (group) => {
         })
     })
 
-    test('it should do nothing when user is not found', async ({ client }) => {
+    test('it should FAIL (404) when user is not found', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
-        const response = await client.delete(`${ENDPOINT}/123e4567-e89b-12d3-a456-426614174000`).loginAs(user)
+        const response = await client.delete(`${ENDPOINT}/373fa2b6-8a06-4538-83cc-9f56cf212782`).loginAs(user)
         response.assertAgainstApiSpec()
-        response.assertStatus(204)
+        response.assertStatus(404)
         response.assertBody({})
     })
 

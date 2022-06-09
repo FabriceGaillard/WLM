@@ -8,13 +8,14 @@ import RegisterValidator from 'App/Validators/Auth/RegisterValidator'
 import Route from '@ioc:Adonis/Core/Route'
 import { DateTime } from 'luxon'
 import InvalidSignedUrlException from 'App/Exceptions/Auth/InvalidSignedUrlException'
-import EmailValidator from 'App/Validators/Auth/EmailValidator'
+import ResetPasswordDemandValidator from 'App/Validators/Auth/ResetPasswordDemandValidator'
 import ResetPasswordDemand from 'App/Mailers/ResetPasswordDemand'
 import ResetPasswordValidator from 'App/Validators/Auth/ResetPasswordValidator'
 import IdenticalPasswordException from 'App/Exceptions/Auth/IdenticalPasswordException'
 import ConfirmAccount from 'App/Mailers/ConfirmAccount'
 import ConfirmResetPassword from 'App/Mailers/ConfirmResetPassword'
 import InvalidAccountException from 'App/Exceptions/Auth/InvalidAccountException'
+import VerifyEmailAuthValidator from 'App/Validators/Auth/VerifyEmailAuthValidator'
 
 export default class AuthController {
     public async login({ auth, request }: HttpContextContract) {
@@ -55,11 +56,12 @@ export default class AuthController {
     }
 
     public async verify({ request, response }: HttpContextContract) {
+        const payload = await request.validate(VerifyEmailAuthValidator)
         if (!request.hasValidSignature()) {
             throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
         }
 
-        const user = await User.findBy('email', request.param('email'))
+        const user = await User.findBy('email', payload.params.email)
         if (!user) throw new InvalidCredentialException('Invalid credentials.')
 
         if (user.verifiedAt === null) {
@@ -72,7 +74,7 @@ export default class AuthController {
     }
 
     public async resetPasswordDemand({ logger, request, response }: HttpContextContract) {
-        const payload = await request.validate(EmailValidator)
+        const payload = await request.validate(ResetPasswordDemandValidator)
         const signedUrl = Route.makeSignedUrl('resetPassword', {
             email: payload.email,
             expiresIn: '30mins'
@@ -91,12 +93,13 @@ export default class AuthController {
     }
 
     public async resetPassword({ request, response, logger }: HttpContextContract) {
+        const payload = await request.validate(ResetPasswordValidator)
+
         if (!request.hasValidSignature()) {
             throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
         }
-        const payload = await request.validate(ResetPasswordValidator)
 
-        const user = await User.findBy('email', request.param('email'))
+        const user = await User.findBy('email', payload.params.email)
         if (!user) {
             throw new InvalidCredentialException('Invalid credentials.')
         }

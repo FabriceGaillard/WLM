@@ -24,6 +24,9 @@ export default class ResetPasswordValidator {
      *    ```
      */
     public schema = schema.create({
+        params: schema.object().members({
+            email: schema.string({}, [rules.email()])
+        }),
         password: schema.string({}, [
             rules.maxLength(180),
             rules.confirmed('passwordConfirmation'),

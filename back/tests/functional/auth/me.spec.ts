@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
-import { bot } from 'Database/seeders/UserSeeder'
+import { bot } from 'Database/seeders/01-UserSeeder'
 
 const ENDPOINT = 'api/auth/me'
 

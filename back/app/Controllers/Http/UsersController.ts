@@ -3,29 +3,14 @@ import User from 'App/Models/User'
 import UpdateUserValidator from 'App/Validators/User/UpdateUserValidator'
 import Drive from '@ioc:Adonis/Core/Drive'
 import InvalidAlternateEmailException from 'App/Exceptions/User/InvalidAlternateEmailException'
+import DestroyUserValidator from 'App/Validators/User/DestroyUserValidator'
 
 export const AVATAR_UPLOAD_DIR = 'avatar'
 export default class UsersController {
 
-
-    /* Cette fonctionnalité n'est peut-être plus utile puisqu'il est maintenant possible
-    d'avoir les informations des contacts d'un utilisateur
-    
-    public async index() {
-        return await User.all()
-    }
-    */
-
-    /* Cette fonctionnalité n'est peut-être plus utile puisqu'il est maintenant possible
-    d'avoir les informations des contacts d'un utilisateur
-
-    public async show({ request }: HttpContextContract) {
-        return await User.find(request.params().id)
-    } */
-
     public async update({ request, bouncer, response }: HttpContextContract) {
         const { avatar, alternateEmail, ...payload } = await request.validate(UpdateUserValidator)
-        const user = await User.find(request.params().id)
+        const user = await User.find(payload.params.id)
 
         if (!user) return response.noContent()
 
@@ -48,9 +33,10 @@ export default class UsersController {
     }
 
     public async destroy({ request, bouncer, response }: HttpContextContract) {
-        const user = await User.find(request.params().id)
+        const payload = await request.validate(DestroyUserValidator)
+        const user = await User.find(payload.params.id)
 
-        if (!user) return response.noContent()
+        if (!user) return response.notFound()
 
         await bouncer
             .with('UserPolicy')

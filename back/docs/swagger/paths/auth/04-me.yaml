@@ -11,8 +11,16 @@
             schema:
               $ref: '#/components/schemas/User'
       '401':
-        description: No content
+        description: Unauthorized
         content:
           application/json:
             schema:
               type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string

@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
-import { bot } from 'Database/seeders/UserSeeder'
+import { bot } from 'Database/seeders/01-UserSeeder'
 import Route from '@ioc:Adonis/Core/Route'
 
 const ENDPOINT = 'api/auth/reset-password'
@@ -24,6 +24,25 @@ test.group('Auth resetPassword', (group) => {
             "errors": [
                 {
                     "message": "E_INVALID_SIGNED_URL: Signature is missing or URL was tampered.",
+                },
+            ],
+        })
+    })
+
+    test('it should FAIL (422) when email is invalid', async ({ client }) => {
+        const signedUrl = Route.makeSignedUrl('resetPassword', { email: 'fabou291@@gmail.com' })
+        const response = await client.patch(signedUrl).json({
+            password: 'TESTtest1234.2',
+            passwordConfirmation: 'TESTtest1234.2',
+        })
+        response.assertAgainstApiSpec()
+        response.assertStatus(422)
+        response.assertBody({
+            "errors": [
+                {
+                    "rule": "email",
+                    "field": "params.email",
+                    "message": "email validation failed",
                 },
             ],
         })

@@ -79,6 +79,12 @@ paths:
                           example:
                             oneOf:
                               - Signature is missing or URL was tampered.
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   /auth/login:
     post:
       summary: Login a user
@@ -134,11 +140,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
         "401":
-          description: No content
+          description: Unauthorized
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
   /auth/reset-password-demand:
     post:
       summary: Demand to reset password
@@ -244,31 +258,27 @@ paths:
         - Contacts
       responses:
         "200":
-          description: Return all contacts of authenticated user.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-  "/contacts/{id}":
-    get:
-      summary: Show a contact of authenticated a contact (a user)
-      tags:
-        - Contacts
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: uuid of the contact (a user)
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
           description: OK
           content:
             application/json:
               schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contact"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
                 type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
         "404":
           description: Not Found
           content:
@@ -294,6 +304,88 @@ paths:
             application/json:
               schema:
                 type: object
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+  "/contacts/{id}":
+    get:
+      summary: Show a contact of authenticated a contact (a user)
+      tags:
+        - Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the contact (a user)
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
     delete:
       summary: Delete a contact
       tags:
@@ -308,11 +400,47 @@ paths:
             format: uuid
       responses:
         "204":
-          description: OK
+          description: No Content
           content:
             application/json:
               schema:
                 type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "403":
+          description: No content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   "/users/{id}":
     put:
       summary: Update a user
@@ -371,19 +499,27 @@ paths:
             format: uuid
       responses:
         "204":
-          description: OK
+          description: No Content
           content:
             application/json:
               schema:
                 type: object
         "401":
-          description: No content
+          description: Unauthorized
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
         "403":
-          description: No content
+          description: Forbidden
           content:
             application/json:
               schema:
@@ -392,6 +528,12 @@ paths:
                   message:
                     type: string
                     example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   schemas:
     Contact:
@@ -409,6 +551,14 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
           maxLength: 36
           readOnly: true
+        user:
+          nullable: true
+          type: object
+          $ref: "#/components/schemas/User"
+        contact:
+          nullable: true
+          type: object
+          $ref: "#/components/schemas/User"
         updatedAt:
           type: string
           format: date-time
