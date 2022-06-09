@@ -5,8 +5,30 @@
       - Contacts
     responses:
       '200':
-        description: Return all contacts of authenticated user.
+        description: OK
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              type: array
+              items:
+                $ref: '#/components/schemas/Contact'
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object

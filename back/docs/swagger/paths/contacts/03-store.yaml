@@ -1,4 +1,4 @@
-/contacts/{id}:
+/contacts:
   post:
     summary: Add a contact
     tags:
@@ -18,3 +18,29 @@
           application/json:
             schema:
               type: object
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'

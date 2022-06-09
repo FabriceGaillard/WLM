@@ -1,44 +1,58 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Contact from 'App/Models/Contact'
+import User from 'App/Models/User';
+import DestroyContactValidator from 'App/Validators/Contact/DestroyContactValidator';
+import ShowContactValidator from 'App/Validators/Contact/ShowContactValidator';
 import StoreContactValidator from 'App/Validators/Contact/StoreContactValidator'
 
 export default class ContactsController {
     public async index({ auth }: HttpContextContract) {
-        await auth.user!.load('contacts')
-        return auth.user!.contacts.map(contact => contact)
+        console.log('coucou')
+        await auth.user!.load('contacts', (q) => q.preload('contact'))
+        return auth.user!.contacts
     }
 
-    public async show({ auth, request }: HttpContextContract) {
-        const contact = await Contact.query()
-            .where('contactId', request.params().id)
-            .andWhere('userId', auth.user!.id)
-            .preload('contact')
-            .first()
+    public async show({ request, bouncer, response }: HttpContextContract) {
+        const payload = await request.validate(ShowContactValidator)
+        const contact = await Contact.find(payload.params.id)
+        if (!contact) return response.notFound()
 
-        return contact?.contact
+        await bouncer
+            .with('ContactPolicy')
+            .authorize('view', contact)
+
+        await contact.load('contact')
+        return contact
     }
 
-    public async store({ auth, request, response }: HttpContextContract) {
+    public async store({ request, response, auth }: HttpContextContract) {
         const payload = await request.validate(StoreContactValidator)
-
-        try {
-            await Contact.create({
-                userId: auth.user!.id,
-                contactId: payload.contactId
-            })
-        } catch (err) {
-            return
+        const contact = await User.find(payload.contactId)
+        if (!contact) {
+            return response.badRequest()
         }
+
+        await Contact.create({
+            userId: auth.user!.id,
+            contactId: contact.id
+        })
 
         return response.created()
     }
 
-    public async destroy({ auth, request }: HttpContextContract) {
-        await Contact.query()
-            .where('contactId', request.params().id)
-            .andWhere('userId', auth.user!.id)
-            .delete()
-        return
+    public async destroy({ bouncer, request, response }: HttpContextContract) {
+        const payload = await request.validate(DestroyContactValidator)
+        const contact = await Contact.find(payload.params.id)
+        if (!contact) {
+            return response.notFound()
+        }
+
+        await bouncer
+            .with('ContactPolicy')
+            .authorize('view', contact)
+
+        await contact.delete()
+        return response.noContent()
     }
 
 }
