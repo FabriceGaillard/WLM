@@ -4,6 +4,9 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 export default class StoreContactValidator {
     constructor(protected ctx: HttpContextContract) { }
     public schema = schema.create({
+        params: schema.object().members({
+            userId: schema.string({}, [rules.uuid()])
+        }),
         contactId: schema.string({}, [rules.uuid()])
     })
 

@@ -5,7 +5,8 @@ export default class ShowContactValidator {
     constructor(protected ctx: HttpContextContract) { }
     public schema = schema.create({
         params: schema.object().members({
-            id: schema.string({}, [rules.uuid()])
+            id: schema.string({}, [rules.uuid()]),
+            userId: schema.string({}, [rules.uuid()])
         })
     })
     public messages = {}

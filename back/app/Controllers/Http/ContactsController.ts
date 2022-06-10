@@ -2,12 +2,18 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Contact from 'App/Models/Contact'
 import User from 'App/Models/User';
 import DestroyContactValidator from 'App/Validators/Contact/DestroyContactValidator';
+import IndexContactValidator from 'App/Validators/Contact/IndexContactValidator';
 import ShowContactValidator from 'App/Validators/Contact/ShowContactValidator';
 import StoreContactValidator from 'App/Validators/Contact/StoreContactValidator'
 
 export default class ContactsController {
-    public async index({ auth }: HttpContextContract) {
-        console.log('coucou')
+    public async index({ auth, request, bouncer }: HttpContextContract) {
+        const payload = await request.validate(IndexContactValidator)
+
+        await bouncer
+            .with('ContactPolicy')
+            .authorize('viewList', payload.params.userId)
+
         await auth.user!.load('contacts', (q) => q.preload('contact'))
         return auth.user!.contacts
     }
@@ -15,7 +21,9 @@ export default class ContactsController {
     public async show({ request, bouncer, response }: HttpContextContract) {
         const payload = await request.validate(ShowContactValidator)
         const contact = await Contact.find(payload.params.id)
-        if (!contact) return response.notFound()
+        if (!contact) {
+            return response.notFound()
+        }
 
         await bouncer
             .with('ContactPolicy')
@@ -25,17 +33,27 @@ export default class ContactsController {
         return contact
     }
 
-    public async store({ request, response, auth }: HttpContextContract) {
+    public async store({ request, response, bouncer }: HttpContextContract) {
         const payload = await request.validate(StoreContactValidator)
+
+        await bouncer
+            .with('ContactPolicy')
+            .authorize('create', payload.params.userId)
+
         const contact = await User.find(payload.contactId)
         if (!contact) {
+            return response.notFound()
+        }
+
+        try {
+            await Contact.create({
+                userId: payload.params.userId,
+                contactId: contact.id
+            })
+        } catch (err) {
             return response.badRequest()
         }
 
-        await Contact.create({
-            userId: auth.user!.id,
-            contactId: contact.id
-        })
 
         return response.created()
     }
