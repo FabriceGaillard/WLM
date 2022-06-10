@@ -56,5 +56,5 @@ export const { actions } = Bouncer
 */
 export const { policies } = Bouncer.registerPolicies({
     UserPolicy: () => import('App/Policies/UserPolicy'),
-    ContactPolicy: () => import('App/Policies/ContactPolicy')
+    UserRelationshipPolicy: () => import('App/Policies/UserRelationshipPolicy')
 })

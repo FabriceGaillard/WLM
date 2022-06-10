@@ -1,13 +1,13 @@
-/users/{userId}/contacts/{id}:
+/users/{userId}/user-relationships/{id}:
   delete:
-    summary: Delete a contact
+    summary: Delete a UserRelationship
     tags:
-      - Contacts
+      - UserRelationships
     parameters:
       - name: id
         in: path
         required: true
-        description: uuid of the contact
+        description: uuid of the UserRelationship
         schema:
           type: string
           format: uuid

@@ -2,11 +2,11 @@ import { test } from '@japa/runner'
 import User from 'App/Models/User'
 import { bot, bot2 } from 'Database/seeders/01-UserSeeder'
 const ENDPOINT_PREFIX = 'api/users'
-const ENDPOINT_SUFIX = 'contacts'
+const ENDPOINT_SUFIX = 'user-relationships'
 
 
-test.group('Contacts destroy', () => {
-    test(`it should FAIL (401) when user si not authenticated`, async ({ client }) => {
+test.group('UserRelationships destroy', () => {
+    test(`it should FAIL (401) when user is not authenticated`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.delete(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}/123e4567-e89b-12d3-a456-426614174000`)
         response.assertAgainstApiSpec()
@@ -38,10 +38,10 @@ test.group('Contacts destroy', () => {
 
     test(`it should FAIL (403) when user is not the owner`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
-        await user.load('contacts')
-        const id = user.contacts[0].id
+        await user.load('userRelationships')
+        const relatedUserId = user.userRelationships[0].relatedUserId
         const user2 = await User.findByOrFail('email', bot2.email)
-        const response = await client.delete(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}/${id}`).loginAs(user2)
+        const response = await client.delete(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}/${relatedUserId}`).loginAs(user2)
         response.assertAgainstApiSpec()
         response.assertStatus(403)
         response.assertBody({
@@ -49,24 +49,24 @@ test.group('Contacts destroy', () => {
         })
     })
 
-    test(`it should FAIL (404) when contact is not found`, async ({ client }) => {
+    test(`it should FAIL (404) when UserRelationship is not found`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
-        await user.load('contacts')
+        await user.load('userRelationships')
         const response = await client.delete(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}/373fa2b6-8a06-4538-83cc-9f56cf212782`).loginAs(user)
         response.assertAgainstApiSpec()
         response.assertStatus(404)
         response.assertBody({})
     })
 
-    test(`it should create contact (204)`, async ({ client, assert }) => {
+    test(`it should create UserRelationship (204)`, async ({ client, assert }) => {
         const user = await User.findByOrFail('email', bot.email)
-        await user.load('contacts')
-        const id = user.contacts[0].id
-        const response = await client.delete(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}/${id}`).loginAs(user)
+        await user.load('userRelationships')
+        const relatedUserId = user.userRelationships[0].relatedUserId
+        const response = await client.delete(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}/${relatedUserId}`).loginAs(user)
         response.assertAgainstApiSpec()
         response.assertStatus(204)
 
-        await user.load('contacts')
-        assert.notEqual(user.contacts[0].id, id)
+        await user.load('userRelationships')
+        assert.notEqual(user.userRelationships[0].relatedUserId, relatedUserId)
     })
 })

@@ -251,11 +251,11 @@ paths:
             application/json:
               schema:
                 type: object
-  "/users/{userId}/contacts":
+  "/users/{userId}/user-relationships":
     get:
       summary: Return all contacts of authenticated user
       tags:
-        - Contacts
+        - UserRelationships
       responses:
         "200":
           description: OK
@@ -264,7 +264,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Contact"
+                  $ref: "#/components/schemas/UserRelationship"
         "401":
           description: Unauthorized
           content:
@@ -302,9 +302,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
     post:
-      summary: Add a contact
+      summary: Add a UserRelationship
       tags:
-        - Contacts
+        - UserRelationships
       parameters:
         - name: id
           in: path
@@ -362,16 +362,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
-  "/users/{userId}/contacts/{id}":
+  "/users/{userId}/user-relationships/{id}":
     get:
-      summary: Show a contact of authenticated a contact (a user)
+      summary: Show a UserRelationship of authenticated a UserRelationship (a user)
       tags:
-        - Contacts
+        - UserRelationships
       parameters:
         - name: id
           in: path
           required: true
-          description: uuid of the contact (a user)
+          description: uuid of the UserRelationship (a user)
           schema:
             type: string
             format: uuid
@@ -381,7 +381,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/UserRelationship"
         "401":
           description: Unauthorized
           content:
@@ -419,14 +419,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
     delete:
-      summary: Delete a contact
+      summary: Delete a UserRelationship
       tags:
-        - Contacts
+        - UserRelationships
       parameters:
         - name: id
           in: path
           required: true
-          description: uuid of the contact
+          description: uuid of the UserRelationship
           schema:
             type: string
             format: uuid
@@ -568,37 +568,6 @@ paths:
                 type: object
 components:
   schemas:
-    Contact:
-      type: object
-      properties:
-        userId:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-          maxLength: 36
-          readOnly: true
-        contactId:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-          maxLength: 36
-          readOnly: true
-        user:
-          nullable: true
-          type: object
-          $ref: "#/components/schemas/User"
-        contact:
-          nullable: true
-          type: object
-          $ref: "#/components/schemas/User"
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
     UnprocessableEntity:
       type: object
       properties:
@@ -711,6 +680,42 @@ components:
           type: string
           format: date-time
           readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+    UserRelationship:
+      type: object
+      properties:
+        relatingUserId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        relatedUserId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        relatingUser:
+          nullable: true
+          type: object
+          $ref: "#/components/schemas/User"
+        relatedUser:
+          nullable: true
+          type: object
+          $ref: "#/components/schemas/User"
+        mean:
+          enum:
+            - chat
+            - mail
+            - none
         updatedAt:
           type: string
           format: date-time

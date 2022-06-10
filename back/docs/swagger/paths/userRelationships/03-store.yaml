@@ -1,25 +1,19 @@
-/users/{userId}/contacts/{id}:
-  get:
-    summary: Show a contact of authenticated a contact (a user)
+/users/{userId}/user-relationships:
+  post:
+    summary: Add a UserRelationship
     tags:
-      - Contacts
+      - UserRelationships
     parameters:
       - name: id
         in: path
         required: true
-        description: uuid of the contact (a user)
+        description: uuid of the user
         schema:
           type: string
           format: uuid
     responses:
-      '200':
-        description: OK
-        content:
-          application/json:
-            schema:
-              type: object
-      '404':
-        description: Not Found
+      '201':
+        description: Created
         content:
           application/json:
             schema:
@@ -48,6 +42,18 @@
                 message:
                   type: string
                   example: 'E_AUTHORIZATION_FAILURE: Not authorized to perform this action'
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object
       '422':
         description: Unprocessable Entity
         content:

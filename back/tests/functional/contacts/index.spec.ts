@@ -2,10 +2,10 @@ import { test } from '@japa/runner'
 import User from 'App/Models/User'
 import { bot, bot2 } from 'Database/seeders/01-UserSeeder'
 const ENDPOINT_PREFIX = 'api/users'
-const ENDPOINT_SUFIX = 'contacts'
+const ENDPOINT_SUFIX = 'user-relationships'
 
 
-test.group('Contacts index', () => {
+test.group('UserRelationships index', () => {
     test(`it should FAIL (401) when user is not authenticated`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.get(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}`)
@@ -53,7 +53,7 @@ test.group('Contacts index', () => {
         response.assertAgainstApiSpec()
         response.assertStatus(200)
 
-        await user.load('contacts', (q) => q.preload('contact'))
-        response.assertBodyContains(user.contacts.map(contact => contact.serialize()))
+        await user.load('userRelationships', (q) => q.preload('relatedUser'))
+        response.assertBodyContains(user.userRelationships.map(userRelationship => userRelationship.serialize()))
     })
 })

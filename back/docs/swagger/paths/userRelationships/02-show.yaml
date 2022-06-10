@@ -1,17 +1,29 @@
-/users/{userId}/contacts:
+/users/{userId}/user-relationships/{id}:
   get:
-    summary: Return all contacts of authenticated user
+    summary: Show a UserRelationship of authenticated a UserRelationship (a user)
     tags:
-      - Contacts
+      - UserRelationships
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the UserRelationship (a user)
+        schema:
+          type: string
+          format: uuid
     responses:
       '200':
         description: OK
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Contact'
+              $ref: '#/components/schemas/UserRelationship'
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object
       '401':
         description: Unauthorized
         content:
@@ -26,12 +38,6 @@
                     properties:
                       message:
                         type: string
-      '404':
-        description: Not Found
-        content:
-          application/json:
-            schema:
-              type: object
       '403':
         description: Forbidden
         content:

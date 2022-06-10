@@ -1,28 +1,30 @@
 components:
   schemas:
-    Contact:
+    UserRelationship:
       type: object
       properties:
-        userId:
+        relatingUserId:
           type: string
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
           maxLength: 36
           readOnly: true
-        contactId:
+        relatedUserId:
           type: string
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
           maxLength: 36
           readOnly: true
-        user:
+        relatingUser:
           nullable: true
           type: object
           $ref: '#/components/schemas/User'
-        contact:
+        relatedUser:
           nullable: true
           type: object
           $ref: '#/components/schemas/User'
+        mean:
+          enum: ['chat', 'mail', 'none']
         updatedAt:
           type: string
           format: date-time

@@ -1,23 +1,17 @@
-/users/{userId}/contacts:
-  post:
-    summary: Add a contact
+/users/{userId}/user-relationships:
+  get:
+    summary: Return all contacts of authenticated user
     tags:
-      - Contacts
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: uuid of the user
-        schema:
-          type: string
-          format: uuid
+      - UserRelationships
     responses:
-      '201':
-        description: Created
+      '200':
+        description: OK
         content:
           application/json:
             schema:
-              type: object
+              type: array
+              items:
+                $ref: '#/components/schemas/UserRelationship'
       '401':
         description: Unauthorized
         content:
@@ -32,6 +26,12 @@
                     properties:
                       message:
                         type: string
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object
       '403':
         description: Forbidden
         content:
@@ -42,18 +42,6 @@
                 message:
                   type: string
                   example: 'E_AUTHORIZATION_FAILURE: Not authorized to perform this action'
-      '400':
-        description: Bad Request
-        content:
-          application/json:
-            schema:
-              type: object
-      '404':
-        description: Not Found
-        content:
-          application/json:
-            schema:
-              type: object
       '422':
         description: Unprocessable Entity
         content:

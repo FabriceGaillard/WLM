@@ -2,12 +2,12 @@ import { test } from '@japa/runner'
 import User from 'App/Models/User'
 import { bot, bot2 } from 'Database/seeders/01-UserSeeder'
 const ENDPOINT_PREFIX = 'api/users'
-const ENDPOINT_SUFIX = 'contacts'
+const ENDPOINT_SUFIX = 'user-relationships'
 
-test.group('Contacts store', () => {
-    test(`it should FAIL (401) when user si not authenticated`, async ({ client }) => {
+test.group('UserRelationships store', () => {
+    test(`it should FAIL (401) when user is not authenticated`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
-        await user.load('contacts')
+        await user.load('userRelationships')
         const response = await client.post(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}`)
         response.assertAgainstApiSpec()
         response.assertStatus(401)
@@ -22,8 +22,8 @@ test.group('Contacts store', () => {
 
     test(`it should FAIL (403) when user is not the owner`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
-        await user.load('contacts')
-        const contactId = user.contacts[0].contactId
+        await user.load('userRelationships')
+        const contactId = user.userRelationships[0].relatedUserId
         const user2 = await User.findByOrFail('email', bot2.email)
         const response = await client.post(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}`).loginAs(user2).json({
             contactId: contactId
@@ -37,8 +37,8 @@ test.group('Contacts store', () => {
 
     test(`it should FAIL (400) when row exist`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
-        await user.load('contacts')
-        const contactId = user.contacts[0].contactId
+        await user.load('userRelationships')
+        const contactId = user.userRelationships[0].relatedUserId
         const response = await client.post(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}`).loginAs(user).json({
             contactId: contactId
         })
@@ -81,7 +81,7 @@ test.group('Contacts store', () => {
         })
     })
 
-    test(`it should FAIL (404) when contact is not found`, async ({ client }) => {
+    test(`it should FAIL (404) when UserRelationship is not found`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.post(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}`).loginAs(user).json({
             contactId: '4c02e053-d592-47db-8023-ac590acd8000'
@@ -110,7 +110,7 @@ test.group('Contacts store', () => {
         )
     })
 
-    test(`it should create contact(201)`, async ({ client, assert }) => {
+    test(`it should create UserRelationship(201)`, async ({ client, assert }) => {
         const botA = await User.findByOrFail('email', bot.email)
         const botB = await User.findByOrFail('email', bot2.email)
         const response = await client.post(`${ENDPOINT_PREFIX}/${botB.id}/${ENDPOINT_SUFIX}`).loginAs(botB).json({
@@ -119,10 +119,9 @@ test.group('Contacts store', () => {
         response.assertAgainstApiSpec()
         response.assertStatus(201)
 
-        await botB.load('contacts')
-        console.log(botB.contacts.map(c => c.contact))
-        assert.exists(botB.contacts[0])
-        assert.equal(botB.contacts[0].contactId, botA.id)
+        await botB.load('userRelationships')
+        assert.exists(botB.userRelationships[0])
+        assert.equal(botB.userRelationships[0].relatedUserId, botA.id)
 
     })
 })

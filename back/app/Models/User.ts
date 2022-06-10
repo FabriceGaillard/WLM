@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, beforeCreate, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import { v4 as uuidv4 } from 'uuid'
-import Contact from './Contact'
+import UserRelationship from './UserRelationship'
 
 export enum gender {
     MALE = 'male',
@@ -80,8 +80,8 @@ export default class User extends BaseModel {
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
 
-    @hasMany(() => Contact)
-    public contacts: HasMany<typeof Contact>
+    @hasMany(() => UserRelationship, { foreignKey: 'relatingUserId' })
+    public userRelationships: HasMany<typeof UserRelationship>
 
     @beforeSave()
     public static async hashPassword(user: User) {
