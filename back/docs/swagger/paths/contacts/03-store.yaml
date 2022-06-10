@@ -1,4 +1,4 @@
-/contacts:
+/users/{userId}/contacts:
   post:
     summary: Add a contact
     tags:
@@ -32,8 +32,24 @@
                     properties:
                       message:
                         type: string
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: 'E_AUTHORIZATION_FAILURE: Not authorized to perform this action'
       '400':
         description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+      '404':
+        description: Not Found
         content:
           application/json:
             schema:

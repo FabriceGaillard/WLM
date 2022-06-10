@@ -251,7 +251,7 @@ paths:
             application/json:
               schema:
                 type: object
-  /contacts:
+  "/users/{userId}/contacts":
     get:
       summary: Return all contacts of authenticated user
       tags:
@@ -279,12 +279,28 @@ paths:
                       properties:
                         message:
                           type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
         "404":
           description: Not Found
           content:
             application/json:
               schema:
                 type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
     post:
       summary: Add a contact
       tags:
@@ -324,13 +340,29 @@ paths:
                       properties:
                         message:
                           type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
         "422":
           description: Unprocessable Entity
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
-  "/contacts/{id}":
+  "/users/{userId}/contacts/{id}":
     get:
       summary: Show a contact of authenticated a contact (a user)
       tags:

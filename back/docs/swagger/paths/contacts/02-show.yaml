@@ -1,4 +1,4 @@
-/contacts/{id}:
+/users/{userId}/contacts/{id}:
   get:
     summary: Show a contact of authenticated a contact (a user)
     tags:

@@ -1,4 +1,4 @@
-/contacts/{id}:
+/users/{userId}/contacts/{id}:
   delete:
     summary: Delete a contact
     tags:
