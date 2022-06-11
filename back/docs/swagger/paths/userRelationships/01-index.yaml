@@ -1,6 +1,6 @@
 /users/{userId}/user-relationships:
   get:
-    summary: Return all contacts of authenticated user
+    summary: Return all relationships of authenticated user
     tags:
       - UserRelationships
     responses:

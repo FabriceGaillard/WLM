@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
-import { bot } from 'Database/seeders/01-UserSeeder'
+import { bot, bot2 } from 'Database/seeders/01-UserSeeder'
 const ENDPOINT = 'api/users'
 
 
@@ -11,10 +11,21 @@ test.group('Users destroy', (group) => {
         return () => Database.rollbackGlobalTransaction()
     })
 
-    test('it should FAIL (401) when uuid is invalid', async ({ client }) => {
+    test('it should FAIL (401) when user id is invalid', async ({ client }) => {
         const response = await client.delete(`${ENDPOINT}/anInvalidUuid`)
         response.assertAgainstApiSpec()
         response.assertStatus(401)
+    })
+
+    test(`it should FAIL (403) when user is not the owner`, async ({ client }) => {
+        const user = await User.findByOrFail('email', bot.email)
+        const user2 = await User.findByOrFail('email', bot2.email)
+        const response = await client.delete(`${ENDPOINT}/${user.id}`).loginAs(user2)
+        response.assertAgainstApiSpec()
+        response.assertStatus(403)
+        response.assertBody({
+            "message": "E_AUTHORIZATION_FAILURE: Not authorized to perform this action",
+        })
     })
 
     test('it should FAIL (422) when id is invalid', async ({ client }) => {

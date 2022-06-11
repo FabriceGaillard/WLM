@@ -3,5 +3,5 @@ tags:
     description: Everything about Authentication
   - name: Users
     description: Everything about Users
-  - name: Contacts
-    description: Everything about Contacts
+  - name: UserRelationships
+    description: Everything about UserRelationships

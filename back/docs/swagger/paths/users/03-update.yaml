@@ -42,3 +42,27 @@
           application/json:
             schema:
               type: object
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: 'E_AUTHORIZATION_FAILURE: Not authorized to perform this action'
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string

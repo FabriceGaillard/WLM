@@ -47,7 +47,7 @@ test.group('UserRelationships index', () => {
         })
     })
 
-    test(`it should return list of contacts`, async ({ client }) => {
+    test(`it should return list of relationships`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.get(`${ENDPOINT_PREFIX}/${user.id}/${ENDPOINT_SUFIX}`).loginAs(user)
         response.assertAgainstApiSpec()

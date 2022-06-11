@@ -1,7 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import User from 'App/Models/User'
-import { bot } from 'Database/seeders/01-UserSeeder'
+import { bot, bot2 } from 'Database/seeders/01-UserSeeder'
 import { DateTime } from 'luxon'
 const ENDPOINT = 'api/users'
 
@@ -10,6 +10,31 @@ test.group('Users update', (group) => {
     group.each.setup(async () => {
         await Database.beginGlobalTransaction()
         return () => Database.rollbackGlobalTransaction()
+    })
+
+    test(`it should FAIL (401) when user is not authenticated`, async ({ client }) => {
+        const user = await User.findByOrFail('email', bot.email)
+        const response = await client.put(`${ENDPOINT}/${user.id}`)
+        response.assertAgainstApiSpec()
+        response.assertStatus(401)
+        response.assertBody({
+            "errors": [
+                {
+                    "message": "E_UNAUTHORIZED_ACCESS: Unauthorized access",
+                },
+            ],
+        })
+    })
+
+    test(`it should FAIL (403) when user is not the owner`, async ({ client }) => {
+        const user = await User.findByOrFail('email', bot.email)
+        const user2 = await User.findByOrFail('email', bot2.email)
+        const response = await client.put(`${ENDPOINT}/${user.id}`).loginAs(user2)
+        response.assertAgainstApiSpec()
+        response.assertStatus(403)
+        response.assertBody({
+            "message": "E_AUTHORIZATION_FAILURE: Not authorized to perform this action",
+        })
     })
 
     test('it should FAIL (400) when alternateEmail is identical of email', async ({ client }) => {

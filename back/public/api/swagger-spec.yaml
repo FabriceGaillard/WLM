@@ -253,7 +253,7 @@ paths:
                 type: object
   "/users/{userId}/user-relationships":
     get:
-      summary: Return all contacts of authenticated user
+      summary: Return all relationships of authenticated user
       tags:
         - UserRelationships
       responses:
@@ -511,6 +511,30 @@ paths:
             application/json:
               schema:
                 type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
         "422":
           description: Unprocessable Entity
           content:
@@ -566,6 +590,74 @@ paths:
             application/json:
               schema:
                 type: object
+  "/users/{id}/update-password":
+    patch:
+      summary: Update a user
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the user
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updatePasswordUserValidator"
+      responses:
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
 components:
   schemas:
     UnprocessableEntity:
@@ -841,6 +933,33 @@ components:
       required:
         - password
         - passwordConfirmation
+    updatePasswordUserValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          description: newPassword mus be different of oldPassword
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: testTest1234.
+        passwordConfirmation:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: testTest1234.
+          description: Must be equal to password field
     updateUserValidator:
       type: object
       properties:
@@ -932,5 +1051,5 @@ tags:
     description: Everything about Authentication
   - name: Users
     description: Everything about Users
-  - name: Contacts
-    description: Everything about Contacts
+  - name: UserRelationships
+    description: Everything about UserRelationships
