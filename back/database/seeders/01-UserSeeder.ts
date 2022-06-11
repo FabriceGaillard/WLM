@@ -9,7 +9,7 @@ const bots = [{
     firstName: 'example',
     lastName: 'bot',
     gender: gender.UNBINARY,
-    alternateEmail: 'bot@example.com',
+    alternateEmail: 'bot@examplee.com',
     verifiedAt: DateTime.now(),
     personalMessage: "Hello i'm a bot"
 }, {
@@ -19,7 +19,7 @@ const bots = [{
     firstName: 'example',
     lastName: 'bot',
     gender: gender.UNBINARY,
-    alternateEmail: 'bot2@example.com',
+    alternateEmail: 'bot2@examplee.com',
     verifiedAt: DateTime.now(),
     personalMessage: "Hello i'm a bot2"
 }, {
@@ -29,7 +29,7 @@ const bots = [{
     firstName: 'example',
     lastName: 'bot',
     gender: gender.UNBINARY,
-    alternateEmail: 'bot2@example.com',
+    alternateEmail: 'bot3@examplee.com',
     verifiedAt: DateTime.now(),
     personalMessage: "Hello i'm a bot3"
 }]
