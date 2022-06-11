@@ -1,0 +1,22 @@
+components:
+  schemas:
+    updateEmailUserValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+        oldEmail:
+          type: string
+          format: email
+          example: exemple@domain.com
+          maxLength: 74
+        newEmail:
+          type: string
+          format: email
+          example: exemple@domain.com
+          maxLength: 74
+          description: This field must be unique, an error will be thrown if it is not.
