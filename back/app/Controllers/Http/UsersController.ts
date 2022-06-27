@@ -8,7 +8,7 @@ import InvalidAccountException from 'App/Exceptions/Auth/InvalidAccountException
 import UpdatePasswordUserValidator from 'App/Validators/User/UpdatePasswordUserValidator'
 import Hash from '@ioc:Adonis/Core/Hash'
 import InvalidCredentialException from 'App/Exceptions/Auth/InvalidCredentialException'
-import UpdateEmailUserValidator from 'App/Validators/User/UpdateEmailUserValidator copy'
+import UpdateEmailUserValidator from 'App/Validators/User/UpdateEmailUserValidator'
 import VerifyEmail from 'App/Mailers/VerifyEmail'
 import CautionChangementEmail from 'App/Mailers/CautionChangementEmail'
 import Route from '@ioc:Adonis/Core/Route'
@@ -25,7 +25,7 @@ export default class UsersController {
         if (!user) return response.noContent()
 
         if (alternateEmail && user.email === alternateEmail) {
-            throw new InvalidAlternateEmailException('E_INVALID_ALTERNATE_EMAIL: alternameEmail cannot be identical of email.')
+            throw new InvalidAlternateEmailException()
         }
 
         await bouncer
@@ -52,9 +52,9 @@ export default class UsersController {
             .with('UserPolicy')
             .authorize('update', user)
 
-        if (!user?.verifiedAt) throw new InvalidAccountException('Invalid account.')
+        if (!user?.verifiedAt) throw new InvalidAccountException()
         if (!(await Hash.verify(user.password, payload.oldPassword))) {
-            throw new InvalidCredentialException('Invalid credentials.')
+            throw new InvalidCredentialException()
         }
 
         await user.merge({ password: payload.newPassword }).save()
@@ -70,10 +70,10 @@ export default class UsersController {
             .with('UserPolicy')
             .authorize('update', user)
 
-        if (!user.verifiedAt) throw new InvalidAccountException('Invalid account.')
+        if (!user.verifiedAt) throw new InvalidAccountException()
         if (user.email !== payload.oldEmail) return response.badRequest()
         if (user.alternateEmail === payload.newEmail) {
-            throw new InvalidAlternateEmailException('E_INVALID_ALTERNATE_EMAIL: alternameEmail cannot be identical of email.')
+            throw new InvalidAlternateEmailException()
         }
 
         try {
@@ -87,7 +87,7 @@ export default class UsersController {
             await mailer.send()
         } catch (error) {
             logger.warn(error)
-            throw new EmailSendingFail('E_EMAIL_SENDING_FAIL: Email sending fail.')
+            throw new EmailSendingFail()
         }
 
         await user.merge({ email: payload.newEmail }).save()

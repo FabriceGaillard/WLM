@@ -22,8 +22,8 @@ export default class AuthController {
         const payload = await request.validate(LoginValidator)
 
         const user = await User.findBy('email', payload.email)
-        if (!user) throw new InvalidCredentialException('Invalid credentials.')
-        if (!user?.verifiedAt) throw new InvalidAccountException('Invalid account.')
+        if (!user) throw new InvalidCredentialException()
+        if (!user?.verifiedAt) throw new InvalidAccountException()
 
         await auth.use('web').attempt(payload.email, payload.password, payload.remember)
 
@@ -58,11 +58,11 @@ export default class AuthController {
     public async verify({ request, response }: HttpContextContract) {
         const payload = await request.validate(VerifyEmailAuthValidator)
         if (!request.hasValidSignature()) {
-            throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
+            throw new InvalidSignedUrlException()
         }
 
         const user = await User.findBy('email', payload.params.email)
-        if (!user) throw new InvalidCredentialException('Invalid credentials.')
+        if (!user) throw new InvalidCredentialException()
 
         if (user.verifiedAt === null) {
             await user.merge({ verifiedAt: DateTime.now() }).save()
@@ -96,16 +96,16 @@ export default class AuthController {
         const payload = await request.validate(ResetPasswordValidator)
 
         if (!request.hasValidSignature()) {
-            throw new InvalidSignedUrlException('Signature is missing or URL was tampered.')
+            throw new InvalidSignedUrlException()
         }
 
         const user = await User.findBy('email', payload.params.email)
         if (!user) {
-            throw new InvalidCredentialException('Invalid credentials.')
+            throw new InvalidCredentialException()
         }
 
         if (await Hash.verify(user.password, payload.password)) {
-            throw new IdenticalPasswordException('Identical of previous passwords.')
+            throw new IdenticalPasswordException()
         }
 
         await user.merge({ password: payload.password }).save()

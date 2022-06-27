@@ -14,6 +14,11 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 |
 */
 export default class InvalidAccountException extends Exception {
+
+    constructor() {
+        super('E_INVALID_ACCOUNT: Invalid account.')
+    }
+
     public async handle(_: this, { response }: HttpContextContract) {
         response.badRequest({
             errors: [{
