@@ -1,11 +1,12 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import EmailSendingFail from 'App/Exceptions/Auth/EmailSendingFail'
 import User from 'App/Models/User'
 import { bot, bot2 } from 'Database/seeders/01-UserSeeder'
 const ENDPOINT = 'api/users'
 const ENDPOINT_SUFFIX = 'update-email'
 
-test.group('Users updatePassword', (group) => {
+test.group('Users updateEmail', (group) => {
 
     group.each.setup(async () => {
         await Database.beginGlobalTransaction()
@@ -51,14 +52,13 @@ test.group('Users updatePassword', (group) => {
             oldEmail: bot.email,
             newEmail: 'fabou291@gmai.com',
         })
+
         response.assertAgainstApiSpec()
         response.assertStatus(400)
         response.assertBody({
-            "errors": [
-                {
-                    "message": "E_EMAIL_SENDING_FAIL: Email sending fail.",
-                },
-            ],
+            errors: [{
+                message: new EmailSendingFail().message
+            }]
         })
     })
 
