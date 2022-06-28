@@ -22,7 +22,7 @@ export default class InvalidAccountException extends Exception {
     public async handle(_: this, { response }: HttpContextContract) {
         response.badRequest({
             errors: [{
-                message: 'E_INVALID_ACCOUNT: Invalid account.'
+                message: this.message
             }]
         })
     }
