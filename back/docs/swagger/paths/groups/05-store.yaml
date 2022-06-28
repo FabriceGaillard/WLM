@@ -1,6 +1,6 @@
 /groups:
   post:
-    summary: Store a user
+    summary: Store a group
     tags:
       - Groups
     requestBody:

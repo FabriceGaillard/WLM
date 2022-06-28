@@ -1,13 +1,13 @@
 /groups/{id}:
   put:
-    summary: Update a user
+    summary: Update a group
     tags:
       - Groups
     parameters:
       - name: id
         in: path
         required: true
-        description: uuid of the user
+        description: uuid of the group
         schema:
           type: string
           format: uuid
