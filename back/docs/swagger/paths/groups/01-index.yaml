@@ -1,0 +1,20 @@
+/groups:
+  get:
+    summary: Return all groups
+    tags:
+      - Groups
+    responses:
+      '200':
+        description: Return all groups.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Group'
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'

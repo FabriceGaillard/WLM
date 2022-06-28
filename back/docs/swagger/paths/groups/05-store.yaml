@@ -1,0 +1,48 @@
+/groups:
+  post:
+    summary: Store a user
+    tags:
+      - Groups
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/storeGroupValidator'
+    responses:
+      '201':
+        description: Created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      '204':
+        description: No Content
+        content:
+          application/json:
+            schema:
+              type: object
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'
+      '400':
+        description: No Content
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'

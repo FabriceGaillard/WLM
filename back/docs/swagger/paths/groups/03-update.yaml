@@ -1,0 +1,62 @@
+/groups/{id}:
+  put:
+    summary: Update a user
+    tags:
+      - Groups
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the user
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/updateGroupValidator'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      '204':
+        description: No Content
+        content:
+          application/json:
+            schema:
+              type: object
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'
+      '400':
+        description: No Content
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '404':
+        description: Not FOund
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'

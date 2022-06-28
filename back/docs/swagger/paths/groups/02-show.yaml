@@ -1,0 +1,44 @@
+/groups/{id}:
+  get:
+    summary: Show a user
+    tags:
+      - Groups
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the user
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '422':
+        description: UnprocessableEntity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'

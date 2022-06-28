@@ -1,0 +1,14 @@
+components:
+  schemas:
+    updateGroupValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+        name:
+          type: string
+          maxLength: 255

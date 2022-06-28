@@ -1,0 +1,12 @@
+components:
+  schemas:
+    ClientError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
