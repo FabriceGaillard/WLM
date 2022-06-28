@@ -47,7 +47,15 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-    origin: [`http://${Env.get('HOST')}`, 'http://127.0.0.1'],
+    origin: (origin) => {
+        const autorized = [`http://${Env.get('HOST')}`, 'http://127.0.0.1']
+        for (const value of autorized) {
+            if (origin.startsWith(value)) {
+                return true
+            }
+        }
+        return false
+    },
 
     /*
   |--------------------------------------------------------------------------
