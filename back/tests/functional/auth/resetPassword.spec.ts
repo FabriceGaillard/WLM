@@ -3,6 +3,8 @@ import { test } from '@japa/runner'
 import User from 'App/Models/User'
 import { bot } from 'Database/seeders/01-UserSeeder'
 import Route from '@ioc:Adonis/Core/Route'
+import InvalidSignedUrlException from 'App/Exceptions/Auth/InvalidSignedUrlException'
+import InvalidCredentialException from 'App/Exceptions/Auth/InvalidCredentialException'
 
 const ENDPOINT = 'api/auth/reset-password'
 
@@ -23,7 +25,7 @@ test.group('Auth resetPassword', (group) => {
         response.assertBody({
             "errors": [
                 {
-                    "message": "E_INVALID_SIGNED_URL: Signature is missing or URL was tampered.",
+                    "message": new InvalidSignedUrlException().message,
                 },
             ],
         })
@@ -134,7 +136,7 @@ test.group('Auth resetPassword', (group) => {
         response.assertBody({
             "errors": [
                 {
-                    "message": "E_INVALID_CREDENTIALS: Invalid credantials."
+                    "message": new InvalidCredentialException().message
                 },
             ],
         })

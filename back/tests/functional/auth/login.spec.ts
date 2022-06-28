@@ -1,5 +1,6 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import InvalidCredentialException from 'App/Exceptions/Auth/InvalidCredentialException'
 import User from 'App/Models/User'
 import { bot } from 'Database/seeders/01-UserSeeder'
 
@@ -97,7 +98,7 @@ test.group('Auth login', (group) => {
         response.assertBody({
             "errors": [
                 {
-                    "message": "E_INVALID_CREDENTIALS: Invalid credantials.",
+                    "message": new InvalidCredentialException().message,
                 },
             ],
         })
