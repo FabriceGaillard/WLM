@@ -251,6 +251,221 @@ paths:
             application/json:
               schema:
                 type: object
+  /groups:
+    get:
+      summary: Return all groups
+      tags:
+        - Groups
+      responses:
+        "200":
+          description: Return all groups.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Group"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+    post:
+      summary: Store a user
+      tags:
+        - Groups
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/storeGroupValidator"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+  "/groups/{id}":
+    get:
+      summary: Show a user
+      tags:
+        - Groups
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the user
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: UnprocessableEntity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+    put:
+      summary: Update a user
+      tags:
+        - Groups
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the user
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/updateGroupValidator"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "404":
+          description: Not FOund
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+    delete:
+      summary: Delete a user
+      tags:
+        - Groups
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the user
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "404":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "422":
+          description: UnprocessableEntity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   "/users/{userId}/user-relationships":
     get:
       summary: Return all relationships of authenticated user
@@ -364,7 +579,7 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntity"
   "/users/{userId}/user-relationships/{id}":
     get:
-      summary: Show a UserRelationship of authenticated a UserRelationship (a user)
+      summary: Show a UserRelationship
       tags:
         - UserRelationships
       parameters:
@@ -728,6 +943,16 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntity"
 components:
   schemas:
+    ClientError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
     UnprocessableEntity:
       type: object
       properties:
@@ -751,6 +976,32 @@ components:
               - rule
               - field
               - message
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        name:
+          type: string
+          example: aGroup
+        userId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
     User:
       type: object
       properties:
@@ -1001,6 +1252,26 @@ components:
       required:
         - password
         - passwordConfirmation
+    storeGroupValidator:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+      required:
+        - name
+    updateGroupValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+        name:
+          type: string
+          maxLength: 255
     updateEmailUserValidator:
       type: object
       properties:
