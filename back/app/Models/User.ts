@@ -3,6 +3,7 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, beforeCreate, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import { v4 as uuidv4 } from 'uuid'
 import UserRelationship from './UserRelationship'
+import Group from './Group'
 
 export enum gender {
     MALE = 'male',
@@ -82,6 +83,9 @@ export default class User extends BaseModel {
 
     @hasMany(() => UserRelationship, { foreignKey: 'relatingUserId' })
     public userRelationships: HasMany<typeof UserRelationship>
+
+    @hasMany(() => Group)
+    public groups: HasMany<typeof Group>
 
     @beforeSave()
     public static async hashPassword(user: User) {

@@ -2,6 +2,8 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
 import { v4 as uuidv4 } from 'uuid'
+import Group from 'App/Models/Group'
+
 
 export default class UserRelationship extends BaseModel {
     public static selfAssignPrimaryKey = true
@@ -16,6 +18,9 @@ export default class UserRelationship extends BaseModel {
     public relatedUserId: string
 
     @column()
+    public groupId?: string
+
+    @column()
     public isBlocked: boolean
 
     @column()
@@ -26,6 +31,9 @@ export default class UserRelationship extends BaseModel {
 
     @belongsTo(() => User, { localKey: 'id', foreignKey: 'relatedUserId' })
     public relatedUser: BelongsTo<typeof User>
+
+    @belongsTo(() => Group)
+    public group: BelongsTo<typeof Group>
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
