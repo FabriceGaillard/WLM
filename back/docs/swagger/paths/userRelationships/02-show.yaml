@@ -1,6 +1,6 @@
 /users/{userId}/user-relationships/{id}:
   get:
-    summary: Show a UserRelationship of authenticated a UserRelationship (a user)
+    summary: Show a UserRelationship
     tags:
       - UserRelationships
     parameters:
