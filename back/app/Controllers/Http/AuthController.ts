@@ -16,7 +16,7 @@ import ConfirmAccount from 'App/Mailers/ConfirmAccount'
 import ConfirmResetPassword from 'App/Mailers/ConfirmResetPassword'
 import InvalidAccountException from 'App/Exceptions/Auth/InvalidAccountException'
 import VerifyEmailAuthValidator from 'App/Validators/Auth/VerifyEmailAuthValidator'
-
+import Env from '@ioc:Adonis/Core/Env'
 export default class AuthController {
     public async login({ auth, request }: HttpContextContract) {
         const payload = await request.validate(LoginValidator)
@@ -75,14 +75,17 @@ export default class AuthController {
 
     public async resetPasswordDemand({ logger, request, response }: HttpContextContract) {
         const payload = await request.validate(ResetPasswordDemandValidator)
+
         const signedUrl = Route.makeSignedUrl('resetPassword', {
             email: payload.email,
             expiresIn: '30mins'
         })
+        const signedUrlMasked = Buffer.from(signedUrl, 'utf8').toString('base64');
+        const url = `http://${Env.get('FRONT_HOST')}:${Env.get('FRONT_PORT')}/reset-password?token=${signedUrlMasked}`
 
         try {
             await User.findByOrFail('email', payload.email)
-            const mailer = new ResetPasswordDemand(payload.email, signedUrl)
+            const mailer = new ResetPasswordDemand(payload.email, url)
             await mailer.send()
         } catch (error) {
             logger.warn(error)
