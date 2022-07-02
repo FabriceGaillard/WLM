@@ -2,6 +2,8 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import InvalidCredentialException from 'App/Exceptions/Auth/InvalidCredentialException'
 import InvalidSignedUrlException from 'App/Exceptions/Auth/InvalidSignedUrlException'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
+import RulesHelper from 'App/Helpers/Tests/RulesHelper'
 import User from 'App/Models/User'
 import { bot } from 'Database/seeders/01-UserSeeder'
 
@@ -17,50 +19,23 @@ test.group('Auth confirmAccount', (group) => {
 
     test('it should FAIL (422) when email is invalid', async ({ client }) => {
         const response = await client.get(`${ENDPOINT}/fabou291@@gmail.com`)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "email",
-                    "field": "params.email",
-                    "message": "email validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.email('params.email')])
     })
 
     test('it should FAIL (400) when user is not found', async ({ client }) => {
         const response = await client.get(`${ENDPOINT}/${params}`)
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({
-            errors: [
-                {
-                    message: new InvalidCredentialException().message
-                },
-            ],
-        })
+        ResponseAssertHelper.error400(response, { errors: [{ message: new InvalidCredentialException().message }] })
     })
 
     test('it should FAIL (400) when signedUrl is incorrect', async ({ client }) => {
         const response = await client.get(`${ENDPOINT}/bot@example.com?signedUrl=anInvalidSignature`)
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({
-            "errors": [
-                {
-                    "message": new InvalidSignedUrlException().message
-                },
-            ],
-        })
+        ResponseAssertHelper.error400(response, { errors: [{ message: new InvalidSignedUrlException().message }] })
     })
 
-    test('it should succeed (200)', async ({ client }) => {
+    test('it should succeed (204)', async ({ client }) => {
         await User.create({ ...bot, email: 'fabou291@gmail.com' })
         const response = await client.get(`${ENDPOINT}/${params}`)
-        response.assertAgainstApiSpec()
-        response.assertStatus(204)
+        ResponseAssertHelper.noContent(response)
     })
 
 })

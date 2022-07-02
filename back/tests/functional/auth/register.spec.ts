@@ -1,5 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
+import RulesHelper from 'App/Helpers/Tests/RulesHelper'
 import User from 'App/Models/User'
 import { DateTime } from 'luxon'
 const ENDPOINT = 'api/auth/register'
@@ -31,17 +33,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             email: invalidEmail
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "email",
-                    "field": "email",
-                    "message": "email validation failed"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.email('email')])
     })
 
     test('it should FAIL (422) when email is missing', async ({ client }) => {
@@ -49,22 +41,10 @@ test.group('Auth register', (group) => {
             ...registerBody,
             email: undefined
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "email",
-                    "message": "required validation failed"
-                },
-                {
-                    "rule": "different",
-                    "field": "alternateEmail",
-                    "message": "different validation failed",
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [
+            RulesHelper.required('email'),
+            RulesHelper.different('alternateEmail'),
+        ])
     })
 
     test('it should FAIL (422) when email is not unique', async ({ client }) => {
@@ -72,17 +52,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             email: 'bot@example.com'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "unique",
-                    "field": "email",
-                    "message": "unique validation failure"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.unique('email', 'unique validation failure')])
     })
 
     test('it should FAIL (422) when alternateEmail is invalid', async ({ client }) => {
@@ -90,17 +60,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             alternateEmail: 'anInvalidEmail@@gmail.com.fr'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "email",
-                    "field": "alternateEmail",
-                    "message": "email validation failed"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.email('alternateEmail')])
     })
 
     test('it should FAIL (422) when alternateEmail is missing', async ({ client }) => {
@@ -108,17 +68,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             alternateEmail: undefined
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "alternateEmail",
-                    "message": "required validation failed"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('alternateEmail')])
     })
 
     test('it should FAIL (422) when alternatelEmail is identic of email', async ({ client }) => {
@@ -127,18 +77,7 @@ test.group('Auth register', (group) => {
             email: validEmail,
             alternateEmail: validEmail,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "different",
-                    "field": "alternateEmail",
-                    "message": "different validation failed"
-                },
-            ]
-        })
-
+        ResponseAssertHelper.error422(response, [RulesHelper.different('alternateEmail')])
     })
 
     test('it should FAIL (422) when password is invalid', async ({ client }) => {
@@ -147,37 +86,16 @@ test.group('Auth register', (group) => {
             password: 'anInvalidPassword',
             passwordConfirmation: 'anInvalidPassword',
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "regex",
-                    "field": "password",
-                    "message": "password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne alphabetic character\nOne special character"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('password', "password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne alphabetic character\nOne special character")])
     })
 
     test('it should FAIL (422) when password is over 180 characters', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
-            password: 'anInvalidPasswordOver180Character+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++',
-            passwordConfirmation: 'anInvalidPasswordOver180Character+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+            password: ('aA1+').repeat(100),
+            passwordConfirmation: ('aA1+').repeat(100),
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "maxLength",
-                "field": "password",
-                "message": "maxLength validation failed",
-                "args": {
-                    "maxLength": 180
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('password', 180)])
     })
 
     test('it should FAIL (422) when password is missing', async ({ client }) => {
@@ -185,17 +103,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             password: undefined
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "password",
-                    "message": "required validation failed"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('password')])
     })
 
     test('it should FAIL (422) when passwordConfirmation is different of password', async ({ client }) => {
@@ -203,15 +111,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             passwordConfirmation: 'anInvalidPassword'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "confirmed",
-                "field": "passwordConfirmation",
-                "message": "confirmed validation failed"
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
     test('it should FAIL (422) when passwordConfirmation is missing', async ({ client }) => {
@@ -219,17 +119,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             passwordConfirmation: undefined
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "confirmed",
-                    "field": "passwordConfirmation",
-                    "message": "confirmed validation failed",
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
     test('it should FAIL (422) when firstName do not respect regex format', async ({ client }) => {
@@ -237,34 +127,15 @@ test.group('Auth register', (group) => {
             ...registerBody,
             firstName: '02Fabrice'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "firstName",
-                "message": "regex validation failed"
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('firstName')])
     })
 
     test('it should FAIL (422) when firstName is over 255 character', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
-            firstName: 'anInvalidFirstNameOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            firstName: 'a'.repeat(256)
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "maxLength",
-                "field": "firstName",
-                "message": "maxLength validation failed",
-                "args": {
-                    "maxLength": 255
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('firstName', 255)])
     })
 
     test('it should FAIL (422) when firstName is missing', async ({ client }) => {
@@ -272,17 +143,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             firstName: undefined
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "firstName",
-                    "message": "required validation failed"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('firstName')])
     })
 
     test('it should FAIL (422) when lastName did not respect regex format', async ({ client }) => {
@@ -290,34 +151,15 @@ test.group('Auth register', (group) => {
             ...registerBody,
             lastName: '02G'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "lastName",
-                "message": "regex validation failed",
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('lastName')])
     })
 
     test('it should FAIL (422) when lastName is over 255 character', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
-            lastName: 'anInvalidLastNameOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            lastName: 'a'.repeat(256)
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "maxLength",
-                "field": "lastName",
-                "message": "maxLength validation failed",
-                "args": {
-                    "maxLength": 255
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('lastName', 255)])
     })
 
     test('it should FAIL (422) when lastName is missing', async ({ client }) => {
@@ -325,17 +167,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             lastName: undefined
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "lastName",
-                    "message": "required validation failed"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('lastName')])
     })
 
     test('it should FAIL (422) when gender is not in range of specified value', async ({ client }) => {
@@ -343,22 +175,11 @@ test.group('Auth register', (group) => {
             ...registerBody,
             gender: 'anInvalidGender'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "enum",
-                "field": "gender",
-                "message": "enum validation failed",
-                "args": {
-                    "choices": [
-                        "male",
-                        "female",
-                        "unbinary",
-                    ],
-                },
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.enum('gender', [
+            "male",
+            "female",
+            "unbinary",
+        ])])
     })
 
     test('it should FAIL (422) when gender is missing', async ({ client }) => {
@@ -366,17 +187,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             gender: undefined
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "gender",
-                    "message": "required validation failed"
-                },
-            ]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('gender')])
     })
 
     test('it should FAIL (422) when birthyear is not between before 130 year and today', async ({ client }) => {
@@ -384,19 +195,8 @@ test.group('Auth register', (group) => {
             ...registerBody,
             birthYear: 1800
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "range",
-                "field": "birthYear",
-                "message": "range validation failed",
-                "args": {
-                    "start": DateTime.now().year - 130,
-                    "stop": DateTime.now().year,
-                }
-            }]
-        })
+
+        ResponseAssertHelper.error422(response, [RulesHelper.range('birthYear', { start: DateTime.now().year - 130, stop: DateTime.now().year })])
     })
 
     test('it should FAIL (422) when birthyear is not a digital value', async ({ client }) => {
@@ -404,25 +204,7 @@ test.group('Auth register', (group) => {
             ...registerBody,
             birthYear: 'stringValue'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "number",
-                "field": "birthYear",
-                "message": "number validation failed",
-            }]
-        })
-    })
-
-    test('it should SUCCEED (201) when birthYear is missing', async ({ client }) => {
-        const response = await client.post(ENDPOINT).json({
-            ...registerBody,
-            birthYear: undefined
-        })
-        response.assertAgainstApiSpec()
-        response.assertStatus(201)
-        response.assertBody({})
+        ResponseAssertHelper.error422(response, [RulesHelper.number('birthYear')])
     })
 
     test('it should FAIL (422) when state did not respect regex format', async ({ client }) => {
@@ -430,70 +212,23 @@ test.group('Auth register', (group) => {
             ...registerBody,
             state: '678invalidState'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "state",
-                "message": "regex validation failed",
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('state')])
     })
 
     test('it should FAIL (422) when state is over 255 characters', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
-            state: 'invalidStateOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            state: 'a'.repeat(256)
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "maxLength",
-                "field": "state",
-                "message": "maxLength validation failed",
-                "args": {
-                    "maxLength": 255,
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('state', 255)])
     })
 
-    test('it should SUCCEED (201) when state is missing', async ({ client }) => {
-        const response = await client.post(ENDPOINT).json({
-            ...registerBody,
-            state: undefined
-        })
-        response.assertAgainstApiSpec()
-        response.assertStatus(201)
-        response.assertBody({})
-    })
-
-    test('it should FAIL (422) when zipCode do not respect regex format', async ({ client }) => {
+    test('it should FAIL (422) when zipCode doesn\'t respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             zipCode: '2C678'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "zipCode",
-                "message": "zipCode must be equal to five numerics characters",
-            }]
-        })
-    })
-
-    test('it should SUCCEED (201) when zipCode is missing', async ({ client }) => {
-        const response = await client.post(ENDPOINT).json({
-            ...registerBody,
-            zipCode: undefined
-        })
-        response.assertAgainstApiSpec()
-        response.assertStatus(201)
-        response.assertBody({})
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('zipCode', "zipCode must be equal to five numerics characters")])
     })
 
     test('it should FAIL (400) when email sending fails', async ({ client, assert }) => {
@@ -502,17 +237,14 @@ test.group('Auth register', (group) => {
             ...registerBody,
             email
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
+        ResponseAssertHelper.error400(response)
         const user = await User.findBy('email', email)
         assert.notExists(user)
     })
 
     test(`it should register ${validEmail} like an unverified account`, async ({ client, assert }) => {
         const response = await client.post('/api/auth/register').json(registerBody)
-        response.assertAgainstApiSpec()
-        response.assertStatus(201)
-
+        ResponseAssertHelper.minimalAssert(response, 201)
         const user = await User.findByOrFail('email', validEmail)
         assert.isNull(user.verifiedAt)
     })

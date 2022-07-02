@@ -5,6 +5,8 @@ import { bot } from 'Database/seeders/01-UserSeeder'
 import Route from '@ioc:Adonis/Core/Route'
 import InvalidSignedUrlException from 'App/Exceptions/Auth/InvalidSignedUrlException'
 import InvalidCredentialException from 'App/Exceptions/Auth/InvalidCredentialException'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
+import RulesHelper from 'App/Helpers/Tests/RulesHelper'
 
 const ENDPOINT = 'api/auth/reset-password'
 
@@ -20,9 +22,7 @@ test.group('Auth resetPassword', (group) => {
             password: bot.password,
             passwordConfirmation: bot.password
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({
+        ResponseAssertHelper.error400(response, {
             "errors": [
                 {
                     "message": new InvalidSignedUrlException().message,
@@ -37,17 +37,7 @@ test.group('Auth resetPassword', (group) => {
             password: 'TESTtest1234.2',
             passwordConfirmation: 'TESTtest1234.2',
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "email",
-                    "field": "params.email",
-                    "message": "email validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.email('params.email')])
     })
 
     test('it should FAIL (422) when password is invalid', async ({ client }) => {
@@ -56,17 +46,7 @@ test.group('Auth resetPassword', (group) => {
             password: 'anInvalidPassword',
             passwordConfirmation: 'anInvalidPassword',
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "regex",
-                    "field": "password",
-                    "message": "password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('password', "password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character")])
     })
 
     test('it should FAIL (422) when password is missing', async ({ client }) => {
@@ -74,17 +54,7 @@ test.group('Auth resetPassword', (group) => {
         const response = await client.patch(signedUrl).json({
             passwordConfirmation: bot.password,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "password",
-                    "message": "required validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('password')])
     })
 
     test('it should FAIL (422) when passwordConfirmation is invalid', async ({ client }) => {
@@ -93,17 +63,7 @@ test.group('Auth resetPassword', (group) => {
             password: bot.password,
             passwordConfirmation: 'notIdenticalPassword',
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "confirmed",
-                    "field": "passwordConfirmation",
-                    "message": "confirmed validation failed"
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
     test('it should FAIL (422) when passwordConfirmation is missing', async ({ client }) => {
@@ -111,17 +71,7 @@ test.group('Auth resetPassword', (group) => {
         const response = await client.patch(signedUrl).json({
             password: bot.password,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "confirmed",
-                    "field": "passwordConfirmation",
-                    "message": "confirmed validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
     test('it should FAIL (400) when user is not found', async ({ client }) => {
@@ -131,9 +81,7 @@ test.group('Auth resetPassword', (group) => {
             password: 'TESTtest1234.2',
             passwordConfirmation: 'TESTtest1234.2'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({
+        ResponseAssertHelper.error400(response, {
             "errors": [
                 {
                     "message": new InvalidCredentialException().message
@@ -149,9 +97,7 @@ test.group('Auth resetPassword', (group) => {
             password: 'TESTtest1234.2',
             passwordConfirmation: 'TESTtest1234.2'
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({})
+        ResponseAssertHelper.error400(response)
     })
 
     test('it should FAIL (400) when password is identic of previous ', async ({ client }) => {
@@ -163,8 +109,7 @@ test.group('Auth resetPassword', (group) => {
             password: user.password,
             passwordConfirmation: user.password,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(204)
+        ResponseAssertHelper.noContent(response)
     })
 
     test('it should reset password', async ({ client, assert }) => {
@@ -179,8 +124,7 @@ test.group('Auth resetPassword', (group) => {
             password: newPassword,
             passwordConfirmation: newPassword,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(204)
+        ResponseAssertHelper.noContent(response)
 
         user = await User.findBy('email', email) as User
         assert.notEqual(oldPassword, newPassword)

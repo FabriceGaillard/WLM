@@ -1,5 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
+import TestHelper from 'App/Helpers/Tests/TestHelper'
 import User from 'App/Models/User'
 import { bot } from 'Database/seeders/01-UserSeeder'
 
@@ -12,26 +14,13 @@ test.group('Auth me', (group) => {
         return () => Database.rollbackGlobalTransaction()
     })
 
-    test(`it should FAIL (401) when client is not authenticated`, async ({ client }) => {
-        const response = await client.get(ENDPOINT)
-        response.assertAgainstApiSpec()
-        response.assertStatus(401)
-        response.assertBody({
-            "errors": [
-                {
-                    "message": "E_UNAUTHORIZED_ACCESS: Unauthorized access",
-                },
-            ],
-        })
-    })
+    TestHelper.notAuthenticated('get', ENDPOINT)
 
     test(`it should success (200), and return user`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
 
         const response = await client.get(ENDPOINT).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(200)
-
+        ResponseAssertHelper.minimalAssert(response, 200)
         response.assertBody({
             ...user.serialize()
         })

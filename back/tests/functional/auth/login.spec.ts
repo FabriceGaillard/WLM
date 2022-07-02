@@ -1,6 +1,8 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import InvalidCredentialException from 'App/Exceptions/Auth/InvalidCredentialException'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
+import RulesHelper from 'App/Helpers/Tests/RulesHelper'
 import User from 'App/Models/User'
 import { bot } from 'Database/seeders/01-UserSeeder'
 
@@ -18,20 +20,18 @@ test.group('Auth login', (group) => {
             email: bot.email,
             password: bot.password,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(200)
-
+        ResponseAssertHelper.minimalAssert(response, 200)
         const user = await User.findByOrFail('email', bot.email)
         response.assertBody(user.serialize())
     })
 
     test(`it should login ${bot.email} and set rememberMeToken`, async ({ client, assert }) => {
-        await client.post(ENDPOINT).json({
+        const response = await client.post(ENDPOINT).json({
             email: bot.email,
             password: bot.password,
             remember: true
         })
-
+        ResponseAssertHelper.minimalAssert(response, 200)
         const user = await User.findByOrFail('email', bot.email)
         assert.isNotNull(user.rememberMeToken)
     })
@@ -41,51 +41,22 @@ test.group('Auth login', (group) => {
             email: 'anInvalidEmail@@gmail.com',
             password: bot.password,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "email",
-                    "field": "email",
-                    "message": "email validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.email('email')])
     })
 
     test('it should FAIL (422) if email is undefined', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             password: bot.password,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "email",
-                    "message": "required validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('email')])
+
     })
 
     test('it should FAIL (422) if password is undefined', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: bot.email,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "required",
-                    "field": "password",
-                    "message": "required validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('password')])
     })
 
     test('it should FAIL (400) if user is not found', async ({ client }) => {
@@ -93,15 +64,7 @@ test.group('Auth login', (group) => {
             email: 'anInvalidEmail@gmail.com',
             password: bot.password,
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({
-            "errors": [
-                {
-                    "message": new InvalidCredentialException().message,
-                },
-            ],
-        })
+        ResponseAssertHelper.error400(response, { errors: [{ message: new InvalidCredentialException().message }] })
     })
 
     test('it should FAIL (400) if password is incorrect', async ({ client }) => {
@@ -109,15 +72,14 @@ test.group('Auth login', (group) => {
             email: bot.email,
             password: 'anIncorrectPassword',
         })
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({
-            "errors": [
+        ResponseAssertHelper.error400(response, {
+            errors: [
                 {
-                    "message": "E_INVALID_AUTH_PASSWORD: Password mis-match",
+                    message: "E_INVALID_AUTH_PASSWORD: Password mis-match",
                 },
             ],
         })
+
     })
 
 })
