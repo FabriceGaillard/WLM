@@ -1,8 +1,14 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import InvalidAlternateEmailException from 'App/Exceptions/User/InvalidAlternateEmailException'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
+import RulesHelper from 'App/Helpers/Tests/RulesHelper'
+import TestHelper from 'App/Helpers/Tests/TestHelper'
 import User from 'App/Models/User'
 import { bot, bot2 } from 'Database/seeders/01-UserSeeder'
 import { DateTime } from 'luxon'
+import { v4 as uuidv4 } from 'uuid'
+
 const ENDPOINT = 'api/users'
 
 test.group('Users update', (group) => {
@@ -12,111 +18,62 @@ test.group('Users update', (group) => {
         return () => Database.rollbackGlobalTransaction()
     })
 
-    test(`it should FAIL (401) when user is not authenticated`, async ({ client }) => {
-        const user = await User.findByOrFail('email', bot.email)
-        const response = await client.put(`${ENDPOINT}/${user.id}`)
-        response.assertAgainstApiSpec()
-        response.assertStatus(401)
-        response.assertBody({
-            "errors": [
-                {
-                    "message": "E_UNAUTHORIZED_ACCESS: Unauthorized access",
-                },
-            ],
-        })
-    })
+    TestHelper.notAuthenticated('put', `${ENDPOINT}/fakeUuid`)
+    TestHelper.ressourceIdInvalid('user', 'put', `${ENDPOINT}/fakeUuid`)
+    TestHelper.ressourceNotFound('user', 'put', `${ENDPOINT}/${uuidv4()}`)
 
-    test(`it should FAIL (403) when user is not the owner`, async ({ client }) => {
+    test(`should FAIL (403) when user is not the owner`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const user2 = await User.findByOrFail('email', bot2.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).loginAs(user2)
-        response.assertAgainstApiSpec()
-        response.assertStatus(403)
-        response.assertBody({
-            "message": "E_AUTHORIZATION_FAILURE: Not authorized to perform this action",
-        })
+        ResponseAssertHelper.error403(response)
     })
 
-    test('it should FAIL (400) when alternateEmail is identical of email', async ({ client }) => {
+    test('should FAIL (400) when alternateEmail is identical of email', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             alternateEmail: user.email
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(400)
-        response.assertBody({
+        ResponseAssertHelper.error400(response, {
             "errors": [{
-                "message": "E_INVALID_ALTERNATE_EMAIL: alternameEmail cannot be identical of email."
+                "message": new InvalidAlternateEmailException().message
             }]
         })
+
     })
 
-    test('it should FAIL (422) when id is invalid', async ({ client }) => {
+    test('should FAIL (422) when id is invalid', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/anInvalidUuid`).json({}).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "uuid",
-                    "field": "params.id",
-                    "message": "uuid validation failed",
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.uuid('params.id')])
     })
 
-    test('it should FAIL (422) when username is over 255 characters', async ({ client }) => {
+    test('should FAIL (422) when username is over 255 characters', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
-            username: 'aUsernameOver255Characterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            username: 'a'.repeat(256)
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "maxLength",
-                    "field": "username",
-                    "message": "maxLength validation failed",
-                    "args": {
-                        "maxLength": 255,
-                    },
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('username', 255)])
     })
 
-    test('it should FAIL (422) when avatar is not a file', async ({ client }) => {
+    test('should FAIL (422) when avatar is not a file', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             avatar: 'anInvalidFile'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "file",
-                    "field": "avatar",
-                    "message": "file validation failed",
-                    "args": {
-                        "size": "2mb",
-                        "extnames": [
-                            "jpg",
-                            "jpeg",
-                            "gif",
-                            "png",
-                            "webp",
-                        ],
-                    },
-                },
+        ResponseAssertHelper.error422(response, [RulesHelper.file('avatar', {
+            "size": "2mb",
+            "extnames": [
+                "jpg",
+                "jpeg",
+                "gif",
+                "png",
+                "webp",
             ],
-        })
+        })])
     })
 
-    /*     test('it should FAIL (422) when avatar file has not a good extension', async ({ client }) => {
+    /*     test('should FAIL (422) when avatar file has not a good extension', async ({ client }) => {
             const user = await User.findByOrFail('email', bot.email)
             const response = await client.put(`${ENDPOINT}/${user.id}`).json({
                 avatar: 'anInvalidFile'
@@ -126,7 +83,7 @@ test.group('Users update', (group) => {
             response.assertBody({})
         })
     
-        test('it should FAIL (422) when avatar file is over 2mb', async ({ client }) => {
+        test('should FAIL (422) when avatar file is over 2mb', async ({ client }) => {
             const user = await User.findByOrFail('email', bot.email)
             const response = await client.put(`${ENDPOINT}/${user.id}`).json({
                 avatar: 'anInvalidFile'
@@ -136,232 +93,115 @@ test.group('Users update', (group) => {
             response.assertBody({})
         }) */
 
-    test('it should FAIL (422) when firstName did not respect regex format', async ({ client }) => {
+    test('should FAIL (422) when firstName did not respect regex format', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             firstName: '02Fabrice'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "firstName",
-                "message": "regex validation failed"
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('firstName')])
     })
 
-    test('it should FAIL (422) when firstName is over 255 character', async ({ client }) => {
+    test('should FAIL (422) when firstName is over 255 character', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
-            firstName: 'anInvalidFirstNameOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            firstName: 'a'.repeat(256)
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "maxLength",
-                "field": "firstName",
-                "message": "maxLength validation failed",
-                "args": {
-                    "maxLength": 255
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('firstName', 255)])
     })
 
-    test('it should FAIL (422) when lastName did not respect regex format', async ({ client }) => {
+    test('should FAIL (422) when lastName did not respect regex format', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             lastName: '02G'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "lastName",
-                "message": "regex validation failed",
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('lastName')])
     })
 
-    test('it should FAIL (422) when lastName is over 255 character', async ({ client }) => {
+    test('should FAIL (422) when lastName is over 255 character', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
-            lastName: 'anInvalidLastNameOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            lastName: 'a'.repeat(256)
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "maxLength",
-                "field": "lastName",
-                "message": "maxLength validation failed",
-                "args": {
-                    "maxLength": 255
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('lastName', 255)])
     })
 
-    test('it should FAIL (422) when gender is not in range of specified value', async ({ client }) => {
+    test('should FAIL (422) when gender is not in range of specified value', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             gender: 'anInvalidGender'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "enum",
-                "field": "gender",
-                "message": "enum validation failed",
-                "args": {
-                    "choices": [
-                        "male",
-                        "female",
-                        "unbinary",
-                    ],
-                },
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.enum('gender', [
+            "male",
+            "female",
+            "unbinary",
+        ])])
     })
 
-    test('it should FAIL (422) when status is not in range of specified value', async ({ client }) => {
+    test('should FAIL (422) when status is not in range of specified value', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             status: 'anInvalidStatus'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "enum",
-                "field": "status",
-                "message": "enum validation failed",
-                "args": {
-                    "choices": [
-                        "online",
-                        "busy",
-                        "beRightBack",
-                        "away",
-                        "onThePhone",
-                        "outToLunch",
-                        "appearOffline",
-                    ],
-                },
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.enum('status', [
+            "online",
+            "busy",
+            "beRightBack",
+            "away",
+            "onThePhone",
+            "outToLunch",
+            "appearOffline",
+        ])])
     })
 
-    test('it should FAIL (422) when birthyear is not between before 130 year and today', async ({ client }) => {
+    test('should FAIL (422) when birthyear is not between before 130 year and today', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             birthYear: 1800
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "range",
-                "field": "birthYear",
-                "message": "range validation failed",
-                "args": {
-                    "start": DateTime.now().year - 130,
-                    "stop": DateTime.now().year,
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.range('birthYear', {
+            "start": DateTime.now().year - 130,
+            "stop": DateTime.now().year,
+        })])
     })
 
-    test('it should FAIL (422) when birthyear is not a digital value', async ({ client }) => {
+    test('should FAIL (422) when birthyear is not a digital value', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             birthYear: 'stringValue'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "number",
-                "field": "birthYear",
-                "message": "number validation failed",
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.number('birthYear')])
     })
 
-    test('it should FAIL (422) when personalMessage is over 255', async ({ client }) => {
+    test('should FAIL (422) when personalMessage is over 255', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
-            personalMessage: 'personalMessageOver255Characterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            personalMessage: 'a'.repeat(256)
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [
-                {
-                    "rule": "maxLength",
-                    "field": "personalMessage",
-                    "message": "maxLength validation failed",
-                    "args": {
-                        "maxLength": 255,
-                    },
-                },
-            ],
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('personalMessage', 255)])
     })
 
-    test('it should FAIL (422) when state did not respect regex format', async ({ client }) => {
+    test('should FAIL (422) when state did not respect regex format', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             state: '678invalidState'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "state",
-                "message": "regex validation failed",
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('state')])
     })
 
-    test('it should FAIL (422) when state is over 255 characters', async ({ client }) => {
+    test('should FAIL (422) when state is over 255 characters', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
-            state: 'invalidStateOverCharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'
+            state: 'a'.repeat(256)
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "maxLength",
-                "field": "state",
-                "message": "maxLength validation failed",
-                "args": {
-                    "maxLength": 255,
-                }
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('state', 255)])
     })
 
-    test('it should FAIL (422) when zipCode did not respect regex format', async ({ client }) => {
+    test('should FAIL (422) when zipCode did not respect regex format', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.put(`${ENDPOINT}/${user.id}`).json({
             zipCode: '2C678'
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [{
-                "rule": "regex",
-                "field": "zipCode",
-                "message": "zipCode must be equal to five numerics characters",
-            }]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.regex('zipCode', "zipCode must be equal to five numerics characters")])
     })
 
 })

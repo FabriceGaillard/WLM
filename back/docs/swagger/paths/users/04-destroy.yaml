@@ -38,6 +38,12 @@
                     properties:
                       message:
                         type: string
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'
       '403':
         description: Forbidden
         content:

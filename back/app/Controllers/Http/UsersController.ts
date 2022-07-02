@@ -20,9 +20,7 @@ export default class UsersController {
 
     public async update({ request, bouncer, response }: HttpContextContract) {
         const { avatar, alternateEmail, ...payload } = await request.validate(UpdateUserValidator)
-        const user = await User.find(payload.params.id)
-
-        if (!user) return response.noContent()
+        const user = await User.findOrFail(payload.params.id)
 
         if (alternateEmail && user.email === alternateEmail) {
             throw new InvalidAlternateEmailException()
@@ -39,14 +37,12 @@ export default class UsersController {
         }
 
         await user.merge(payload).save()
-        return user
+        return response.ok(user)
     }
 
     public async updatePassword({ request, bouncer, response }: HttpContextContract) {
         const payload = await request.validate(UpdatePasswordUserValidator)
-        const user = await User.find(payload.params.id)
-
-        if (!user) return response.noContent()
+        const user = await User.findOrFail(payload.params.id)
 
         await bouncer
             .with('UserPolicy')
@@ -63,8 +59,7 @@ export default class UsersController {
 
     public async updateEmail({ request, bouncer, response, logger }: HttpContextContract) {
         const payload = await request.validate(UpdateEmailUserValidator)
-        const user = await User.find(payload.params.id)
-        if (!user) return response.notFound()
+        const user = await User.findOrFail(payload.params.id)
 
         await bouncer
             .with('UserPolicy')
@@ -96,9 +91,7 @@ export default class UsersController {
 
     public async destroy({ request, bouncer, response }: HttpContextContract) {
         const payload = await request.validate(DestroyUserValidator)
-        const user = await User.find(payload.params.id)
-
-        if (!user) return response.notFound()
+        const user = await User.findOrFail(payload.params.id)
 
         await bouncer
             .with('UserPolicy')
