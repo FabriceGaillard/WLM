@@ -1,5 +1,6 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
 import TestHelper from 'App/Helpers/Tests/TestHelper'
 import User from 'App/Models/User'
 import { bot } from 'Database/seeders/01-UserSeeder'
@@ -13,12 +14,11 @@ test.group('Groups index', (group) => {
 
     TestHelper.notAuthenticated('get', ENDPOINT)
 
-    test('it should return all group', async ({ client }) => {
+    test('should return all group', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         await user.load('groups')
         const response = await client.get(ENDPOINT).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(200)
+        ResponseAssertHelper.minimalAssert(response, 200)
         response.assertBody(user.groups.map(group => group.serialize()))
     })
 

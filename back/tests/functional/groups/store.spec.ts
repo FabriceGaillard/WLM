@@ -1,5 +1,6 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
+import ResponseAssertHelper from 'App/Helpers/Tests/ResponseAssertHelper'
 import RulesHelper from 'App/Helpers/Tests/RulesHelper'
 import TestHelper from 'App/Helpers/Tests/TestHelper'
 import Group from 'App/Models/Group'
@@ -17,35 +18,25 @@ test.group('Groups store', (group) => {
 
     TestHelper.notAuthenticated('post', ENDPOINT)
 
-
-    test('it should FAIL (422) when name is over 255 characters', async ({ client }) => {
+    test('should FAIL (422) when name is over 255 characters', async ({ client }) => {
         const user = await User.firstOrFail()
         const response = await client.post(ENDPOINT).json({
             name: 'tooLong'.repeat(100),
         }).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [RulesHelper.maxLength('name', 255)]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.maxLength('name', 255)])
     })
 
-    test('it should FAIL (422) when name is missing', async ({ client }) => {
+    test('should FAIL (422) when name is missing', async ({ client }) => {
         const user = await User.firstOrFail()
         const response = await client.post(ENDPOINT).json({}).loginAs(user)
-        response.assertAgainstApiSpec()
-        response.assertStatus(422)
-        response.assertBody({
-            "errors": [RulesHelper.required('name')]
-        })
+        ResponseAssertHelper.error422(response, [RulesHelper.required('name')])
     })
 
-    test('it should create a new group and return it', async ({ client }) => {
+    test('should create a new group and return it', async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const name = 'aNewGroup'
         const response = await client.post(ENDPOINT).loginAs(user).json({ name })
-        response.assertAgainstApiSpec()
-        response.assertStatus(201)
+        ResponseAssertHelper.minimalAssert(response, 201)
         const newGroup = await Group.findByOrFail('name', name)
         response.assertBody(newGroup.serialize())
     })
