@@ -13,7 +13,7 @@ test.group('UserRelationships show', () => {
     TestHelper.ressourceNotFound('userRelationships', 'get', `${ENDPOINT}/${uuidv4()}`)
 
 
-    test(`it should FAIL (403) when user is not owner`, async ({ client }) => {
+    test(`should FAIL (403) when user is not owner`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         await user.load('userRelationships')
 
@@ -23,7 +23,7 @@ test.group('UserRelationships show', () => {
         ResponseAssertHelper.error403(response)
     })
 
-    test(`it should return UserRelationship`, async ({ client }) => {
+    test(`should return UserRelationship`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         await user.load('userRelationships', (q) => q.preload('relatedUser'))
 

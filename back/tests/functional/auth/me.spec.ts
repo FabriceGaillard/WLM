@@ -16,7 +16,7 @@ test.group('Auth me', (group) => {
 
     TestHelper.notAuthenticated('get', ENDPOINT)
 
-    test(`it should success (200), and return user`, async ({ client }) => {
+    test(`should success (200), and return user`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
 
         const response = await client.get(ENDPOINT).loginAs(user)

@@ -14,28 +14,28 @@ test.group('Auth resetPasswordDemand', (group) => {
         return () => Database.rollbackGlobalTransaction()
     })
 
-    test('it should FAIL (422) when email is invalid', async ({ client }) => {
+    test('should FAIL (422) when email is invalid', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: 'anInvalidEmail@@gmail.com',
         })
         ResponseAssertHelper.error422(response, [RulesHelper.email('email')])
     })
 
-    test('it should FAIL (400) when user is not found', async ({ client }) => {
+    test('should FAIL (400) when user is not found', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: bot.email,
         })
         ResponseAssertHelper.error400(response)
     })
 
-    test('it should FAIL (400) when email sending fails', async ({ client }) => {
+    test('should FAIL (400) when email sending fails', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: bot.email,
         })
         ResponseAssertHelper.error400(response)
     })
 
-    test('it should succeed (204)', async ({ client }) => {
+    test('should succeed (204)', async ({ client }) => {
         await User.create({ ...bot, email: 'fabou291@gmail.com' })
         const response = await client.post(ENDPOINT).json({
             email: 'fabou291@gmail.com'

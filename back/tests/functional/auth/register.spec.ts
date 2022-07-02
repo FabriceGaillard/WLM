@@ -27,7 +27,7 @@ test.group('Auth register', (group) => {
     })
 
     // Over 74 character, an email is considered invalid
-    test('it should FAIL (422) when email is not a valid email', async ({ client }) => {
+    test('should FAIL (422) when email is not a valid email', async ({ client }) => {
         const invalidEmail = 'anInvalidEmail@@gmail.com.fr'
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
@@ -36,7 +36,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.email('email')])
     })
 
-    test('it should FAIL (422) when email is missing', async ({ client }) => {
+    test('should FAIL (422) when email is missing', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             email: undefined
@@ -47,7 +47,7 @@ test.group('Auth register', (group) => {
         ])
     })
 
-    test('it should FAIL (422) when email is not unique', async ({ client }) => {
+    test('should FAIL (422) when email is not unique', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             email: 'bot@example.com'
@@ -55,7 +55,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.unique('email', 'unique validation failure')])
     })
 
-    test('it should FAIL (422) when alternateEmail is invalid', async ({ client }) => {
+    test('should FAIL (422) when alternateEmail is invalid', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             alternateEmail: 'anInvalidEmail@@gmail.com.fr'
@@ -63,7 +63,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.email('alternateEmail')])
     })
 
-    test('it should FAIL (422) when alternateEmail is missing', async ({ client }) => {
+    test('should FAIL (422) when alternateEmail is missing', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             alternateEmail: undefined
@@ -71,7 +71,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.required('alternateEmail')])
     })
 
-    test('it should FAIL (422) when alternatelEmail is identic of email', async ({ client }) => {
+    test('should FAIL (422) when alternatelEmail is identic of email', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             email: validEmail,
@@ -80,7 +80,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.different('alternateEmail')])
     })
 
-    test('it should FAIL (422) when password is invalid', async ({ client }) => {
+    test('should FAIL (422) when password is invalid', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             password: 'anInvalidPassword',
@@ -89,7 +89,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.regex('password', "password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne alphabetic character\nOne special character")])
     })
 
-    test('it should FAIL (422) when password is over 180 characters', async ({ client }) => {
+    test('should FAIL (422) when password is over 180 characters', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             password: ('aA1+').repeat(100),
@@ -98,7 +98,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.maxLength('password', 180)])
     })
 
-    test('it should FAIL (422) when password is missing', async ({ client }) => {
+    test('should FAIL (422) when password is missing', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             password: undefined
@@ -106,7 +106,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.required('password')])
     })
 
-    test('it should FAIL (422) when passwordConfirmation is different of password', async ({ client }) => {
+    test('should FAIL (422) when passwordConfirmation is different of password', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             passwordConfirmation: 'anInvalidPassword'
@@ -114,7 +114,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
-    test('it should FAIL (422) when passwordConfirmation is missing', async ({ client }) => {
+    test('should FAIL (422) when passwordConfirmation is missing', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             passwordConfirmation: undefined
@@ -122,7 +122,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
-    test('it should FAIL (422) when firstName do not respect regex format', async ({ client }) => {
+    test('should FAIL (422) when firstName do not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             firstName: '02Fabrice'
@@ -130,7 +130,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.regex('firstName')])
     })
 
-    test('it should FAIL (422) when firstName is over 255 character', async ({ client }) => {
+    test('should FAIL (422) when firstName is over 255 character', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             firstName: 'a'.repeat(256)
@@ -138,7 +138,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.maxLength('firstName', 255)])
     })
 
-    test('it should FAIL (422) when firstName is missing', async ({ client }) => {
+    test('should FAIL (422) when firstName is missing', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             firstName: undefined
@@ -146,7 +146,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.required('firstName')])
     })
 
-    test('it should FAIL (422) when lastName did not respect regex format', async ({ client }) => {
+    test('should FAIL (422) when lastName did not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             lastName: '02G'
@@ -154,7 +154,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.regex('lastName')])
     })
 
-    test('it should FAIL (422) when lastName is over 255 character', async ({ client }) => {
+    test('should FAIL (422) when lastName is over 255 character', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             lastName: 'a'.repeat(256)
@@ -162,7 +162,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.maxLength('lastName', 255)])
     })
 
-    test('it should FAIL (422) when lastName is missing', async ({ client }) => {
+    test('should FAIL (422) when lastName is missing', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             lastName: undefined
@@ -170,7 +170,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.required('lastName')])
     })
 
-    test('it should FAIL (422) when gender is not in range of specified value', async ({ client }) => {
+    test('should FAIL (422) when gender is not in range of specified value', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             gender: 'anInvalidGender'
@@ -182,7 +182,7 @@ test.group('Auth register', (group) => {
         ])])
     })
 
-    test('it should FAIL (422) when gender is missing', async ({ client }) => {
+    test('should FAIL (422) when gender is missing', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             gender: undefined
@@ -190,7 +190,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.required('gender')])
     })
 
-    test('it should FAIL (422) when birthyear is not between before 130 year and today', async ({ client }) => {
+    test('should FAIL (422) when birthyear is not between before 130 year and today', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             birthYear: 1800
@@ -199,7 +199,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.range('birthYear', { start: DateTime.now().year - 130, stop: DateTime.now().year })])
     })
 
-    test('it should FAIL (422) when birthyear is not a digital value', async ({ client }) => {
+    test('should FAIL (422) when birthyear is not a digital value', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             birthYear: 'stringValue'
@@ -207,7 +207,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.number('birthYear')])
     })
 
-    test('it should FAIL (422) when state did not respect regex format', async ({ client }) => {
+    test('should FAIL (422) when state did not respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             state: '678invalidState'
@@ -215,7 +215,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.regex('state')])
     })
 
-    test('it should FAIL (422) when state is over 255 characters', async ({ client }) => {
+    test('should FAIL (422) when state is over 255 characters', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             state: 'a'.repeat(256)
@@ -223,7 +223,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.maxLength('state', 255)])
     })
 
-    test('it should FAIL (422) when zipCode doesn\'t respect regex format', async ({ client }) => {
+    test('should FAIL (422) when zipCode doesn\'t respect regex format', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             ...registerBody,
             zipCode: '2C678'
@@ -231,7 +231,7 @@ test.group('Auth register', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.regex('zipCode', "zipCode must be equal to five numerics characters")])
     })
 
-    test('it should FAIL (400) when email sending fails', async ({ client, assert }) => {
+    test('should FAIL (400) when email sending fails', async ({ client, assert }) => {
         const email = "bot@test.com"
         const response = await client.post('/api/auth/register').json({
             ...registerBody,
@@ -242,7 +242,7 @@ test.group('Auth register', (group) => {
         assert.notExists(user)
     })
 
-    test(`it should register ${validEmail} like an unverified account`, async ({ client, assert }) => {
+    test(`should register ${validEmail} like an unverified account`, async ({ client, assert }) => {
         const response = await client.post('/api/auth/register').json(registerBody)
         ResponseAssertHelper.minimalAssert(response, 201)
         const user = await User.findByOrFail('email', validEmail)

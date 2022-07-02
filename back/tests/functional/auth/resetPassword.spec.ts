@@ -17,7 +17,7 @@ test.group('Auth resetPassword', (group) => {
         return () => Database.rollbackGlobalTransaction()
     })
 
-    test('it should FAIL (400) when signature is invalid', async ({ client }) => {
+    test('should FAIL (400) when signature is invalid', async ({ client }) => {
         const response = await client.patch(`${ENDPOINT}/${bot.email}?signature=anInvalidSignature`).json({
             password: bot.password,
             passwordConfirmation: bot.password
@@ -31,7 +31,7 @@ test.group('Auth resetPassword', (group) => {
         })
     })
 
-    test('it should FAIL (422) when email is invalid', async ({ client }) => {
+    test('should FAIL (422) when email is invalid', async ({ client }) => {
         const signedUrl = Route.makeSignedUrl('resetPassword', { email: 'fabou291@@gmail.com' })
         const response = await client.patch(signedUrl).json({
             password: 'TESTtest1234.2',
@@ -40,7 +40,7 @@ test.group('Auth resetPassword', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.email('params.email')])
     })
 
-    test('it should FAIL (422) when password is invalid', async ({ client }) => {
+    test('should FAIL (422) when password is invalid', async ({ client }) => {
         const signedUrl = Route.makeSignedUrl('resetPassword', { email: 'fabou291@gmail.com' })
         const response = await client.patch(signedUrl).json({
             password: 'anInvalidPassword',
@@ -49,7 +49,7 @@ test.group('Auth resetPassword', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.regex('password', "password must contain 12 character minimum with at least:\nOne minuscule\nOne majuscule\nOne numeric\nOne special character")])
     })
 
-    test('it should FAIL (422) when password is missing', async ({ client }) => {
+    test('should FAIL (422) when password is missing', async ({ client }) => {
         const signedUrl = Route.makeSignedUrl('resetPassword', { email: 'fabou291@gmail.com' })
         const response = await client.patch(signedUrl).json({
             passwordConfirmation: bot.password,
@@ -57,7 +57,7 @@ test.group('Auth resetPassword', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.required('password')])
     })
 
-    test('it should FAIL (422) when passwordConfirmation is invalid', async ({ client }) => {
+    test('should FAIL (422) when passwordConfirmation is invalid', async ({ client }) => {
         const signedUrl = Route.makeSignedUrl('resetPassword', { email: 'fabou291@gmail.com' })
         const response = await client.patch(signedUrl).json({
             password: bot.password,
@@ -66,7 +66,7 @@ test.group('Auth resetPassword', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
-    test('it should FAIL (422) when passwordConfirmation is missing', async ({ client }) => {
+    test('should FAIL (422) when passwordConfirmation is missing', async ({ client }) => {
         const signedUrl = Route.makeSignedUrl('resetPassword', { email: 'fabou291@gmail.com' })
         const response = await client.patch(signedUrl).json({
             password: bot.password,
@@ -74,7 +74,7 @@ test.group('Auth resetPassword', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.confirmed('passwordConfirmation')])
     })
 
-    test('it should FAIL (400) when user is not found', async ({ client }) => {
+    test('should FAIL (400) when user is not found', async ({ client }) => {
         const signedUrl = Route.makeSignedUrl('resetPassword', { email: 'unknowUser@gmail.com' })
 
         const response = await client.patch(signedUrl).json({
@@ -90,7 +90,7 @@ test.group('Auth resetPassword', (group) => {
         })
     })
 
-    test('it should FAIL (400) when email sending fails', async ({ client }) => {
+    test('should FAIL (400) when email sending fails', async ({ client }) => {
         const signedUrl = Route.makeSignedUrl('resetPassword', { email: bot.email })
 
         const response = await client.patch(signedUrl).json({
@@ -100,7 +100,7 @@ test.group('Auth resetPassword', (group) => {
         ResponseAssertHelper.error400(response)
     })
 
-    test('it should FAIL (400) when password is identic of previous ', async ({ client }) => {
+    test('should FAIL (400) when password is identic of previous ', async ({ client }) => {
         const email = 'fabou291@gmail.com'
         const signedUrl = Route.makeSignedUrl('resetPassword', { email })
 
@@ -112,7 +112,7 @@ test.group('Auth resetPassword', (group) => {
         ResponseAssertHelper.noContent(response)
     })
 
-    test('it should reset password', async ({ client, assert }) => {
+    test('should reset password', async ({ client, assert }) => {
         const email = 'fabou291@gmail.com'
         const signedUrl = Route.makeSignedUrl('resetPassword', { email })
 

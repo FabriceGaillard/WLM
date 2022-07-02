@@ -14,7 +14,7 @@ test.group('UserRelationships update', () => {
     TestHelper.ressourceNotFound('userRelationships', 'put', `${ENDPOINT}/${uuidv4()}`)
 
 
-    test(`it should FAIL (403) when user is not owner`, async ({ client }) => {
+    test(`should FAIL (403) when user is not owner`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         await user.load('userRelationships')
 
@@ -27,7 +27,7 @@ test.group('UserRelationships update', () => {
 
     })
 
-    test(`it should FAIL (422) when isHidden property is not a boolean`, async ({ client }) => {
+    test(`should FAIL (422) when isHidden property is not a boolean`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         await user.load('userRelationships')
 
@@ -41,7 +41,7 @@ test.group('UserRelationships update', () => {
         ResponseAssertHelper.error422(response, [RulesHelper.boolean('isHidden')])
     })
 
-    test(`it should return UserRelationship`, async ({ client }) => {
+    test(`should return UserRelationship`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         await user.load('userRelationships', (q) => q.preload('relatedUser'))
 

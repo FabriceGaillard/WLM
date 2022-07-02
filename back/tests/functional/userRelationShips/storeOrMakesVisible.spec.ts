@@ -11,13 +11,13 @@ const ENDPOINT = 'api/user-relationships/store-or-makes-visible'
 test.group('UserRelationships store', () => {
     TestHelper.notAuthenticated('post', ENDPOINT);
 
-    test(`it should FAIL(422) when relatedUserEmail is missing`, async ({ client }) => {
+    test(`should FAIL(422) when relatedUserEmail is missing`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.post(ENDPOINT).loginAs(user).json({})
         ResponseAssertHelper.error422(response, [RulesHelper.required('relatedUserEmail')])
     })
 
-    test(`it should FAIL (422) when relatedUserEmail is an invalid email`, async ({ client }) => {
+    test(`should FAIL (422) when relatedUserEmail is an invalid email`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.post(ENDPOINT).loginAs(user).json({
             relatedUserEmail: 'invalid@@email.com'
@@ -26,7 +26,7 @@ test.group('UserRelationships store', () => {
     })
 
 
-    test(`it should create UserRelationship(200)`, async ({ client }) => {
+    test(`should create UserRelationship(200)`, async ({ client }) => {
         const botA = await User.findByOrFail('email', bot.email)
         const botB = await User.findByOrFail('email', bot2.email)
         const response = await client.post(ENDPOINT).loginAs(botB).json({

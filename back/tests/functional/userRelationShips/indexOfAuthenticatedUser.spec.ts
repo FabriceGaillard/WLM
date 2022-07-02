@@ -9,7 +9,7 @@ test.group('UserRelationships indexOfAuthenticatedUser', () => {
 
     TestHelper.notAuthenticated('get', ENDPOINT)
 
-    test(`it should return list of relationships of authenticated user`, async ({ client }) => {
+    test(`should return list of relationships of authenticated user`, async ({ client }) => {
         const user = await User.findByOrFail('email', bot.email)
         const response = await client.get(ENDPOINT).loginAs(user)
 

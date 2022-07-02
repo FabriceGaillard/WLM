@@ -15,7 +15,7 @@ test.group('Auth login', (group) => {
         return () => Database.rollbackGlobalTransaction()
     })
 
-    test(`it should login ${bot.email}`, async ({ client }) => {
+    test(`should login ${bot.email}`, async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: bot.email,
             password: bot.password,
@@ -25,7 +25,7 @@ test.group('Auth login', (group) => {
         response.assertBody(user.serialize())
     })
 
-    test(`it should login ${bot.email} and set rememberMeToken`, async ({ client, assert }) => {
+    test(`should login ${bot.email} and set rememberMeToken`, async ({ client, assert }) => {
         const response = await client.post(ENDPOINT).json({
             email: bot.email,
             password: bot.password,
@@ -36,7 +36,7 @@ test.group('Auth login', (group) => {
         assert.isNotNull(user.rememberMeToken)
     })
 
-    test('it should FAIL (422) if email is invalid', async ({ client }) => {
+    test('should FAIL (422) if email is invalid', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: 'anInvalidEmail@@gmail.com',
             password: bot.password,
@@ -44,7 +44,7 @@ test.group('Auth login', (group) => {
         ResponseAssertHelper.error422(response, [RulesHelper.email('email')])
     })
 
-    test('it should FAIL (422) if email is undefined', async ({ client }) => {
+    test('should FAIL (422) if email is undefined', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             password: bot.password,
         })
@@ -52,14 +52,14 @@ test.group('Auth login', (group) => {
 
     })
 
-    test('it should FAIL (422) if password is undefined', async ({ client }) => {
+    test('should FAIL (422) if password is undefined', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: bot.email,
         })
         ResponseAssertHelper.error422(response, [RulesHelper.required('password')])
     })
 
-    test('it should FAIL (400) if user is not found', async ({ client }) => {
+    test('should FAIL (400) if user is not found', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: 'anInvalidEmail@gmail.com',
             password: bot.password,
@@ -67,7 +67,7 @@ test.group('Auth login', (group) => {
         ResponseAssertHelper.error400(response, { errors: [{ message: new InvalidCredentialException().message }] })
     })
 
-    test('it should FAIL (400) if password is incorrect', async ({ client }) => {
+    test('should FAIL (400) if password is incorrect', async ({ client }) => {
         const response = await client.post(ENDPOINT).json({
             email: bot.email,
             password: 'anIncorrectPassword',

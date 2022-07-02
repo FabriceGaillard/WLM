@@ -17,22 +17,22 @@ test.group('Auth confirmAccount', (group) => {
         return () => Database.rollbackGlobalTransaction()
     })
 
-    test('it should FAIL (422) when email is invalid', async ({ client }) => {
+    test('should FAIL (422) when email is invalid', async ({ client }) => {
         const response = await client.get(`${ENDPOINT}/fabou291@@gmail.com`)
         ResponseAssertHelper.error422(response, [RulesHelper.email('params.email')])
     })
 
-    test('it should FAIL (400) when user is not found', async ({ client }) => {
+    test('should FAIL (400) when user is not found', async ({ client }) => {
         const response = await client.get(`${ENDPOINT}/${params}`)
         ResponseAssertHelper.error400(response, { errors: [{ message: new InvalidCredentialException().message }] })
     })
 
-    test('it should FAIL (400) when signedUrl is incorrect', async ({ client }) => {
+    test('should FAIL (400) when signedUrl is incorrect', async ({ client }) => {
         const response = await client.get(`${ENDPOINT}/bot@example.com?signedUrl=anInvalidSignature`)
         ResponseAssertHelper.error400(response, { errors: [{ message: new InvalidSignedUrlException().message }] })
     })
 
-    test('it should succeed (204)', async ({ client }) => {
+    test('should succeed (204)', async ({ client }) => {
         await User.create({ ...bot, email: 'fabou291@gmail.com' })
         const response = await client.get(`${ENDPOINT}/${params}`)
         ResponseAssertHelper.noContent(response)
