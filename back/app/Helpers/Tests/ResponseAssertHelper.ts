@@ -4,6 +4,16 @@ export default class ResponseAssertHelper {
         response.assertStatus(statusCode)
     }
 
+    public static noContent(response: ApiResponse) {
+        ResponseAssertHelper.minimalAssert(response, 204)
+        response.assertBody({})
+    }
+
+    public static error400(response: ApiResponse, body: any = {}) {
+        ResponseAssertHelper.minimalAssert(response, 400)
+        response.assertBody(body)
+    }
+
     public static error401(response: ApiResponse) {
         ResponseAssertHelper.minimalAssert(response, 401)
         response.assertBody({ errors: [{ message: 'E_UNAUTHORIZED_ACCESS: Unauthorized access' }] })
