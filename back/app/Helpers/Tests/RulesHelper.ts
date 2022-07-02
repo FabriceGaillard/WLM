@@ -37,4 +37,7 @@ export default abstract class RulesHelper {
         return this.format('range', field, undefined, { ...args })
     }
 
+    public static file(field: string, args: { [k: string]: any }) {
+        return this.format('file', field, undefined, { ...args })
+    }
 }
