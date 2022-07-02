@@ -4,7 +4,7 @@ import RulesHelper from "./RulesHelper"
 
 export default abstract class AuthenticationTestsHelper {
     public static notAuthenticated(method: string, endpoint: string) {
-        test('it should FAIL (401) when user is not authenticated', async ({ client }) => {
+        test('should FAIL (401) when user is not authenticated', async ({ client }) => {
             const response = await client[method](endpoint)
             response.assertAgainstApiSpec()
             response.assertStatus(401)
@@ -19,7 +19,7 @@ export default abstract class AuthenticationTestsHelper {
     }
 
     public static ressourceIdInvalid(ressource: string, method: string, endpoint: string) {
-        test(`it should FAIL (422) when ${ressource} id is an invalid uuid`, async ({ client }) => {
+        test(`should FAIL (422) when ${ressource} id is an invalid uuid`, async ({ client }) => {
             const user = await User.firstOrFail()
             const response = await client[method](endpoint).loginAs(user)
             response.assertAgainstApiSpec()
