@@ -24,7 +24,7 @@ export default class UserRelationship extends BaseModel {
     public isBlocked: boolean
 
     @column()
-    public isDeleted: boolean
+    public isHidden: boolean
 
     @belongsTo(() => User, { localKey: 'id', foreignKey: 'relatingUserId' })
     public relatingUser: BelongsTo<typeof User>
@@ -52,7 +52,7 @@ export default class UserRelationship extends BaseModel {
     }
 
     @beforeCreate()
-    public static isDeleted(UserRelationship: UserRelationship) {
-        UserRelationship.isDeleted = false
+    public static isHidden(UserRelationship: UserRelationship) {
+        UserRelationship.isHidden = false
     }
 }

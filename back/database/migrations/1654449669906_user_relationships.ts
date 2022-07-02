@@ -10,7 +10,7 @@ export default class UserRelationshipsSchema extends BaseSchema {
             table.uuid('related_user_id').references('users.id').onDelete('CASCADE').onUpdate('CASCADE')
             table.uuid('group_id').nullable().references('groups.id').onDelete('SET NULL').onUpdate('CASCADE')
             table.boolean('is_blocked').notNullable()
-            table.boolean('is_deleted').notNullable()
+            table.boolean('is_hidden').notNullable()
             table.timestamp('created_at', { useTz: true })
             table.timestamp('updated_at', { useTz: true })
             table.unique(['relating_user_id', 'related_user_id'])
