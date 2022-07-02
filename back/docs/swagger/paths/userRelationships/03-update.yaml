@@ -1,6 +1,6 @@
-/users/{userId}/user-relationships/{id}:
-  delete:
-    summary: Delete a UserRelationship
+/user-relationships/{id}:
+  put:
+    summary: Update a UserRelationship
     tags:
       - UserRelationships
     parameters:
@@ -11,9 +11,24 @@
         schema:
           type: string
           format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              isHidden:
+                type: boolean
     responses:
-      '204':
-        description: No Content
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRelationship'
+      '404':
+        description: Not Found
         content:
           application/json:
             schema:
@@ -32,20 +47,8 @@
                     properties:
                       message:
                         type: string
-      '404':
-        description: Not Found
-        content:
-          application/json:
-            schema:
-              type: object
-      '422':
-        description: Unprocessable Entity
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnprocessableEntity'
       '403':
-        description: No content
+        description: Forbidden
         content:
           application/json:
             schema:
@@ -54,3 +57,9 @@
                 message:
                   type: string
                   example: 'E_AUTHORIZATION_FAILURE: Not authorized to perform this action'
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'

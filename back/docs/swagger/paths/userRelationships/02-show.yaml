@@ -1,4 +1,4 @@
-/users/{userId}/user-relationships/{id}:
+/user-relationships/{id}:
   get:
     summary: Show a UserRelationship
     tags:

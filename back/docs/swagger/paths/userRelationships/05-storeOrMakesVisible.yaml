@@ -1,23 +1,25 @@
-/users/{userId}/user-relationships:
+/user-relationships/store-or-makes-visible:
   post:
-    summary: Add a UserRelationship
+    summary: Add or makes visible a UserRelationship
     tags:
       - UserRelationships
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: uuid of the user
-        schema:
-          type: string
-          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              relatedUserEmail:
+                type: string
+                format: email
     responses:
-      '201':
-        description: Created
+      '200':
+        description: Ok
         content:
           application/json:
             schema:
-              type: object
+              $ref: '#/components/schemas/UserRelationship'
       '401':
         description: Unauthorized
         content:

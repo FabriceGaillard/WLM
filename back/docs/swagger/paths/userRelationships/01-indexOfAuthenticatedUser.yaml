@@ -1,4 +1,4 @@
-/users/{userId}/user-relationships:
+/user-relationships/index-of-authenticated-user:
   get:
     summary: Return all relationships of authenticated user
     tags:
@@ -32,19 +32,11 @@
           application/json:
             schema:
               type: object
-      '403':
-        description: Forbidden
-        content:
-          application/json:
-            schema:
-              type: object
               properties:
-                message:
-                  type: string
-                  example: 'E_AUTHORIZATION_FAILURE: Not authorized to perform this action'
-      '422':
-        description: Unprocessable Entity
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnprocessableEntity'
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
