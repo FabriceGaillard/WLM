@@ -1,0 +1,44 @@
+/blocked-user-relationship-logs/{id}:
+  get:
+    summary: Show a blocked user relationship log
+    tags:
+      - BlockedUserRelationshipLogs
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the BlockedUserRelationshipLog
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockedUserRelationshipLog'
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientError'
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object

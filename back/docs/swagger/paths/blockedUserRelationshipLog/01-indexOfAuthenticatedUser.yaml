@@ -1,0 +1,28 @@
+/blocked-user-relationship-logs/index-of-authenticated-user:
+  get:
+    summary: Return all blocked user relationship logs of authenticated user
+    tags:
+      - BlockedUserRelationshipLogs
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BlockedUserRelationshipLog'
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
