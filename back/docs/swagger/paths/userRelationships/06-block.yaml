@@ -1,0 +1,62 @@
+/user-relationships/{id}/block:
+  patch:
+    summary: Block a userRelationships
+    tags:
+      - UserRelationships
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: uuid of the UserRelationship
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '204':
+        description: No Content
+        content:
+          application/json:
+            schema:
+              type: object
+      '401':
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+      '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: 'E_AUTHORIZATION_FAILURE: Not authorized to perform this action'
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+      '404':
+        description: Not Found
+        content:
+          application/json:
+            schema:
+              type: object
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'

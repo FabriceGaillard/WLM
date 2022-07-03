@@ -23,8 +23,10 @@ components:
           nullable: true
           type: object
           $ref: '#/components/schemas/User'
-        mean:
-          enum: ['chat', 'mail', 'none']
+        isBlocked:
+          type: boolean
+        isHidden:
+          type: boolean
         updatedAt:
           type: string
           format: date-time
