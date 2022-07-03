@@ -7,5 +7,5 @@ tags:
     description: Everything about UserRelationships
   - name: Groups
     description: Everything about Groups
-  - name: BlockedUserRelationships
-    description: Everything about BlockedUserRelationships
+  - name: BlockedUserRelationshipLogs
+    description: Everything about BlockedUserRelationshipLogs
