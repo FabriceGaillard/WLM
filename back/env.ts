@@ -31,5 +31,8 @@ export default Env.rules({
     MAILGUN_API_KEY: Env.schema.string(),
     MAILGUN_DOMAIN: Env.schema.string(),
 
-    SESSION_DRIVER: Env.schema.string()
+    SESSION_DRIVER: Env.schema.string(),
+
+    FRONT_HOST: Env.schema.string({ format: 'host' }),
+    FRONT_PORT: Env.schema.number(),
 })
