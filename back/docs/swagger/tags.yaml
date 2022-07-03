@@ -5,3 +5,7 @@ tags:
     description: Everything about Users
   - name: UserRelationships
     description: Everything about UserRelationships
+  - name: Groups
+    description: Everything about Groups
+  - name: BlockedUserRelationships
+    description: Everything about BlockedUserRelationships

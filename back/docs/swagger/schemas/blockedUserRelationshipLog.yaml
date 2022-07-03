@@ -1,0 +1,42 @@
+components:
+  schemas:
+    BlockedUserRelationshipLog:
+      type: object
+      properties:
+        relatingUserId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        relatedUserId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        relatingUser:
+          nullable: true
+          type: object
+          $ref: '#/components/schemas/User'
+        relatedUser:
+          nullable: true
+          type: object
+          $ref: '#/components/schemas/User'
+        startedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        endedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true

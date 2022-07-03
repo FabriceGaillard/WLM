@@ -251,6 +251,78 @@ paths:
             application/json:
               schema:
                 type: object
+  /blocked-user-relationship-logs/index-of-authenticated-user:
+    get:
+      summary: Return all blocked user relationship logs of authenticated user
+      tags:
+        - BlockedUserRelationshipLogs
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlockedUserRelationshipLog"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+  "/blocked-user-relationship-logs/{id}":
+    get:
+      summary: Show a blocked user relationship log
+      tags:
+        - BlockedUserRelationshipLogs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the BlockedUserRelationshipLog
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlockedUserRelationshipLog"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   /groups:
     get:
       summary: Return all groups
@@ -272,7 +344,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ClientError"
     post:
-      summary: Store a user
+      summary: Store a group
       tags:
         - Groups
       requestBody:
@@ -320,14 +392,14 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntity"
   "/groups/{id}":
     get:
-      summary: Show a user
+      summary: Show a group
       tags:
         - Groups
       parameters:
         - name: id
           in: path
           required: true
-          description: uuid of the user
+          description: uuid of the group
           schema:
             type: string
             format: uuid
@@ -363,14 +435,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
     put:
-      summary: Update a user
+      summary: Update a group
       tags:
         - Groups
       parameters:
         - name: id
           in: path
           required: true
-          description: uuid of the user
+          description: uuid of the group
           schema:
             type: string
             format: uuid
@@ -424,14 +496,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
     delete:
-      summary: Delete a user
+      summary: Delete a group
       tags:
         - Groups
       parameters:
         - name: id
           in: path
           required: true
-          description: uuid of the user
+          description: uuid of the group
           schema:
             type: string
             format: uuid
@@ -466,7 +538,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
-  "/users/{userId}/user-relationships":
+  /user-relationships/index-of-authenticated-user:
     get:
       summary: Return all relationships of authenticated user
       tags:
@@ -494,55 +566,8 @@ paths:
                       properties:
                         message:
                           type: string
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
         "404":
           description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-        "422":
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UnprocessableEntity"
-    post:
-      summary: Add a UserRelationship
-      tags:
-        - UserRelationships
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: uuid of the user
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-        "401":
-          description: Unauthorized
           content:
             application/json:
               schema:
@@ -555,29 +580,7 @@ paths:
                       properties:
                         message:
                           type: string
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-        "422":
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UnprocessableEntity"
-  "/users/{userId}/user-relationships/{id}":
+  "/user-relationships/{id}":
     get:
       summary: Show a UserRelationship
       tags:
@@ -633,8 +636,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
-    delete:
-      summary: Delete a UserRelationship
+    put:
+      summary: Update a UserRelationship
       tags:
         - UserRelationships
       parameters:
@@ -645,9 +648,82 @@ paths:
           schema:
             type: string
             format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isHidden:
+                  type: boolean
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRelationship"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+  /user-relationships/store-or-makes-visible:
+    post:
+      summary: Add or makes visible a UserRelationship
+      tags:
+        - UserRelationships
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                relatedUserEmail:
+                  type: string
+                  format: email
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRelationship"
+        "400":
+          description: Bad Request
           content:
             application/json:
               schema:
@@ -667,7 +743,131 @@ paths:
                         message:
                           type: string
         "403":
-          description: No content
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+  "/user-relationships/{id}/block":
+    patch:
+      summary: Block a userRelationships
+      tags:
+        - UserRelationships
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the UserRelationship
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+  "/user-relationships/{id}/unblock":
+    patch:
+      summary: Unblock a userRelationships
+      tags:
+        - UserRelationships
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: uuid of the UserRelationship
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        "403":
+          description: Forbidden
           content:
             application/json:
               schema:
@@ -750,6 +950,12 @@ paths:
                   message:
                     type: string
                     example: "E_AUTHORIZATION_FAILURE: Not authorized to perform this action"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
         "422":
           description: Unprocessable Entity
           content:
@@ -805,6 +1011,12 @@ paths:
             application/json:
               schema:
                 type: object
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   "/users/{id}/update-password":
     patch:
       summary: Update password of a user
@@ -943,6 +1155,46 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntity"
 components:
   schemas:
+    BlockedUserRelationshipLog:
+      type: object
+      properties:
+        relatingUserId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        relatedUserId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        relatingUser:
+          nullable: true
+          type: object
+          $ref: "#/components/schemas/User"
+        relatedUser:
+          nullable: true
+          type: object
+          $ref: "#/components/schemas/User"
+        startedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        endedAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
     ClientError:
       type: object
       properties:
@@ -1122,11 +1374,10 @@ components:
           nullable: true
           type: object
           $ref: "#/components/schemas/User"
-        mean:
-          enum:
-            - chat
-            - mail
-            - none
+        isBlocked:
+          type: boolean
+        isHidden:
+          type: boolean
         updatedAt:
           type: string
           format: date-time
@@ -1412,3 +1663,7 @@ tags:
     description: Everything about Users
   - name: UserRelationships
     description: Everything about UserRelationships
+  - name: Groups
+    description: Everything about Groups
+  - name: BlockedUserRelationships
+    description: Everything about BlockedUserRelationships
