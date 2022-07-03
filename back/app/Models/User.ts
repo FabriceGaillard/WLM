@@ -4,7 +4,7 @@ import { column, beforeSave, BaseModel, beforeCreate, hasMany, HasMany } from '@
 import { v4 as uuidv4 } from 'uuid'
 import UserRelationship from './UserRelationship'
 import Group from './Group'
-import BlockedRelationshipLog from './blockedRelationshipLog'
+import BlockedUserRelationshipLog from './BlockedUserRelationshipLog'
 
 export enum gender {
     MALE = 'male',
@@ -85,8 +85,8 @@ export default class User extends BaseModel {
     @hasMany(() => UserRelationship, { foreignKey: 'relatingUserId' })
     public userRelationships: HasMany<typeof UserRelationship>
 
-    @hasMany(() => BlockedRelationshipLog, { foreignKey: 'relatingUserId' })
-    public blockedRelationshipLogs: HasMany<typeof BlockedRelationshipLog>
+    @hasMany(() => BlockedUserRelationshipLog, { foreignKey: 'relatingUserId' })
+    public blockedUserRelationshipLogs: HasMany<typeof BlockedUserRelationshipLog>
 
     @hasMany(() => Group)
     public groups: HasMany<typeof Group>
