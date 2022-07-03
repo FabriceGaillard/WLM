@@ -1,9 +1,11 @@
 import { validator } from '@ioc:Adonis/Core/Validator'
+import ObjectHelper from 'App/Helpers/ObjectHelper'
 
 validator.rule(
     'different',
     (value, [field], options) => {
-        if (!options.root[field] || value === options.root[field]) {
+        const property = ObjectHelper.getPropertyFromPointedString(options.root, field)
+        if (!property || value === property) {
             options.errorReporter.report(
                 options.pointer,
                 'different',
