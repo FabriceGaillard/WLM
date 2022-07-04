@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import UserRelationship from './UserRelationship'
 import Group from './Group'
 import BlockedUserRelationshipLog from './BlockedUserRelationshipLog'
+import Message from './Message'
 import Channel from './Channel'
 
 export enum gender {
@@ -94,6 +95,9 @@ export default class User extends BaseModel {
 
     @hasMany(() => Group)
     public groups: HasMany<typeof Group>
+
+    @hasMany(() => Message)
+    public messages: HasMany<typeof Message>
 
     @beforeSave()
     public static async hashPassword(user: User) {
