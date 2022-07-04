@@ -7,6 +7,6 @@ export default class ResetPasswordDemand extends BaseMailer {
     public prepare(message: MessageContract) {
         message.subject('reset password demand')
             .to(this.recipient)
-            .html(this.url)
+            .html(`<a href="${this.url}">${this.url}</a>`)
     }
 }

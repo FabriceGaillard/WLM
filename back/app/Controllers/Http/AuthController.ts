@@ -43,8 +43,11 @@ export default class AuthController {
         const signedUrl = Route.makeSignedUrl('verifyEmail', {
             email: payload.email,
         })
+        const signedUrlMasked = Buffer.from(signedUrl, 'utf8').toString('base64');
+        const url = `http://${Env.get('FRONT_HOST')}:${Env.get('FRONT_PORT')}/reset-password?token=${signedUrlMasked}`
+
         try {
-            const mailer = new VerifyEmail(payload.email, signedUrl)
+            const mailer = new VerifyEmail(payload.email, url)
             await mailer.send()
         } catch (error) {
             logger.warn(error)
