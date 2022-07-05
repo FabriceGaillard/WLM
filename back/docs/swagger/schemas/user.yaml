@@ -74,7 +74,7 @@ components:
           maxLength: 5
           pattern: /^(?:2A|2B|\d{2})\d{3}$/
           nullable: true
-          example: 42100
+          example: '42100'
         verifiedAt:
           type: string
           format: date-time

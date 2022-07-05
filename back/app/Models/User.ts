@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, beforeCreate, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, beforeCreate, hasMany, HasMany, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import { v4 as uuidv4 } from 'uuid'
 import UserRelationship from './UserRelationship'
 import Group from './Group'
 import BlockedUserRelationshipLog from './BlockedUserRelationshipLog'
+import Channel from './Channel'
 
 export enum gender {
     MALE = 'male',
@@ -87,6 +88,9 @@ export default class User extends BaseModel {
 
     @hasMany(() => BlockedUserRelationshipLog, { foreignKey: 'relatingUserId' })
     public blockedUserRelationshipLogs: HasMany<typeof BlockedUserRelationshipLog>
+
+    @manyToMany(() => Channel)
+    public channels: ManyToMany<typeof Channel>
 
     @hasMany(() => Group)
     public groups: HasMany<typeof Group>
