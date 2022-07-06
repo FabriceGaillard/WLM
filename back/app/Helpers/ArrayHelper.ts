@@ -1,5 +1,5 @@
 export default abstract class ArrayHelper {
-    public static toObjectByKey(arr: any[], key: string) {
+    public static toObjectByKey<T>(arr: T[], key: string): { [k: string]: T } {
         let result = {}
 
         for (const item of arr) {
@@ -7,5 +7,10 @@ export default abstract class ArrayHelper {
         }
 
         return result
+    }
+
+    public static random<T>(arr: Array<T>): T {
+        const index = Math.floor(Math.random() * arr.length)
+        return arr[index]
     }
 }
