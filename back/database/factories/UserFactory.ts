@@ -2,7 +2,9 @@ import User, { gender, status } from 'App/Models/User'
 import Factory from '@ioc:Adonis/Lucid/Factory'
 import ArrayHelper from 'App/Helpers/ArrayHelper'
 import { DateTime } from 'luxon'
-
+import { BlockedUserRelationshipLogFactory } from './BlockedUserRelationshipLog'
+import { ChannelFactory } from './ChannelFactory'
+import { GroupFactory } from './GroupFactory'
 
 export const UserFactory = Factory
     .define(User, ({ faker }) => {
@@ -26,4 +28,8 @@ export const UserFactory = Factory
             verifiedAt: DateTime.fromISO(faker.date.past().toISOString()),
         }
     })
+    .relation('blockedUserRelationshipLogs', () => BlockedUserRelationshipLogFactory)
+    .relation('channels', () => ChannelFactory)
+    .relation('groups', () => GroupFactory)
+    .relation('userRelationships', () => BlockedUserRelationshipLogFactory)
     .build()
