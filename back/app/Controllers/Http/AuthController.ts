@@ -44,7 +44,7 @@ export default class AuthController {
             email: payload.email,
         })
         const signedUrlMasked = Buffer.from(signedUrl, 'utf8').toString('base64');
-        const url = `http://${Env.get('FRONT_HOST')}:${Env.get('FRONT_PORT')}/reset-password?token=${signedUrlMasked}`
+        const url = `http://${Env.get('FRONT_HOST')}:${Env.get('FRONT_PORT')}/verify?token=${signedUrlMasked}`
 
         try {
             const mailer = new VerifyEmail(payload.email, url)
