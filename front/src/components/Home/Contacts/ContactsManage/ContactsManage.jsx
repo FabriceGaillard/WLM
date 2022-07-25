@@ -1,13 +1,15 @@
 // COMPONENTS
-import { ContactsManageAdd, ContactsManageSort, ContactsManageSearch } from "../contactsIndex";
+import { ContactsManageAdd, ContactsManageSortShow, ContactsManageSearch } from "../contactsIndex";
+// ICONS
+import contactsManageIcon from "/assets/icons/contactsManageIcons/contacts-manage-icon.png";
 
 const ContactsManage = () => {
   return (
     <div className="contacts-manage__container">
-      <img className="contacts-manage__icon" src="/assets/icons/contactsManageIcons/contacts-manage-icon.png" />
+      <img className="contacts-manage__icon" src={contactsManageIcon} />
       <ContactsManageSearch />
       <ContactsManageAdd />
-      <ContactsManageSort />
+      <ContactsManageSortShow />
     </div>
   );
 };
