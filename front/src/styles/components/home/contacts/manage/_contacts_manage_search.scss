@@ -18,6 +18,7 @@
     height: 100%;
     width: 100%;
     padding: 2px 7px;
+
     background: linear-gradient(
       180deg,
       rgba(245, 246, 247, 1) 0%,
@@ -36,6 +37,11 @@
       &::placeholder {
         color: transparent;
       }
+    }
+
+    &::selection {
+      color: white;
+      background-color: #0078d7;
     }
   }
 
