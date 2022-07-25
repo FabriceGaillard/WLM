@@ -39,7 +39,12 @@
 @use "./components/home/contacts/contacts";
 @use "./components/home/contacts/manage/contacts_manage";
 @use "./components/home/contacts/manage/contacts_manage_search";
-@use "./components/home/contacts/manage/contacts_manage_buttons";
+
+// HOME CONTACTS BUTTONS
+@use "./components/home/contacts/manage/buttons/contacts_manage_buttons";
+@use "./components/home/contacts/manage/buttons/contacts_manage_button_reset";
+@use "./components/home/contacts/manage/buttons/contacts_manage_button_sort";
+@use "./components/home/contacts/manage/buttons/contacts_manage_button_add";
 
 // REGISTER
 @import "./components/register/register";

@@ -1,4 +1,4 @@
-@use "../../../../abstracts/index" as *;
+@use "../../../../../abstracts/index" as *;
 
 .add-contact__button,
 .sort-contact__button,
@@ -35,26 +35,5 @@
     .notHover {
       visibility: visible;
     }
-  }
-}
-
-.add-contact__button {
-  &__img--container .hover {
-    top: 1px;
-  }
-}
-
-.sort-contact__button {
-  &__img--container {
-    margin-right: 15px;
-    top: 1px;
-  }
-}
-
-.reset-input__button {
-  margin-right: 4px;
-
-  &:hover {
-    cursor: pointer;
   }
 }
