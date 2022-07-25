@@ -1,9 +1,19 @@
-// COMPONENTS
-import React from 'react';
-
 const ContactsManageAdd = () => {
+  const handleAdd = () => {
+    console.log("🚀 ~ file: ContactsManageAdd.jsx ~ line 9 ~ handleAdd");
+  };
+
   return (
-    <div>ContactsManageAdd</div>
+    <button
+      type="button"
+      className="sort-contact__button"
+      onClick={handleAdd}
+    >
+      <div className="add-contact__button__img--container">
+        <img src="/assets/icons/contactsManageIcons/contacts-manage-add-icon.png" className="notHover" alt="" />
+        <img src="/assets/icons/contactsManageIcons/contacts-manage-add-icon-hover.png" className="hover" alt="" />
+      </div>
+    </button>
   );
 };
 

@@ -1,13 +1,14 @@
 // COMPONENTS
-import { ContactsManageAdd, ContactsManageOrder, ContactsManageSearch } from "../contactsIndex";
+import { ContactsManageAdd, ContactsManageSort, ContactsManageSearch } from "../contactsIndex";
 
 const ContactsManage = () => {
   return (
-    <>
-      <ContactsManageAdd />
-      <ContactsManageOrder />
+    <div className="contacts-manage__container">
+      <img className="contacts-manage__icon" src="/assets/icons/contactsManageIcons/contacts-manage-icon.png" />
       <ContactsManageSearch />
-    </>
+      <ContactsManageAdd />
+      <ContactsManageSort />
+    </div>
   );
 };
 
