@@ -11,6 +11,7 @@ const ContactsManageAdd = () => {
     <button
       type="button"
       className="add-contact__button"
+      title="Ajouter un contact"
       onClick={handleAdd}
     >
       <div className="add-contact__button__img--container">

@@ -28,6 +28,8 @@ const LoginStatus = () => {
         type="button"
         className={`status-select${showStatusList ? " border" : ""}`}
         onClick={handleStatusList}
+        title="Sélectionnez le statut que vos contacts
+        verront s'afficher après votre connexion."
       >
         {statusList[formUpdate.status].sentence}
         <div className='dropdown' id="dropDownStatus">

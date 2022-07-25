@@ -26,6 +26,7 @@ const ContactsManageSortShow = () => {
       <button
         type="button"
         className="sort-contact__button"
+        title="Trier vos contacts"
         onClick={handleSortMenu}
         ref={menuButtonRef}
       >

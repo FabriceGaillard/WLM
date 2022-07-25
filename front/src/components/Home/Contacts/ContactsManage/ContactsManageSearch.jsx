@@ -24,7 +24,8 @@ const ContactsManageSearch = () => {
     <div className="contacts-manage-search__container">
       <input
         type="text"
-        placeholder="Rechercher un contact ou un numéro..."
+        placeholder="Rechercher un contact..."
+        title="Retrouvez un contact en entrant un nom."
         onChange={handleSearchInput}
         value={searchInputValue}
         ref={inputRef}

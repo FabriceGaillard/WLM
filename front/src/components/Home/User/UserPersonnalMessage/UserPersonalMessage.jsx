@@ -65,6 +65,7 @@ const UserPersonalMessage = () => {
         )
         : <button
           type="button"
+          title="Partagez un message perso avec vos contacts"
           ref={buttonRef}
           className="user-personnal-message"
           onClick={() => setClickedButton(true)}

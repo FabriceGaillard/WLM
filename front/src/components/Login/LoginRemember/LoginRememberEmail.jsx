@@ -45,7 +45,12 @@ const LoginRememberEmail = () => {
           checked={formUpdate.rememberEmail}
           onChange={handleRememberEmailAndStatus}
         />
-        <label htmlFor="remember_email">Mémoriser mon adresse</label>
+        <label
+          htmlFor="remember_email"
+          title="Enregistre votre adresse de messagerie et votre status."
+        >
+          Mémoriser mon adresse
+        </label>
       </div>
       <button
         type="button"

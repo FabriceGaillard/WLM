@@ -93,6 +93,7 @@ const LoginSubmit = () => {
     <button
       type="button"
       id="connect__btn"
+      title="Connectez-vous"
       onClick={() => {
         setIsConnecting(prev => !prev);
         setHasClickedSubmitBtn(true);

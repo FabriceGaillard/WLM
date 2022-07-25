@@ -24,6 +24,7 @@ const UserSettings = () => {
     <div className="user__container-settings">
       <button
         type="button"
+        title="Cliquez ici pour modifier votre pseudo, status ou image perso."
         className={`status-select${showSettings ? " border" : ""}`}
         onClick={handleUserSettings}>
         <span className="user__pseudo"><b>{userDataFromDb.username}</b></span>

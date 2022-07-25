@@ -6,7 +6,11 @@ import contactsManageIcon from "/assets/icons/contactsManageIcons/contacts-manag
 const ContactsManage = () => {
   return (
     <div className="contacts-manage__container">
-      <img className="contacts-manage__icon" src={contactsManageIcon} />
+      <img
+        className="contacts-manage__icon"
+        src={contactsManageIcon}
+        title="Votre liste de contacts"
+      />
       <ContactsManageSearch />
       <ContactsManageAdd />
       <ContactsManageSortShow />

@@ -12,6 +12,7 @@ const LoginResetPasswordButton = () => {
   return (
     <button
       type="button"
+      title="Redéfinir votre mot de passe"
       className="reset-password__btn"
       onClick={switchToAskResetForm}
     >

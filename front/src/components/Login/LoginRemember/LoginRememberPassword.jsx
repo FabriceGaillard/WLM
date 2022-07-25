@@ -38,7 +38,8 @@ const LoginRememberPassword = () => {
         onChange={handleRememberPassword}
         checked={formUpdate.rememberPassword}
       />
-      <label htmlFor="remember_password">Mémoriser mon mot de passe</label>
+      <label htmlFor="remember_password">
+        Mémoriser mon mot de passe</label>
     </div>
   );
 };
