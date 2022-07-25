@@ -3,8 +3,8 @@ import { useRef, useEffect } from 'react';
 // HELPERS
 import clickOutside from '/src/helpers/clickOutside';
 // DATA
-import menuSortOptions from '../../../../../data/home/contacts/menuSortOptions';
-import menuShowOptions from '../../../../../data/home/contacts/menuShowOptions';
+import menuSortOptions from '/src/data/home/contacts/menuSortOptions';
+import menuShowOptions from '/src/data/home/contacts/menuShowOptions';
 
 const ContactsManageSortShowMenu = (props) => {
 

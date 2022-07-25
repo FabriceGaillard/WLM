@@ -1,6 +1,6 @@
 // HELPERS
-import showDetails from '../../../helpers/home/contacts/show/showDetails';
-import showEveryContacts from '../../../helpers/home/contacts/show/showEveryContacts';
+import showDetails from '/src/helpers/home/contacts/show/showDetails';
+import showEveryContacts from '/src/helpers/home/contacts/show/showEveryContacts';
 
 const menuShowOptions = [
   {

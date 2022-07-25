@@ -12,11 +12,11 @@ import {
 import HeaderWithLogo from '../HeaderWithLogo';
 import FooterWindowsLiveId from '../FooterWindowsLiveId';
 // CONTEXT
-import loginContext from '../../contexts/LoginContext';
+import loginContext from '/src/contexts/LoginContext';
 // DATA
-import formLoginData from '../../data/formLoginData';
+import formLoginData from '/src/data/login/formLoginData';
 // HELPERS
-import { getLocalStorageUsers } from "../../helpers/handleStorage";
+import { getLocalStorageUsers } from "/src/helpers/handleStorage";
 
 const Login = () => {
 

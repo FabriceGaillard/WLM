@@ -2,11 +2,11 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 // CONTEXT
-import loginContext from '../../contexts/LoginContext';
-import globalContext from '../../contexts/GlobalContext';
+import loginContext from '/src/contexts/LoginContext';
+import globalContext from '/src/contexts/GlobalContext';
 // HELPERS
-import { fetchLogin, fetchMeFromLogin } from '../../helpers/fetch';
-import { handleStorageWhenAuthenticated } from '../../helpers/handleStorage';
+import { fetchLogin, fetchMeFromLogin } from '/src/helpers/fetch';
+import { handleStorageWhenAuthenticated } from '/src/helpers/handleStorage';
 
 const LoginSubmit = () => {
 

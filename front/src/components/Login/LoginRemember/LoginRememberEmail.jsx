@@ -1,11 +1,11 @@
 // HOOKS
 import { useContext, useRef } from 'react';
 // CONTEXT
-import loginContext from '../../../contexts/LoginContext';
+import loginContext from '/src/contexts/LoginContext';
 // HELPERS
-import { deleteOneUserFromStorage } from '../../../helpers/handleStorage';
+import { deleteOneUserFromStorage } from '/src/helpers/handleStorage';
 // DATA
-import formLoginData from '../../../data/login/formLoginData';
+import formLoginData from '/src/data/login/formLoginData';
 
 const LoginRememberEmail = () => {
 

@@ -1,7 +1,7 @@
 // HOOKS
 import { useContext, useRef } from 'react';
 // CONTEXT
-import loginContext from '../../contexts/LoginContext';
+import loginContext from '/src/contexts/LoginContext';
 
 const LoginAuto = () => {
 

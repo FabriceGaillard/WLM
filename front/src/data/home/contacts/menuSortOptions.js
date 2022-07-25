@@ -1,7 +1,7 @@
 // HELPERS
-import sortStatus from '../../../helpers/home/contacts/sort/sortStatus';
-import sortGroup from '../../../helpers/home/contacts/sort/sortGroup';
-import sortPersonalSpace from '../../../helpers/home/contacts/sort/sortPersonalSpace';
+import sortStatus from '/src/helpers/home/contacts/sort/sortStatus';
+import sortGroup from '/src/helpers/home/contacts/sort/sortGroup';
+import sortPersonalSpace from '/src/helpers/home/contacts/sort/sortPersonalSpace';
 
 const menuSortOptions = [
   {

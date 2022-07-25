@@ -1,13 +1,13 @@
 // HOOKS
 import { useContext } from 'react';
 // ICONS
-import ArrowIcon from '../../../icons/dropDownArrow';
+import ArrowIcon from '/src/icons/dropDownArrow';
 // CONTEXT
-import loginContext from '../../../contexts/LoginContext';
+import loginContext from '/src/contexts/LoginContext';
 // HELPERS
-import replaceUserInfosWithSelectedEmail from '../../../helpers/login/replaceUserInfosWithSelectedEmail';
+import replaceUserInfosWithSelectedEmail from '/src/helpers/login/replaceUserInfosWithSelectedEmail';
 // DATA
-import formLoginData from '../../../data/login/formLoginData';
+import formLoginData from '/src/data/login/formLoginData';
 
 const LoginAuthEmailInput = (props) => {
 

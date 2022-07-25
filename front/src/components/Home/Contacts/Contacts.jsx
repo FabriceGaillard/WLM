@@ -1,8 +1,5 @@
 // COMPONENTS
-import {
-  ContactsManage,
-  ContactsList
-} from './contactsIndex';
+import { ContactsManage, ContactsList } from './contactsIndex';
 
 const Contacts = () => {
   return (

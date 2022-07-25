@@ -1,11 +1,11 @@
 // HOOKS
 import { useRef, useEffect, useContext, useCallback } from 'react';
 // CONTEXT 
-import loginContext from '../../../contexts/LoginContext';
+import loginContext from '/src/contexts/LoginContext';
 // HELPERS
-import clickOutside from '../../../helpers/clickOutside';
+import clickOutside from '/src/helpers/clickOutside';
 // DATA
-import statusList from '../../../data/login/statusList';
+import statusList from '/src/data/login/statusList';
 
 const LoginStatusList = (props) => {
 

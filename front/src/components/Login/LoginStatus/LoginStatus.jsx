@@ -3,11 +3,11 @@ import { useState, useContext } from 'react';
 // COMPONENTS
 import { LoginStatusList } from '../loginIndex';
 // CONTEXT
-import loginContext from '../../../contexts/LoginContext';
+import loginContext from '/src/contexts/LoginContext';
 // DATA
-import statusList from '../../../data/login/statusList';
+import statusList from '/src/data/login/statusList';
 // ICONS
-import ArrowIcon from '../../../icons/dropDownArrow';
+import ArrowIcon from '/src/icons/dropDownArrow';
 
 const LoginStatus = () => {
 

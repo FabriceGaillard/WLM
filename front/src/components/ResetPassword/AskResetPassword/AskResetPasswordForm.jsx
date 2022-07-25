@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { AskResetPasswordInput, AskResetPasswordInstructions, AskResetPasswordSubmit } from "../resetPasswordIndex";
 // HELPERS
-import { fetchAskResetPassword } from '../../../helpers/fetch';
+import { fetchAskResetPassword } from '/src/helpers/fetch';
 
 const AskResetPasswordForm = ({ setResetPasswordDemandSent }) => {
 
