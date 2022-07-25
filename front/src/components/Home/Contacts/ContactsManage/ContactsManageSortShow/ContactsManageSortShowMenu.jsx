@@ -1,41 +1,16 @@
 // HOOKS
 import { useRef, useEffect } from 'react';
 // HELPERS
-import clickOutside from '../../../../../helpers/clickOutside';
+import clickOutside from '/src/helpers/clickOutside';
+// DATA
+import menuSortOptions from '../../../../../data/home/contacts/menuSortOptions';
+import menuShowOptions from '../../../../../data/home/contacts/menuShowOptions';
 
 const ContactsManageSortShowMenu = (props) => {
 
   const { dropDownButtonTarget, setShowContactsSortMenu } = props;
 
   const sortMenuContainerRef = useRef(null);
-
-  const sortStatus = () => {
-    console.log("sortStatus");
-  };
-
-  const sortGroup = () => {
-    console.log("sortGroup");
-  };
-
-  const sortPersonalSpace = () => {
-    console.log("sortPersonalSpace");
-  };
-
-  const showDetails = () => {
-    console.log("showDetails");
-  };
-
-  const showEveryContacts = () => {
-    console.log("showEveryContacts");
-  };
-
-  const menuOptions = [
-    { title: "Trier par statut", action: sortStatus },
-    { title: "Trier par groupe", action: sortGroup },
-    { title: "Trier par date de mise à jour des espaces perso", action: sortPersonalSpace },
-    { title: "Afficher le détail des contacts", action: showDetails },
-    { title: "Afficher tous les contacts", action: showEveryContacts }
-  ];
 
   const clickOutsideHandler = e => {
     const options = [
@@ -63,7 +38,8 @@ const ContactsManageSortShowMenu = (props) => {
       ref={sortMenuContainerRef}
       onClick={() => setShowContactsSortMenu(false)}
     >
-      {menuOptions.map(({ action, title }, idx) => <li key={idx} onClick={action}>{title}</li>)}
+      {menuSortOptions.map(({ action, title }, idx) => <li key={idx} onClick={action}>{title}</li>)}
+      {menuShowOptions.map(({ action, title }, idx) => <li key={idx} onClick={action}>{title}</li>)}
     </ul>
   );
 };
