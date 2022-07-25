@@ -1,3 +1,7 @@
+// ICONS
+import addIcon from "/assets/icons/contactsManageIcons/contacts-manage-add-icon.png";
+import addIconHover from "/assets/icons/contactsManageIcons/contacts-manage-add-icon-hover.png";
+
 const ContactsManageAdd = () => {
   const handleAdd = () => {
     console.log("🚀 ~ file: ContactsManageAdd.jsx ~ line 9 ~ handleAdd");
@@ -10,8 +14,8 @@ const ContactsManageAdd = () => {
       onClick={handleAdd}
     >
       <div className="add-contact__button__img--container">
-        <img src="/assets/icons/contactsManageIcons/contacts-manage-add-icon.png" className="notHover" alt="" />
-        <img src="/assets/icons/contactsManageIcons/contacts-manage-add-icon-hover.png" className="hover" alt="" />
+        <img src={addIcon} className="notHover" alt="" />
+        <img src={addIconHover} className="hover" alt="" />
       </div>
     </button>
   );

@@ -1,5 +1,8 @@
 // COMPONENTS
 import { useState, useRef } from 'react';
+// ICONS
+import resetInputIcon from "/assets/icons/contactsManageIcons/contacts-manage-search-reset.png";
+import resetInputIconHover from "/assets/icons/contactsManageIcons/contacts-manage-search-reset-hover.png";
 
 const ContactsManageSearch = () => {
 
@@ -31,8 +34,8 @@ const ContactsManageSearch = () => {
         onClick={handleResetInput}
       >
         <div className="reset-input__button__img--container">
-          <img src="/assets/icons/contactsManageIcons/contacts-manage-search-reset.png" className="notHover" />
-          <img src="/assets/icons/contactsManageIcons/contacts-manage-search-reset-hover.png" className="hover" />
+          <img src={resetInputIcon} className="notHover" />
+          <img src={resetInputIconHover} className="hover" />
         </div>
       </button>
     </div>

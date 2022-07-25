@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import loginContext from '../../../contexts/LoginContext';
 // COMPONENTS
 import { LoginRememberEmail, LoginRememberPassword, LoginAuto } from '../loginIndex';
+// ICONS
+import loader from "/assets/loading_anim.gif";
 
 const LoginRemember = () => {
 
@@ -23,7 +25,7 @@ const LoginRemember = () => {
         <div>Connexion...</div>
         <img
           className="connecting-gif"
-          src="./assets/loading_anim.gif"
+          src={loader}
           alt="connecting gif animation"
         />
       </div>

@@ -2,6 +2,9 @@
 import { useState, useRef } from 'react';
 // COMPONENTS
 import { ContactsManageSortShowMenu } from "../../contactsIndex";
+// ICONS
+import sortIcon from "/assets/icons/contactsManageIcons/contacts-manage-sort-icon.png";
+import sortIconHover from "/assets/icons/contactsManageIcons/contacts-manage-sort-icon-hover.png";
 
 const ContactsManageSortShow = () => {
 
@@ -27,8 +30,8 @@ const ContactsManageSortShow = () => {
         ref={menuButtonRef}
       >
         <div className="sort-contact__button__img--container">
-          <img src="/assets/icons/contactsManageIcons/contacts-manage-sort-icon.png" className="notHover" alt="" />
-          <img src="/assets/icons/contactsManageIcons/contacts-manage-sort-icon-hover.png" className="hover" alt="" />
+          <img src={sortIcon} className="notHover" alt="" />
+          <img src={sortIconHover} className="hover" alt="" />
         </div>
       </button>
       {showContactsSortMenu && (
