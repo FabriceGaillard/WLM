@@ -1,7 +1,8 @@
 @use "../../../../abstracts/index" as *;
 
 .add-contact__button,
-.sort-contact__button {
+.sort-contact__button,
+.reset-input__button {
   width: 20px;
   height: 20px;
   border: none;
@@ -9,7 +10,10 @@
 
   &:hover .hover {
     visibility: visible;
-    border: solid 1px $contact-mange-add-btn-hover-border;
+
+    &:not(.reset-input__button__img--container .hover) {
+      border: solid 1px $contact-mange-add-btn-hover-border;
+    }
   }
 
   &:hover .notHover {
@@ -44,5 +48,13 @@
   &__img--container {
     margin-right: 15px;
     top: 1px;
+  }
+}
+
+.reset-input__button {
+  margin-right: 4px;
+
+  &:hover {
+    cursor: pointer;
   }
 }
