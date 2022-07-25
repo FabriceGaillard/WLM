@@ -6,7 +6,7 @@ const ContactsManageAdd = () => {
   return (
     <button
       type="button"
-      className="sort-contact__button"
+      className="add-contact__button"
       onClick={handleAdd}
     >
       <div className="add-contact__button__img--container">
