@@ -1,0 +1,48 @@
+@use "../../../../abstracts/index" as *;
+
+.add-contact__button,
+.sort-contact__button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-color: transparent;
+
+  &:hover .hover {
+    visibility: visible;
+    border: solid 1px $contact-mange-add-btn-hover-border;
+  }
+
+  &:hover .notHover {
+    visibility: hidden;
+  }
+
+  &__img--container {
+    position: relative;
+
+    img {
+      position: absolute;
+      @include translate-center;
+    }
+
+    .hover {
+      visibility: hidden;
+    }
+
+    .notHover {
+      visibility: visible;
+    }
+  }
+}
+
+.add-contact__button {
+  &__img--container .hover {
+    top: 1px;
+  }
+}
+
+.sort-contact__button {
+  &__img--container {
+    margin-right: 15px;
+    top: 1px;
+  }
+}
