@@ -26,7 +26,7 @@ const LoginRemember = () => {
         <img
           className="connecting-gif"
           src={loader}
-          alt="connecting gif animation"
+          alt="Gif de chargement"
         />
       </div>
     </div>

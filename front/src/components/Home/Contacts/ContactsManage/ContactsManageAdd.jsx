@@ -14,8 +14,8 @@ const ContactsManageAdd = () => {
       onClick={handleAdd}
     >
       <div className="add-contact__button__img--container">
-        <img src={addIcon} className="notHover" alt="" />
-        <img src={addIconHover} className="hover" alt="" />
+        <img src={addIcon} className="notHover" alt="Icône d'ajout de contact" />
+        <img src={addIconHover} className="hover" alt="Icône d'ajout de contact au survol" />
       </div>
     </button>
   );

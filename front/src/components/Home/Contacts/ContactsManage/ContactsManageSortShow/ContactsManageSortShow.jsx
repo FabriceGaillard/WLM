@@ -30,8 +30,8 @@ const ContactsManageSortShow = () => {
         ref={menuButtonRef}
       >
         <div className="sort-contact__button__img--container">
-          <img src={sortIcon} className="notHover" alt="" />
-          <img src={sortIconHover} className="hover" alt="" />
+          <img src={sortIcon} className="notHover" alt="Icone de tri et affichage de contact" />
+          <img src={sortIconHover} className="hover" alt="Icone de tri et affichage de contact au survol" />
         </div>
       </button>
       {showContactsSortMenu && (
