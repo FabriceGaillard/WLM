@@ -7,7 +7,7 @@ import loginContext from '../../../contexts/LoginContext';
 // HELPERS
 import replaceUserInfosWithSelectedEmail from '../../../helpers/login/replaceUserInfosWithSelectedEmail';
 // DATA
-import formLoginData from '../../../data/formLoginData';
+import formLoginData from '../../../data/login/formLoginData';
 
 const LoginAuthEmailInput = (props) => {
 

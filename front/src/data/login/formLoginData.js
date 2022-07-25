@@ -1,4 +1,4 @@
-import defaultAvatarBase64 from './defaultAvatarBase64';
+import defaultAvatarBase64 from '../defaultAvatarBase64';
 
 const formLoginData = {
   email: "",

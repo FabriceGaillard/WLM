@@ -1,5 +1,5 @@
 // DATA
-import statusList from '../../../../data/statusList';
+import statusList from '../../../../data/login/statusList';
 
 const UserSettingsDisconnect = (props) => {
 

@@ -5,7 +5,7 @@ import globalContext from '../../../../contexts/GlobalContext';
 // COMPONENTS
 import { UserSettingsList } from "../userIndex";
 // DATA
-import statusList from '../../../../data/statusList';
+import statusList from '../../../../data/login/statusList';
 // ICONS
 import ArrowIcon from '../../../../icons/dropDownArrow';
 

@@ -5,7 +5,7 @@ import globalContext from '../../../../contexts/GlobalContext';
 // HELPERS
 import clickOutside from '../../../../helpers/clickOutside';
 // DATA
-import statusList from '../../../../data/statusList';
+import statusList from '../../../../data/login/statusList';
 // COMPONENTS
 import {
   UserSettingsModifyAvatar,

@@ -5,7 +5,7 @@ import { LoginStatusList } from '../loginIndex';
 // CONTEXT
 import loginContext from '../../../contexts/LoginContext';
 // DATA
-import statusList from '../../../data/statusList';
+import statusList from '../../../data/login/statusList';
 // ICONS
 import ArrowIcon from '../../../icons/dropDownArrow';
 
