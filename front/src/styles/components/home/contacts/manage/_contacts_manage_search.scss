@@ -1,0 +1,48 @@
+@use "../../../../abstracts/index" as *;
+
+.contacts-manage-search__container {
+  position: relative;
+  height: 100%;
+  flex: 1;
+
+  &::before {
+    position: absolute;
+    content: "";
+    inset: 1px;
+    border: solid 1px white;
+    pointer-events: none;
+  }
+
+  input {
+    border: 1px solid $contact-manage-input-border;
+    height: 100%;
+    width: 100%;
+    padding: 2px 7px;
+    background: linear-gradient(
+      180deg,
+      rgba(245, 246, 247, 1) 0%,
+      rgba(254, 254, 254, 1) 25%,
+      rgba(255, 255, 255, 1) 26%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    // background: linear-gradient(
+    //   180deg,
+    //   red 0%,
+    //   red 30%,
+    //   rgba(255, 255, 255, 1) 31%,
+    //   rgba(255, 255, 255, 1) 100%
+    // );
+
+    &::placeholder {
+      color: $contact-manage-input-placeholder;
+    }
+
+    &:focus {
+      outline: none;
+
+      &::placeholder {
+        color: transparent;
+      }
+    }
+  }
+}

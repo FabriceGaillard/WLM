@@ -1,0 +1,66 @@
+@use "../../../../abstracts/index" as *;
+
+.contacts-manage__container {
+  // @include flex($align: center);
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  height: 40px;
+  padding: 7px 2px;
+  background-color: white;
+  margin-top: 7px;
+  border: solid 1px $contact-manage-add-border;
+
+  .contacts-manage__icon {
+    height: 20px;
+    width: 24px;
+  }
+
+  .add-contact__button,
+  .sort-contact__button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: transparent;
+
+    &:hover .hover {
+      visibility: visible;
+      border: solid 1px $contact-mange-add-btn-hover-border;
+    }
+
+    &:hover .notHover {
+      visibility: hidden;
+    }
+
+    &__img--container {
+      position: relative;
+
+      img {
+        position: absolute;
+        @include translate-center;
+      }
+
+      .hover {
+        visibility: hidden;
+        // top: 1px;
+      }
+
+      .notHover {
+        visibility: visible;
+      }
+    }
+  }
+
+  .add-contact__button {
+    &__img--container .hover {
+      top: 1px;
+    }
+  }
+
+  .sort-contact__button {
+    &__img--container {
+      margin-right: 15px;
+      top: 1px;
+    }
+  }
+}
