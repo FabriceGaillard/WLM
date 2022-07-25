@@ -1,14 +1,13 @@
+// GENERAL
 @use "./components/app";
 @use "./settings/base";
 
 // COMMON
-
 @use "./components/common/header_wlm";
 @use "./components/common/stripe_background";
 @use "./components/common/gradient_btn";
 
 // LOGIN
-
 @use "./components/login/common/login_dropdown";
 @use "./components/login/common/checkbox";
 @use "./components/login/common/disabled";
@@ -27,18 +26,20 @@
 @use "./components/loading";
 
 // HOME
-
 @use "./components/home/home";
-@use "./components/home/contacts";
+
+//HOME USER
 @use "./components/home/user/user";
 @use "./components/home/user/user_settings";
 @use "./components/home/user/user_avatar";
 @use "./components/home/user/user_personal_message";
 @use "./components/home/user/user_buttons";
+
+// HOME CONTACTS
+@use "./components/home/contacts/contacts";
 @use "./components/home/contacts/manage/contacts_manage";
 @use "./components/home/contacts/manage/contacts_manage_search";
 @use "./components/home/contacts/manage/contacts_manage_buttons";
 
 // REGISTER
-
 @import "./components/register/register";
