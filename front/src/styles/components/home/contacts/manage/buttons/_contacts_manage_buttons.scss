@@ -2,7 +2,8 @@
 
 .add-contact__button,
 .sort-contact__button,
-.reset-input__button {
+.reset-input__button,
+.close-button {
   width: 20px;
   height: 20px;
   border: none;
@@ -11,7 +12,7 @@
   &:hover .hover {
     visibility: visible;
 
-    &:not(.reset-input__button__img--container .hover) {
+    &:not(.reset-input__button__img--container .hover, .close-button .hover) {
       border: solid 1px $contact-mange-add-btn-hover-border;
     }
   }
