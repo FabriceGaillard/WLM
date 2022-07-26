@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 // CONTEXT
 import globalContext from '../../../../contexts/GlobalContext';
 // COMPONENTS
@@ -12,10 +12,16 @@ import ArrowIcon from '../../../../icons/dropDownArrow';
 const UserSettings = () => {
 
   const { userDataFromDb, setUserDataFromDb } = useContext(globalContext);
+  const userSettingsButtonRef = useRef(null);
+
   const [showSettings, setShowSettings] = useState(false);
   const [dropDownButtonTarget, setDropDownButtonTarget] = useState(null);
 
   const handleUserSettings = ({ currentTarget }) => {
+    if (showSettings) {
+      userSettingsButtonRef.current.blur();
+    }
+
     setDropDownButtonTarget(currentTarget);
     setShowSettings(previous => !previous);
   };
@@ -25,6 +31,7 @@ const UserSettings = () => {
       <button
         type="button"
         title="Cliquez ici pour modifier votre pseudo, status ou image perso."
+        ref={userSettingsButtonRef}
         className={`status-select${showSettings ? " border" : ""}`}
         onClick={handleUserSettings}>
         <span className="user__pseudo"><b>{userDataFromDb.username}</b></span>
