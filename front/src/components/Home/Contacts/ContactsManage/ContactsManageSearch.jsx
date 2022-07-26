@@ -35,8 +35,8 @@ const ContactsManageSearch = () => {
         onClick={handleResetInput}
       >
         <div className="reset-input__button__img--container">
-          <img src={resetInputIcon} className="notHover" />
-          <img src={resetInputIconHover} className="hover" />
+          <img src={resetInputIcon} className="notHover" alt="Icône de reset" />
+          <img src={resetInputIconHover} className="hover" alt="Icône de reset en mode survol" />
         </div>
       </button>
     </div>

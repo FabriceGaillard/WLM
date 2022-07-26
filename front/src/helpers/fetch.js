@@ -14,7 +14,7 @@ export const fetchLogin = async (data, currentAbortController) => {
 
   const response = await fetch(loginApiUrl, optionsLogin);
   if (response.ok === false) {
-    throw ("Informations incorrectes");
+    throw new Error("Informations incorrectes");
   }
   const userData = await response.json();
 
@@ -29,7 +29,7 @@ export const fetchMeFromLogin = async (currentAbortController) => {
 
   const response = await fetch(userInfosApiUrl, optionsMe);
   if (response.ok === false) {
-    throw ("Non authentifié");
+    throw new Error("Non authentifié");
   }
 
   const userData = await response.json();
@@ -39,7 +39,7 @@ export const fetchMeFromLogin = async (currentAbortController) => {
 export const fetchMe = async () => {
   const response = await fetch(userInfosApiUrl, options);
   if (response.ok === false) {
-    throw ("Non authentifié");
+    throw new Error("Non authentifié");
   }
 
   const userData = await response.json();
@@ -54,7 +54,7 @@ export const fetchAskResetPassword = async (email) => {
   });
 
   if (response.ok === false) {
-    throw ("Erreur lors de la requête");
+    throw new Error("Erreur lors de la requête");
   }
 };
 
@@ -67,6 +67,6 @@ export const fetchResetPassword = async (endpoint, data) => {
 
   const response = await fetch(getResetPasswordUrl(endpoint), optionsLogin);
   if (response.ok === false) {
-    throw ("Erreur lors de la requête");
+    throw new Error("Erreur lors de la requête");
   }
 };
