@@ -9,9 +9,8 @@ import replaceUserInfosWithSelectedEmail from '/src/helpers/login/replaceUserInf
 // DATA
 import formLoginData from '/src/data/login/formLoginData';
 
-const LoginAuthEmailInput = (props) => {
+const LoginAuthEmailInput = ({ handleEmailList }) => {
 
-  const { handleEmailList } = props;
   const { formUpdate, setFormUpdate, isConnecting, storageData, setIsEmailOnInputSaved } = useContext(loginContext);
 
   const resetFieldsToDefault = (input) => {

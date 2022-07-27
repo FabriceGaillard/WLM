@@ -3,9 +3,7 @@ import { useState } from 'react';
 // COMPONENTS
 import { ContactsManageAddMenuHeader, ContactsManageAddMenuForm } from "../../../contactsIndex";
 
-const ContactsManageAddMenu = (props) => {
-
-  const { setIsAdding } = props;
+const ContactsManageAddMenu = ({ setIsAdding }) => {
 
   const handleAbort = () => setIsAdding(false);
 

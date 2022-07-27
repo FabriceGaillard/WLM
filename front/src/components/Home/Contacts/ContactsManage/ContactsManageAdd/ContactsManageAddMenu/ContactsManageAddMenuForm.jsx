@@ -1,9 +1,7 @@
 // HOOKS
 import { useState } from 'react';
 
-const ContactsManageAddMenuForm = (props) => {
-
-  const { handleAbort } = props;
+const ContactsManageAddMenuForm = ({ handleAbort }) => {
 
   const [emailInput, setEmailInput] = useState("");
 
