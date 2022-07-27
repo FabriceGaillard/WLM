@@ -1,0 +1,31 @@
+@use "../../../../../abstracts/index" as *;
+
+.add-contact-menu {
+  &__header {
+    @include flex($align: center);
+    bottom: 0px;
+    min-height: 40px;
+    z-index: 1;
+    border-bottom: solid 1px $contact-manage-add-border;
+
+    h2 {
+      margin-inline: 5px auto;
+      font-size: 0.7rem !important;
+      font-weight: bold !important;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+
+      .close-icons-container {
+        position: relative;
+
+        img {
+          position: absolute;
+          @include translate-center;
+        }
+      }
+    }
+  }
+}

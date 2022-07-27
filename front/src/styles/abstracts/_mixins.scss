@@ -1,3 +1,5 @@
+@use "./colors" as *;
+
 @mixin flex($flow: nowrap row, $justify: stretch, $align: stretch) {
   display: flex;
   flex-flow: $flow;
@@ -9,4 +11,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@mixin pseudo-element-inset {
+  content: "";
+  position: absolute;
+  inset: 0;
 }

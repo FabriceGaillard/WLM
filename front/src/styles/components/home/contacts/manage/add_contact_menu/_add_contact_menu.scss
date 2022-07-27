@@ -1,0 +1,35 @@
+@use "../../../../../abstracts/index" as *;
+
+.add-contact-menu__container {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+}
+.add-contact-menu {
+  position: absolute;
+  @include translate-center;
+  @include flex($flow: nowrap column);
+  width: 400px;
+  height: 200px;
+  background: $bg-contact-manage-add-menu;
+  border: solid 1px #55759c;
+  padding: 0px 5px 5px 5px;
+  z-index: 2;
+
+  &::before,
+  &::after {
+    @include pseudo-element-inset;
+  }
+
+  &::before {
+    background: url("/assets/background_stripes_v2.jpg") no-repeat top right;
+    z-index: 1;
+    opacity: 1;
+  }
+
+  &::after {
+    background: url("/assets/icons/contactsManageIcons/contacts-manage-menu-header.png") repeat-x
+      top;
+    z-index: -1;
+  }
+}

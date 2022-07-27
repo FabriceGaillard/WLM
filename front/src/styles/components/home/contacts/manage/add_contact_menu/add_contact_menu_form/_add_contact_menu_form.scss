@@ -1,0 +1,29 @@
+@use "../../../../../../abstracts/index" as *;
+
+.add-contact-menu {
+  form {
+    z-index: 1;
+    @include flex($flow: nowrap column, $justify: center);
+    height: 100%;
+    background-color: #fbfdfd;
+
+    label {
+      margin: auto 0 5px 0;
+      align-self: center;
+      grid-area: label;
+    }
+
+    input[type="email"] {
+      align-self: center;
+      grid-area: input;
+      width: 50%;
+      border: 1px solid $bg-contacts-manage-add-input;
+      box-sizing: border-box;
+      padding: 3px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

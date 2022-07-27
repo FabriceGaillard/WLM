@@ -7,7 +7,8 @@
   margin: auto;
   border-radius: 0.5px;
   border-bottom: solid 1px $border-connect-btn;
-  border-width: 0 0 1px 0;
+  border-top: solid 1px transparent;
+  border-width: 1px 0;
   box-shadow: 0 0 0 1px white, 0 0 0 2px #c8c8c8;
   color: $font-login-connect-btn-font;
   background: $bg-login-connect-btn;
@@ -16,10 +17,18 @@
   line-height: 15px;
   padding: 2px;
 
+  &:active {
+    border-bottom-color: transparent;
+    border-top: solid 1px $border-connect-btn;
+
+    &::before {
+      border-bottom-color: transparent;
+      border-top: solid 1px $border-connect-btn-before;
+    }
+  }
+
   &::before {
-    content: "";
-    position: absolute;
-    inset: 0px;
+    @include pseudo-element-inset;
     border-bottom: solid 1px $border-connect-btn-before;
     pointer-events: none;
   }

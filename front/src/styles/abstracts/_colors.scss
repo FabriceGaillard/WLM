@@ -37,6 +37,23 @@ $contact-manage-add-border: #bed6e0;
 $contact-manage-input-border: #b2bec5;
 $contact-manage-input-placeholder: #6d6d6d;
 $contact-mange-add-btn-hover-border: #4890c8;
+$bg-contact-manage-add-menu: linear-gradient(
+  180deg,
+  rgba(244, 252, 252, 1) 0%,
+  rgba(236, 243, 246, 1) 100%
+);
+$bg-contact-manage-add-abort-btn: linear-gradient(
+  180deg,
+  #f0f0f0 0%,
+  #e8e8e8 53.46%,
+  #dbdbdb 57.17%,
+  #e8e8e8 82.5%
+);
+$border-contacts-manage-add-abort: #bed6e0;
+$font-contacts-manage-add-abort-btn: #001563;
+$bg-contacts-manage-add-btn-disabled: #f0f0f0;
+$font-contacts-manage-add-btn-disabled: #c9c9d9;
+$bg-contacts-manage-add-input: #868f9a;
 
 // GRADIENT
 $bg-login-connect-btn: linear-gradient(

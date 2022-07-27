@@ -37,16 +37,23 @@
 
 // HOME CONTACTS
 @use "./components/home/contacts/contacts";
-@use "./components/home/contacts/manage/contacts_manage";
-@use "./components/home/contacts/manage/contacts_manage_search";
-@use "./components/home/contacts/manage/contacts_manage_sort";
-@use "./components/home/contacts/manage/contacts_manage_add";
 
 // HOME CONTACTS BUTTONS
 @use "./components/home/contacts/manage/buttons/contacts_manage_buttons";
 @use "./components/home/contacts/manage/buttons/contacts_manage_button_reset";
 @use "./components/home/contacts/manage/buttons/contacts_manage_button_sort";
 @use "./components/home/contacts/manage/buttons/contacts_manage_button_add";
+
+// HOME CONTACTS MANAGE
+@use "./components/home/contacts/manage/contacts_manage";
+@use "./components/home/contacts/manage/contacts_manage_search";
+@use "./components/home/contacts/manage/contacts_manage_sort";
+
+// HOME CONTACTS MANAGE ADDMENU
+@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu";
+@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu_header";
+@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu_form/add_contact_menu_form";
+@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu_form/add_contact_menu_form_add_abort";
 
 // REGISTER
 @import "./components/register/register";
