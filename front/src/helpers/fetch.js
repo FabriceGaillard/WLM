@@ -1,4 +1,10 @@
-import { loginApiUrl, userInfosApiUrl, askResetPasswordUrl, getResetPasswordUrl } from '../data/apiUrls';
+import {
+  loginApiUrl,
+  userInfosApiUrl,
+  askResetPasswordUrl,
+  getResetPasswordUrl,
+  userRelationships
+} from '../data/apiUrls';
 
 let options = { credentials: "include" };
 
@@ -69,4 +75,10 @@ export const fetchResetPassword = async (endpoint, data) => {
   if (response.ok === false) {
     throw new Error("Erreur lors de la requête");
   }
+};
+
+export const fetchContacts = async () => {
+  const response = await fetch(userRelationships, options);
+  const users = await response.json();
+  return users;
 };
