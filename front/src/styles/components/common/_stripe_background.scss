@@ -14,6 +14,7 @@
     @include flex($flow: nowrap column, $align: center);
     position: relative;
     font-size: $font-login-size;
+    font-weight: 500;
     font-family: $font-login;
     border: 1px solid $border-login-container;
     overflow: hidden;
@@ -41,7 +42,7 @@
       z-index: -1;
     }
 
-    & :not(.header-wlm__title, .header-wlm__title b) {
+    & :not(b, h1, h2, h3) {
       font-size: $font-login-size;
       font-weight: 500;
     }

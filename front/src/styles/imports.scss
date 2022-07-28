@@ -38,6 +38,9 @@
 // HOME CONTACTS
 @use "./components/home/contacts/contacts";
 
+// HOME CONTACTS LISTS
+@use "./components/home/contacts/lists/contacts_lists";
+
 // HOME CONTACTS BUTTONS
 @use "./components/home/contacts/manage/buttons/contacts_manage_buttons";
 @use "./components/home/contacts/manage/buttons/contacts_manage_button_reset";

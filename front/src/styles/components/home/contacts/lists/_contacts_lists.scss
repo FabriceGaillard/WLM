@@ -1,0 +1,77 @@
+@use "../../../../abstracts/index" as *;
+
+.contacts-list__container {
+  @include flex($flow: nowrap column);
+  width: 100%;
+  height: 100%;
+  cursor: default;
+  user-select: none;
+  background-color: white;
+  border: solid 1px #bad6df;
+  border-top-width: 0px;
+
+  .contacts-list {
+    .show-contacts__button {
+      @include flex;
+      border: none;
+      height: 20px;
+      width: 100%;
+      background-color: #e4e4e4;
+
+      &:focus,
+      &:focus h3 {
+        background-color: #d2eaf6;
+      }
+
+      &:hover svg {
+        color: #3078d8;
+      }
+
+      svg {
+        color: #a8a8a8;
+        font-weight: 900;
+        height: 20px;
+        width: 20px;
+        transform: rotate(-90deg);
+
+        &.arrowRight {
+          transform: rotate(0deg);
+        }
+      }
+    }
+  }
+
+  h3 {
+    flex: 1;
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding-block: 3px;
+    background-color: #e4e4e4;
+  }
+}
+
+.user__card {
+  @include flex($align: center);
+
+  button {
+    background-color: transparent;
+    @include flex($align: center);
+    padding: 2px 20px;
+    width: 100%;
+    border: none;
+
+    &:focus {
+      background-color: #d2eaf6;
+    }
+  }
+
+  &--personal {
+    color: #777777;
+
+    .dash {
+      color: black;
+      padding: 2px;
+    }
+  }
+}
