@@ -11,12 +11,20 @@ const ContactsLists = () => {
 
   const [contacts, setContacts] = useState([]);
   const [showContacts, setShowContacts] = useState(false);
+  const [contactsContextMenu, setContactsContextMenu] = useState({});
 
   useEffect(() => {
     const getContacts = async () => {
       const userContacts = await fetchContacts();
-      console.log(userContacts);
+      const userContactsReduce = userContacts.reduce((acc, { id }) => {
+        acc[id] = false;
+        return acc;
+      }, { current: null });
+
+      console.log({ userContactsReduce });
+
       setContacts(userContacts);
+      setContactsContextMenu(userContactsReduce);
     };
 
     getContacts();
@@ -37,8 +45,14 @@ const ContactsLists = () => {
             </button>
 
             {showContacts && (
-              contacts.map(({ relatedUser }) => (
-                <ContactsListCard key={relatedUser.id} relatedUser={relatedUser} />
+              contacts.map(({ relatedUser, id }) => (
+                <ContactsListCard
+                  key={id}
+                  relatedUser={relatedUser}
+                  setContactsContextMenu={setContactsContextMenu}
+                  contactsContextMenu={contactsContextMenu}
+                  id={id}
+                />
               ))
             )}
           </ul>
