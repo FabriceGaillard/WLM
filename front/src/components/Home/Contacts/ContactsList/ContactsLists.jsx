@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react';
 // FETCH
 import { fetchContacts } from '../../../../helpers/fetch';
 // COMPONENTS
-import { ContactsListCard, ContactsListsEmpty } from '../contactsIndex';
-// ICONS
-import DropDownContactsList from '../../../../icons/DropDownContactsList';
+import { ContactsListCard, ContactsListsEmpty, ContactsListsButton } from '../contactsIndex';
 
 const ContactsLists = () => {
 
@@ -26,7 +24,6 @@ const ContactsLists = () => {
     };
 
     getContacts();
-
   }, []);
 
   return (
@@ -34,22 +31,12 @@ const ContactsLists = () => {
       {contacts.length !== 0
         ? (
           <ul className="contacts-list">
-            <button type="button"
-              onClick={() => setShowContacts(prev => !prev)}
-              className="show-contacts__button"
-            >
-              <DropDownContactsList className={showContacts ? "arrowRight" : ""} />
-              <h3>Contacts ({contacts.length})</h3>
-            </button>
-
+            <ContactsListsButton data={{ showContacts, setShowContacts, contacts }} />
             {showContacts && (
               contacts.map(({ relatedUser, id }) => (
                 <ContactsListCard
                   key={id}
-                  relatedUser={relatedUser}
-                  setContactsContextMenu={setContactsContextMenu}
-                  contactsContextMenu={contactsContextMenu}
-                  id={id}
+                  data={{ relatedUser, setContactsContextMenu, contactsContextMenu, id }}
                 />
               ))
             )}

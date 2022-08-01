@@ -7,9 +7,9 @@ import openContactConversation from '../../../../helpers/home/contacts/list/open
 // COMPONENTS
 import { ContactsListsCardContextMenu } from "../contactsIndex";
 
-const ContactsListsCard = (props) => {
+const ContactsListsCard = ({ data }) => {
 
-  const { relatedUser, id, contactsContextMenu, setContactsContextMenu } = props;
+  const { relatedUser, id, contactsContextMenu, setContactsContextMenu } = data;
   const { email, avatar, username, personalMessage } = relatedUser;
 
   const buttonRef = useRef();
