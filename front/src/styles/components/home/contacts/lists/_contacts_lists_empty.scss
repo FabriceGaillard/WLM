@@ -1,0 +1,22 @@
+.contacts-list {
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin: 20px auto;
+    border-radius: 10px;
+    border: solid black 1px;
+    height: 150px;
+    background-color: #f9f7e2;
+    width: 267px;
+
+    p {
+      max-width: 230px;
+    }
+
+    img {
+      height: 20px;
+    }
+  }
+}

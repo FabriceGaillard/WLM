@@ -1,6 +1,7 @@
 export { default as ContactsList } from "./ContactsList/ContactsLists";
 export { default as ContactsListCard } from "./ContactsList/ContactsListsCard";
 export { default as ContactsListsCardContextMenu } from "./ContactsList/ContactsListsCardContextMenu";
+export { default as ContactsListsEmpty } from "./ContactsList/ContactsListsEmpty";
 
 export { default as ContactsManage } from "./ContactsManage/ContactsManage";
 export { default as ContactsManageSortShow } from "./ContactsManage/ContactsManageSortShow/ContactsManageSortShow";

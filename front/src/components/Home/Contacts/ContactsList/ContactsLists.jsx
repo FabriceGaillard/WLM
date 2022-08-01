@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // FETCH
 import { fetchContacts } from '../../../../helpers/fetch';
 // COMPONENTS
-import { ContactsListCard } from '../contactsIndex';
+import { ContactsListCard, ContactsListsEmpty } from '../contactsIndex';
 // ICONS
 import DropDownContactsList from '../../../../icons/DropDownContactsList';
 
@@ -20,8 +20,6 @@ const ContactsLists = () => {
         acc[id] = false;
         return acc;
       }, { current: null });
-
-      console.log({ userContactsReduce });
 
       setContacts(userContacts);
       setContactsContextMenu(userContactsReduce);
@@ -57,7 +55,7 @@ const ContactsLists = () => {
             )}
           </ul>
         )
-        : <p>Aucun contacts lol</p>
+        : <ContactsListsEmpty />
       }
     </div>
   );

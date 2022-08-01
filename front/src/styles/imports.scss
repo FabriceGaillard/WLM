@@ -41,6 +41,7 @@
 // HOME CONTACTS LISTS
 @use "./components/home/contacts/lists/contacts_lists";
 @use "./components/home/contacts/lists/contacts_lists_context_menu";
+@use "./components/home/contacts/lists/contacts_lists_empty";
 
 // HOME CONTACTS BUTTONS
 @use "./components/home/contacts/manage/buttons/contacts_manage_buttons";
