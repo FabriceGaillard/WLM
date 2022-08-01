@@ -13,6 +13,14 @@ const getLocalStorageUsers = () => {
   };
 };
 
+const removeStorageCurrent = (users) => {
+  if (users.current) {
+    users.current = null;
+  }
+
+  localStorage.setItem("users", JSON.stringify(users));
+};
+
 const handleStorageWhenAuthenticated = async (currentUser, autoAuth, rememberEmail) => {
   currentUser.lastConnection = Date.now();
 
@@ -65,4 +73,4 @@ const deleteOneUserFromStorage = (emailInput, setStorageData) => {
   }
 };
 
-export { getLocalStorageUsers, handleStorageWhenAuthenticated, deleteOneUserFromStorage };
+export { getLocalStorageUsers, handleStorageWhenAuthenticated, deleteOneUserFromStorage, removeStorageCurrent };
