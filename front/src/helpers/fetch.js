@@ -3,7 +3,8 @@ import {
   userInfosApiUrl,
   askResetPasswordUrl,
   getResetPasswordUrl,
-  userRelationships
+  userRelationships,
+  logoutApiUrl
 } from '../data/apiUrls';
 
 let options = { credentials: "include" };
@@ -81,4 +82,8 @@ export const fetchContacts = async () => {
   const response = await fetch(userRelationships, options);
   const users = await response.json();
   return users;
+};
+
+export const fetchLogout = async () => {
+  await fetch(logoutApiUrl, options);
 };
