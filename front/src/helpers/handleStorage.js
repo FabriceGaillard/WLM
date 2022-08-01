@@ -13,6 +13,20 @@ const getLocalStorageUsers = () => {
   };
 };
 
+const addStorageSettings = (settings) => {
+  localStorage.setItem("settings", JSON.stringify(settings));
+};
+
+const getLocalStorageSettings = () => {
+  const findSettingsInStorage = localStorage.getItem("settings");
+
+  if (findSettingsInStorage) {
+    return JSON.parse(findSettingsInStorage);
+  }
+
+  return findSettingsInStorage;
+};
+
 const removeStorageCurrent = (users) => {
   if (users.current) {
     users.current = null;
@@ -73,4 +87,4 @@ const deleteOneUserFromStorage = (emailInput, setStorageData) => {
   }
 };
 
-export { getLocalStorageUsers, handleStorageWhenAuthenticated, deleteOneUserFromStorage, removeStorageCurrent };
+export { getLocalStorageUsers, handleStorageWhenAuthenticated, deleteOneUserFromStorage, removeStorageCurrent, getLocalStorageSettings, addStorageSettings };
