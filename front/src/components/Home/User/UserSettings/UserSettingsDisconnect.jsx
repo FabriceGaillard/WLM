@@ -1,13 +1,35 @@
+// HOOKS
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 // DATA
 import statusList from '../../../../data/login/statusList';
+// CONTEXT 
+import globalContext from '../../../../contexts/GlobalContext';
+// HELPERS
+import { fetchLogout } from '../../../../helpers/fetch';
+import { getLocalStorageUsers, removeStorageCurrent } from '../../../../helpers/handleStorage';
 
 const UserSettingsDisconnect = (props) => {
 
   const { setShowSettings } = props;
 
-  const handleDisconnect = () => {
-    console.log("disconnect");
+  const { setUserDataFromDb } = useContext(globalContext);
+
+  const navigate = useNavigate();
+
+  const handleDisconnect = async () => {
     setShowSettings(false);
+
+    try {
+      await fetchLogout();
+      const users = getLocalStorageUsers();
+      removeStorageCurrent(users);
+      setUserDataFromDb(null);
+      navigate("/login");
+    }
+    catch (err) {
+      console.log(err);
+    }
   };
 
   return (
