@@ -1,11 +1,11 @@
 // ICONS
 import closeIcon from "/assets/icons/close-icon.png";
 import closeIconHover from "/assets/icons/close-icon-hover.png";
-import addIconV2 from "/assets/icons/contactsManageIcons/contacts-manage-add-icon-v2.png";
+import addIcon from "/assets/icons/contactsManageIcons/contacts-manage-add-icon-hq.png";
 
 const ContactsManageAddMenuHeader = ({ handleAbort }) => (
   <header className="add-contact-menu__header">
-    <img src={addIconV2} className="add-contact-menu__logo" />
+    <img src={addIcon} className="add-contact-menu__header--logo" />
     <h2>Windows Live Contacts - Ajouter un contact</h2>
     <button
       type="button"
