@@ -42,7 +42,6 @@ const handleStorageWhenAuthenticated = async (currentUser, autoAuth, rememberEma
   }
 
   localStorage.setItem("users", JSON.stringify(users));
-  localStorage.setItem("remember", JSON.stringify(autoAuth));
 };
 
 const deleteOneUserFromStorage = (emailInput, setStorageData) => {
