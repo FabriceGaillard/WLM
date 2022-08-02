@@ -1,9 +1,9 @@
 import {
   loginApiUrl,
   userInfosApiUrl,
-  askResetPasswordUrl,
-  getResetPasswordUrl,
-  userRelationships,
+  askResetPasswordApiUrl,
+  getResetPasswordApiUrl,
+  userRelationshipsApiUrl,
   logoutApiUrl
 } from '../data/apiUrls';
 
@@ -54,7 +54,7 @@ export const fetchMe = async () => {
 };
 
 export const fetchAskResetPassword = async (email) => {
-  const response = await fetch(askResetPasswordUrl, {
+  const response = await fetch(askResetPasswordApiUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email })
@@ -72,14 +72,14 @@ export const fetchResetPassword = async (endpoint, data) => {
     body: JSON.stringify(data),
   };
 
-  const response = await fetch(getResetPasswordUrl(endpoint), optionsLogin);
+  const response = await fetch(getResetPasswordApiUrl(endpoint), optionsLogin);
   if (response.ok === false) {
     throw new Error("Erreur lors de la requête");
   }
 };
 
 export const fetchContacts = async () => {
-  const response = await fetch(userRelationships, options);
+  const response = await fetch(userRelationshipsApiUrl, options);
   const users = await response.json();
   return users;
 };
