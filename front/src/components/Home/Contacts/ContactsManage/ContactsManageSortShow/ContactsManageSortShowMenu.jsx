@@ -1,12 +1,18 @@
 // HOOKS
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext } from 'react';
 // HELPERS
 import clickOutside from '/src/helpers/clickOutside';
 // DATA
-import menuSortOptions from '/src/data/home/contacts/menuSortOptions';
-import menuShowOptions from '/src/data/home/contacts/menuShowOptions';
+import menuSortShowOptions from '../../../../../data/home/contacts/menuSortShowOptions';
+// CONTEXT
+import settingsContext from '../../../../../contexts/settingsContext';
+// ICON
+import CheckedOption from '../../../../../icons/checkedOption';
 
 const ContactsManageSortShowMenu = (props) => {
+
+  const { settings, setSettings } = useContext(settingsContext);
+
 
   const { dropDownButtonTarget, setShowContactsSortMenu } = props;
 
@@ -38,8 +44,16 @@ const ContactsManageSortShowMenu = (props) => {
       ref={sortMenuContainerRef}
       onClick={() => setShowContactsSortMenu(false)}
     >
-      {menuSortOptions.map(({ action, title }, idx) => <li key={idx} onClick={action}>{title}</li>)}
-      {menuShowOptions.map(({ action, title }, idx) => <li key={idx} onClick={action}>{title}</li>)}
+      {menuSortShowOptions.map(({ action, title, key }, idx) => (
+        <li
+          key={idx}
+          data-checked={settings.sortShowOptions[key] ? "checked" : "unchecked"}
+          onClick={({ target }) => action(target, settings, setSettings)}
+        >
+          <CheckedOption isShowing={settings.sortShowOptions[key]} />
+          {title}
+        </li>
+      ))}
     </ul>
   );
 };
