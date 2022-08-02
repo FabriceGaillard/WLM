@@ -12,7 +12,7 @@ import {
 const ContactsLists = () => {
 
   const [contacts, setContacts] = useState([]);
-  const [showContacts, setShowContacts] = useState(false);
+  const [showContacts, setShowContacts] = useState(true);
   const [contactsContextMenu, setContactsContextMenu] = useState({});
 
   useEffect(() => {
