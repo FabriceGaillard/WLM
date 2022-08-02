@@ -1,7 +1,7 @@
 // HOOKS
 import { useEffect } from 'react';
 // DATA
-import menuContactsListOptions from '../../../../data/home/contacts/menuContactsListOptions';
+import menuContactsListOptions from '../../../../../data/home/contacts/menuContactsListOptions';
 
 const ContactsListsCardContextMenu = (props) => {
 
