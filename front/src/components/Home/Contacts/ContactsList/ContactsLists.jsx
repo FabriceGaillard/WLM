@@ -4,16 +4,20 @@ import { useEffect, useState, useContext } from 'react';
 import { fetchContacts } from '../../../../helpers/fetch';
 // CONTEXT
 import globalContext from '../../../../contexts/GlobalContext';
+import homeContext from '../../../../contexts/homeContext';
 // COMPONENTS
 import {
   ContactsListCard,
   ContactsListsEmpty,
-  ContactsListsButton
+  ContactsListsButton,
+  ContactsListsEmptySearchResult
 } from '../contactsIndex';
 
 const ContactsLists = () => {
 
   const { contacts } = useContext(globalContext);
+  const { emptySearchResult } = useContext(homeContext);
+
   const [showContacts, setShowContacts] = useState(true);
   const [contactsContextMenu, setContactsContextMenu] = useState(null);
 
@@ -42,7 +46,9 @@ const ContactsLists = () => {
             )}
           </ul>
         )
-        : <ContactsListsEmpty />
+        : emptySearchResult
+          ? <ContactsListsEmptySearchResult />
+          : <ContactsListsEmpty />
       }
     </div>
   );

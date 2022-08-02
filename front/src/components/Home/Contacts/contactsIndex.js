@@ -1,8 +1,9 @@
 export { default as ContactsList } from "./ContactsList/ContactsLists";
-export { default as ContactsListCard } from "./ContactsList/ContactsListsCard/ContactsListsCard";
 export { default as ContactsListsCardContextMenu } from "./ContactsList/ContactsListsCardContextMenu";
 export { default as ContactsListsEmpty } from "./ContactsList/ContactsListsEmpty";
 export { default as ContactsListsButton } from "./ContactsList/ContactsListsButton";
+export { default as ContactsListsEmptySearchResult } from "./ContactsList/ContactsListsEmptySearchResult";
+export { default as ContactsListCard } from "./ContactsList/ContactsListsCard/ContactsListsCard";
 export { default as ContactsListsCardButtonDetails } from "./ContactsList/ContactsListsCard/ContactsListsCardButtonDetails";
 export { default as ContactsListsCardButtonSimple } from "./ContactsList/ContactsListsCard/ContactsListsCardButtonSimple";
 
