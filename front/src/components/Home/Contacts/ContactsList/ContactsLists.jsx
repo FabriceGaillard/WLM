@@ -3,7 +3,11 @@ import { useEffect, useState } from 'react';
 // FETCH
 import { fetchContacts } from '../../../../helpers/fetch';
 // COMPONENTS
-import { ContactsListCard, ContactsListsEmpty, ContactsListsButton } from '../contactsIndex';
+import {
+  ContactsListCard,
+  ContactsListsEmpty,
+  ContactsListsButton
+} from '../contactsIndex';
 
 const ContactsLists = () => {
 
