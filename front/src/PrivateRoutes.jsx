@@ -6,11 +6,11 @@ import Loader from './components/Loader';
 // CONTEXT
 import globalContext from './contexts/GlobalContext';
 // HELPERS
-import { fetchMe } from './helpers/fetch';
+import { fetchMe, fetchContacts } from './helpers/fetch';
 
 const PrivateRoutes = () => {
 
-  const { userDataFromDb, setUserDataFromDb } = useContext(globalContext);
+  const { userDataFromDb, setUserDataFromDb, setContacts } = useContext(globalContext);
 
   const [userAuthenticated, setUserAuthenticated] = useState("pending");
 
@@ -19,6 +19,8 @@ const PrivateRoutes = () => {
       const getUserInfos = async () => {
         try {
           const userData = await fetchMe();
+          const userContacts = await fetchContacts();
+          setContacts(userContacts);
           setUserDataFromDb(userData);
         }
         catch (err) {
