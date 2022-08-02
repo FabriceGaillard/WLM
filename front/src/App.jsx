@@ -15,9 +15,10 @@ import PrivateRoutes from './PrivateRoutes';
 const App = () => {
 
   const [userDataFromDb, setUserDataFromDb] = useState(null);
+  const [contacts, setContacts] = useState([]);
 
   return (
-    <globalContext.Provider value={{ userDataFromDb, setUserDataFromDb }}>
+    <globalContext.Provider value={{ userDataFromDb, setUserDataFromDb, contacts, setContacts }}>
       <BrowserRouter>
         <Routes>
           <Route element={<PrivateRoutes userDataFromDb={userDataFromDb} />}>

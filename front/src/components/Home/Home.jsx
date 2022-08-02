@@ -5,7 +5,7 @@ import Contacts from "./Contacts/Contacts";
 import User from "./User/User";
 import HeaderWithLogo from "../HeaderWithLogo";
 // CONTEXT 
-import settingsContext from '../../contexts/settingsContext';
+import homeContext from '../../contexts/homeContext';
 // HELPERS
 import { getLocalStorageSettings, addStorageSettings } from '../../helpers/handleStorage';
 // DATA
@@ -23,7 +23,7 @@ const Home = () => {
   }, []);
 
   return (
-    <settingsContext.Provider value={{ settings, setSettings }}>
+    <homeContext.Provider value={{ settings, setSettings }}>
       <div className="home__container">
         <div className="home">
           <HeaderWithLogo />
@@ -31,7 +31,7 @@ const Home = () => {
           <Contacts />
         </div>
       </div>
-    </settingsContext.Provider>
+    </homeContext.Provider>
   );
 };
 
