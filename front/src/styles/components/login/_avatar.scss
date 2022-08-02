@@ -1,5 +1,14 @@
 @use "../../abstracts/" as *;
 
+@keyframes fade-avatar {
+  0% {
+    background-color: white;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
 .img__container {
   position: relative;
   z-index: 1;
@@ -11,9 +20,10 @@
   padding: 1px;
 
   &::before {
+    position: absolute;
     inset: 0px;
     content: "";
-    position: absolute;
+    animation: fade-avatar 1.1s linear;
     border: solid 2px white;
   }
 
