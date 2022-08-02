@@ -50,28 +50,3 @@
     background-color: #e4e4e4;
   }
 }
-
-.user__card {
-  @include flex($align: center);
-
-  button {
-    background-color: transparent;
-    @include flex($align: center);
-    padding: 2px 20px;
-    width: 100%;
-    border: none;
-
-    &:focus {
-      background-color: #d2eaf6;
-    }
-  }
-
-  &--personal {
-    color: #777777;
-
-    .dash {
-      color: black;
-      padding: 2px;
-    }
-  }
-}
