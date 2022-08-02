@@ -31,10 +31,13 @@
         left: 5px;
         top: 50%;
         transform: translateY(-50%);
-        visibility: hidden;
 
         &.show {
           visibility: visible;
+        }
+
+        &.hide {
+          visibility: hidden;
         }
 
         path {
