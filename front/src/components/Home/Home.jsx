@@ -14,6 +14,7 @@ import defaultStorageSettings from '../../data/home/defaultStorageSettings';
 const Home = () => {
 
   const [settings, setSettings] = useState(null);
+  const [emptySearchResult, setEmptySearchResult] = useState(false);
 
   useEffect(() => {
     const localStorageSettings = getLocalStorageSettings();
@@ -23,7 +24,7 @@ const Home = () => {
   }, []);
 
   return (
-    <homeContext.Provider value={{ settings, setSettings }}>
+    <homeContext.Provider value={{ settings, setSettings, emptySearchResult, setEmptySearchResult }}>
       <div className="home__container">
         <div className="home">
           <HeaderWithLogo />

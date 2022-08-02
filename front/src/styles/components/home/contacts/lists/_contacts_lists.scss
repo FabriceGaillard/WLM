@@ -10,6 +10,10 @@
   border: solid 1px #bad6df;
   border-top-width: 0px;
 
+  .empty-search-results {
+    padding: 8px;
+  }
+
   .contacts-list {
     .show-contacts__button {
       @include flex;

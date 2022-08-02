@@ -1,24 +1,50 @@
 // COMPONENTS
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 // ICONS
 import resetInputIcon from "/assets/icons/contactsManageIcons/contacts-manage-search-reset.png";
 import resetInputIconHover from "/assets/icons/contactsManageIcons/contacts-manage-search-reset-hover.png";
+// CONTEXT
+import globalContext from '../../../../contexts/GlobalContext';
+import homeContext from '../../../../contexts/homeContext';
 
 const ContactsManageSearch = () => {
 
+  const { contacts, setContacts } = useContext(globalContext);
+  const { setEmptySearchResult } = useContext(homeContext);
   const inputRef = useRef(null);
 
   const [searchInputValue, setSearchInputValue] = useState("");
+  const [contactsCopy, setContactsCopy] = useState([]);
 
   const handleSearchInput = ({ target }) => {
-    setSearchInputValue(target.value);
-    console.log("🚀 ~ file: ContactsManageSearch.jsx ~ line 7 ~ handleSearchInput", target.value);
+    const inputValue = target.value;
+    setSearchInputValue(inputValue);
+
+    const filterContacts = contactsCopy.filter(({ relatedUser }) => {
+      const { email, username, personalMessage } = relatedUser;
+
+      return (
+        email.includes(inputValue) ||
+        username.includes(inputValue) ||
+        personalMessage.includes(inputValue)
+      );
+    });
+
+    filterContacts.length === 0
+      ? setEmptySearchResult(true)
+      : setEmptySearchResult(false);
+
+    setContacts(filterContacts);
   };
 
   const handleResetInput = () => {
     setSearchInputValue("");
     inputRef.current.focus();
   };
+
+  useEffect(() => {
+    setContactsCopy(contacts);
+  }, []);
 
   return (
     <div className="contacts-manage-search__container">
