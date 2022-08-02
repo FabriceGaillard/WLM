@@ -16,13 +16,31 @@
     padding: 2px;
 
     li {
-      padding-left: 30px;
+      position: relative;
+      padding-left: 25px;
       height: 20px;
       line-height: 20px;
 
       &:hover {
         background-color: $bg-login-email-drop-hover;
         cursor: default;
+      }
+
+      svg {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        visibility: hidden;
+
+        &.show {
+          visibility: visible;
+        }
+
+        path {
+          stroke: black;
+          stroke-width: 3px;
+        }
       }
     }
   }
