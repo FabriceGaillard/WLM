@@ -3,13 +3,13 @@ import { useContext, useEffect, useState } from "react";
 // COMPONENTS
 import Contacts from "./Contacts/Contacts";
 import User from "./User/User";
-import HeaderWithLogo from "../HeaderWithLogo";
+import HeaderWithLogo from "../../HeaderWithLogo";
 // CONTEXT 
-import homeContext from '../../contexts/homeContext';
+import homeContext from '../../../contexts/homeContext';
 // HELPERS
-import { getLocalStorageSettings, addStorageSettings } from '../../helpers/handleStorage';
+import { getLocalStorageSettings, addStorageSettings } from '../../../helpers/handleStorage';
 // DATA
-import defaultStorageSettings from '../../data/home/defaultStorageSettings';
+import defaultStorageSettings from '../../../data/home/defaultStorageSettings';
 
 const Home = () => {
 
@@ -25,12 +25,10 @@ const Home = () => {
 
   return (
     <homeContext.Provider value={{ settings, setSettings, emptySearchResult, setEmptySearchResult }}>
-      <div className="home__container">
-        <div className="home">
-          <HeaderWithLogo />
-          <User />
-          <Contacts />
-        </div>
+      <div className="home">
+        <HeaderWithLogo />
+        <User />
+        <Contacts />
       </div>
     </homeContext.Provider>
   );

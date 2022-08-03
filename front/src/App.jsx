@@ -6,7 +6,9 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import ResetPasswordAsk from './components/ResetPassword/AskResetPassword/AskResetPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword/ResetPassword';
-import Home from './components/Home/Home';
+import Taskbar from './components/Taskbar/Taskbar';
+import PersonalSpace from './components/PersonalSpace/PersonalSpace';
+
 // CONTEXT
 import globalContext from './contexts/GlobalContext';
 // OUTLET
@@ -22,7 +24,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<PrivateRoutes userDataFromDb={userDataFromDb} />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<PersonalSpace />} />
           </Route>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -31,6 +33,7 @@ const App = () => {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
+      <Taskbar />
     </globalContext.Provider>
   );
 };
