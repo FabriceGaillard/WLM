@@ -4,7 +4,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 // COMPONENTS
 import { ResetPasswordInstructions, ResetPasswordInput, ResetPasswordSubmit } from "../resetPasswordIndex";
 // FETCH
-import { fetchResetPassword } from '/src/helpers/fetch';
+import { fetchResetPassword } from '../../../helpers/fetchMethods/resetPassword';
 // HELPERS
 import passwordsValidator from '/src/validators/passwordsValidator';
 

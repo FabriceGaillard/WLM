@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import loginContext from '/src/contexts/LoginContext';
 import globalContext from '/src/contexts/GlobalContext';
 // HELPERS
-import { fetchLogin, fetchMeFromLogin } from '/src/helpers/fetch';
+import { fetchLogin, fetchMeFromLogin } from '../../helpers/fetchMethods/login';
 import { handleStorageWhenAuthenticated } from '/src/helpers/handleStorage';
 
 const LoginSubmit = () => {

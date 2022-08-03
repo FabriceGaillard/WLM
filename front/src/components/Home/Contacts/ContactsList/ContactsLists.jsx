@@ -1,7 +1,5 @@
 // HOOKS
 import { useEffect, useState, useContext } from 'react';
-// FETCH
-import { fetchContacts } from '../../../../helpers/fetch';
 // CONTEXT
 import globalContext from '../../../../contexts/GlobalContext';
 import homeContext from '../../../../contexts/homeContext';
