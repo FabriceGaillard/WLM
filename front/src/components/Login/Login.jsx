@@ -1,5 +1,5 @@
 // HOOKS
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 // COMPONENTS
 import {
   LoginAuth,
@@ -13,6 +13,7 @@ import HeaderWithLogo from '../HeaderWithLogo';
 import FooterWindowsLiveId from '../FooterWindowsLiveId';
 // CONTEXT
 import loginContext from '/src/contexts/LoginContext';
+import globalContext from '../../contexts/GlobalContext';
 // DATA
 import formLoginData from '/src/data/login/formLoginData';
 // HELPERS
@@ -20,6 +21,7 @@ import { getLocalStorageUsers } from "/src/helpers/handleStorage";
 
 const Login = () => {
 
+  const { showMenu } = useContext(globalContext);
   const formRef = useRef();
 
   const [formUpdate, setFormUpdate] = useState(formLoginData);
@@ -76,7 +78,7 @@ const Login = () => {
 
   return (
     <loginContext.Provider value={providerValues}>
-      <div className="login__container">
+      <div className={`login__container ${showMenu ? "" : "hide"}`}>
         <div className="login">
           <HeaderWithLogo />
           <form
@@ -93,7 +95,7 @@ const Login = () => {
           <FooterWindowsLiveId />
         </div>
       </div>
-    </loginContext.Provider>
+    </loginContext.Provider >
   );
 };
 

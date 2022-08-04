@@ -40,3 +40,9 @@
     object-fit: cover;
   }
 }
+
+@mixin hideElement {
+  position: absolute;
+  z-index: -100;
+  visibility: none;
+}

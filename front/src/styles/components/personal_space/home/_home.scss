@@ -1,8 +1,14 @@
+@use "../../../abstracts/index" as *;
+
 .home {
   padding: 0px 8px 8px 8px;
 
   & > header {
     box-sizing: content-box;
     margin-inline: -8px;
+  }
+
+  &.hide {
+    @include hideElement;
   }
 }

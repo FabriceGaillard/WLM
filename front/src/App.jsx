@@ -18,9 +18,19 @@ const App = () => {
 
   const [userDataFromDb, setUserDataFromDb] = useState(null);
   const [contacts, setContacts] = useState([]);
+  const [showMenu, setShowMenu] = useState(true);
+
+  const globalContextOptions = {
+    userDataFromDb,
+    setUserDataFromDb,
+    contacts,
+    setContacts,
+    showMenu,
+    setShowMenu
+  };
 
   return (
-    <globalContext.Provider value={{ userDataFromDb, setUserDataFromDb, contacts, setContacts }}>
+    <globalContext.Provider value={globalContextOptions}>
       <BrowserRouter>
         <Routes>
           <Route element={<PrivateRoutes userDataFromDb={userDataFromDb} />}>
