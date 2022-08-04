@@ -1,4 +1,4 @@
-@use "../../../../abstracts/index" as *;
+@use "../../../../../abstracts/index" as *;
 
 .user__card__simple {
   @include flex($align: center);

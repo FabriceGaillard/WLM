@@ -1,50 +1,43 @@
 @use "../../abstracts/index" as *;
 
-.login__container,
-.ask-reset-password__container,
-.reset-password__container,
-.home__container {
-  height: 100vh;
-  @include flex($justify: center, $align: center);
+.login,
+.ask-reset-password,
+.reset-password,
+.home {
+  @include flex($flow: nowrap column, $align: center);
+  position: relative;
+  font-size: $font-login-size;
+  font-weight: 500;
+  font-family: $font-login;
+  border: 1px solid $border-login-container;
+  overflow: hidden;
+  height: 864px;
+  // height: 100%;
+  width: 550px;
+  background: $bg-login;
+  background-size: 100% 100%;
+  border-radius: 5px;
+  z-index: 0;
 
-  .login,
-  .ask-reset-password,
-  .reset-password,
-  .home {
-    @include flex($flow: nowrap column, $align: center);
-    position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+    inset: 0px;
+    pointer-events: none;
+    border: solid 2px $border-login-container-before;
+    z-index: 0;
+  }
+
+  &::after {
+    position: absolute;
+    content: url("/assets/background_stripes.jpg");
+    right: 2px;
+    top: -2px;
+    z-index: -1;
+  }
+
+  & :not(b, h1, h2, h3) {
     font-size: $font-login-size;
     font-weight: 500;
-    font-family: $font-login;
-    border: 1px solid $border-login-container;
-    overflow: hidden;
-    height: 864px;
-    width: 550px;
-    background: $bg-login;
-    background-size: 100% 100%;
-    border-radius: 5px;
-    z-index: 0;
-
-    &::before {
-      position: absolute;
-      content: "";
-      inset: 0px;
-      pointer-events: none;
-      border: solid 2px $border-login-container-before;
-      z-index: 0;
-    }
-
-    &::after {
-      position: absolute;
-      content: url("/assets/background_stripes.jpg");
-      right: 2px;
-      top: -2px;
-      z-index: -1;
-    }
-
-    & :not(b, h1, h2, h3) {
-      font-size: $font-login-size;
-      font-weight: 500;
-    }
   }
 }

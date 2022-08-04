@@ -13,6 +13,9 @@ li {
   list-style: none;
 }
 
-body {
+#root {
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: url("/assets/windows-xp-wallpaper.jpg") no-repeat;
 }

@@ -8,6 +8,7 @@
 @use "./components/common/gradient_btn";
 
 // LOGIN
+@use "./components/login/login";
 @use "./components/login/common/login_dropdown";
 @use "./components/login/common/checkbox";
 @use "./components/login/common/disabled";
@@ -25,41 +26,50 @@
 
 @use "./components/loading";
 
-// HOME
-@use "./components/home/home";
+// PERSONALSPACE
+@use "./components/personal_space/personal_space.scss";
 
-//HOME USER
-@use "./components/home/user/user";
-@use "./components/home/user/user_settings";
-@use "./components/home/user/user_avatar";
-@use "./components/home/user/user_personal_message";
-@use "./components/home/user/user_buttons";
+// PERSONALSPACE HOME
+@use "./components/personal_space/home/home";
 
-// HOME CONTACTS
-@use "./components/home/contacts/contacts";
+// PERSONALSPACE HOME USER
+@use "./components/personal_space/home/user/user";
+@use "./components/personal_space/home/user/user_settings";
+@use "./components/personal_space/home/user/user_avatar";
+@use "./components/personal_space/home/user/user_personal_message";
+@use "./components/personal_space/home/user/user_buttons";
 
-// HOME CONTACTS LISTS
-@use "./components/home/contacts/lists/contacts_lists";
-@use "./components/home/contacts/lists/contacts_lists_context_menu";
-@use "./components/home/contacts/lists/contacts_lists_empty";
-@use "./components/home/contacts/lists/contacts_lists_card";
+//PERSONALSPACE HOME CONTACTS
+@use "./components/personal_space/home/contacts/contacts";
 
-// HOME CONTACTS BUTTONS
-@use "./components/home/contacts/manage/buttons/contacts_manage_buttons";
-@use "./components/home/contacts/manage/buttons/contacts_manage_button_reset";
-@use "./components/home/contacts/manage/buttons/contacts_manage_button_sort";
-@use "./components/home/contacts/manage/buttons/contacts_manage_button_add";
+// PERSONALSPACE HOME CONTACTS LISTS
+@use "./components/personal_space/home/contacts/lists/contacts_lists";
+@use "./components/personal_space/home/contacts/lists/contacts_lists_context_menu";
+@use "./components/personal_space/home/contacts/lists/contacts_lists_empty";
+@use "./components/personal_space/home/contacts/lists/contacts_lists_card";
 
-// HOME CONTACTS MANAGE
-@use "./components/home/contacts/manage/contacts_manage";
-@use "./components/home/contacts/manage/contacts_manage_search";
-@use "./components/home/contacts/manage/contacts_manage_sort";
+//PERSONALSPACE HOME CONTACTS BUTTONS
+@use "./components/personal_space/home/contacts/manage/buttons/contacts_manage_buttons";
+@use "./components/personal_space/home/contacts/manage/buttons/contacts_manage_button_reset";
+@use "./components/personal_space/home/contacts/manage/buttons/contacts_manage_button_sort";
+@use "./components/personal_space/home/contacts/manage/buttons/contacts_manage_button_add";
 
-// HOME CONTACTS MANAGE ADDMENU
-@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu";
-@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu_header";
-@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu_form/add_contact_menu_form";
-@use "./components/home/contacts/manage/add_contact_menu/add_contact_menu_form/add_contact_menu_form_add_abort";
+// PERSONALSPACE HOME CONTACTS MANAGE
+@use "./components/personal_space/home/contacts/manage/contacts_manage";
+@use "./components/personal_space/home/contacts/manage/contacts_manage_search";
+@use "./components/personal_space/home/contacts/manage/contacts_manage_sort";
+
+// PERSONALSPACE HOME CONTACTS MANAGE ADDMENU
+@use "./components/personal_space/home/contacts/manage/add_contact_menu/add_contact_menu";
+@use "./components/personal_space/home/contacts/manage/add_contact_menu/add_contact_menu_header";
+@use "./components/personal_space/home/contacts/manage/add_contact_menu/add_contact_menu_form/add_contact_menu_form";
+@use "./components/personal_space/home/contacts/manage/add_contact_menu/add_contact_menu_form/add_contact_menu_form_add_abort";
+
+//PERSONALSPACE CHAT
+@use "./components/personal_space/chat/chat";
+
+// TASKBAR
+@use "./components/taskbar/taskbar";
 
 // REGISTER
 @import "./components/register/register";
