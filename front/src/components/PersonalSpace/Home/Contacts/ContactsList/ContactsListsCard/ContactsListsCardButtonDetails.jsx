@@ -1,9 +1,9 @@
 // HOOKS
 import { useRef } from 'react';
 // DATA
-import statusList from '../../../../../data/login/statusList';
+import statusList from '../../../../../../data/login/statusList';
 // HELPERS
-import openContactConversation from '../../../../../helpers/home/contacts/list/openContactConversation';
+import openContactConversation from '../../../../../../helpers/home/contacts/list/openContactConversation';
 
 const ContactsListsCardButtonDetails = (props) => {
 

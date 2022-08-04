@@ -4,8 +4,8 @@ import { useState, useRef, useContext, useEffect } from 'react';
 import resetInputIcon from "/assets/icons/contactsManageIcons/contacts-manage-search-reset.png";
 import resetInputIconHover from "/assets/icons/contactsManageIcons/contacts-manage-search-reset-hover.png";
 // CONTEXT
-import globalContext from '../../../../contexts/GlobalContext';
-import homeContext from '../../../../contexts/homeContext';
+import globalContext from '../../../../../contexts/GlobalContext';
+import homeContext from '../../../../../contexts/homeContext';
 
 const ContactsManageSearch = () => {
 

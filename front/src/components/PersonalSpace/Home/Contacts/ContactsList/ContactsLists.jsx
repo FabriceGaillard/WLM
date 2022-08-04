@@ -1,8 +1,8 @@
 // HOOKS
 import { useEffect, useState, useContext } from 'react';
 // CONTEXT
-import globalContext from '../../../../contexts/GlobalContext';
-import homeContext from '../../../../contexts/homeContext';
+import globalContext from '../../../../../contexts/GlobalContext';
+import homeContext from '../../../../../contexts/homeContext';
 // COMPONENTS
 import {
   ContactsListCard,

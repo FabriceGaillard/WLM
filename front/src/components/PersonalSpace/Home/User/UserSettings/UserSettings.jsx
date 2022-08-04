@@ -1,13 +1,13 @@
 // HOOKS
 import { useState, useContext, useRef } from 'react';
 // CONTEXT
-import globalContext from '../../../../contexts/GlobalContext';
+import globalContext from '../../../../../contexts/GlobalContext';
 // COMPONENTS
 import { UserSettingsList } from "../userIndex";
 // DATA
-import statusList from '../../../../data/login/statusList';
+import statusList from '../../../../../data/login/statusList';
 // ICONS
-import ArrowIcon from '../../../../icons/dropDownArrow';
+import ArrowIcon from '../../../../../icons/dropDownArrow';
 
 const UserSettings = () => {
 

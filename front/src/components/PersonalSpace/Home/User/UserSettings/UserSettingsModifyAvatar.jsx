@@ -1,7 +1,7 @@
 // HOOKS
 import { useContext } from 'react';
 // CONTEXT
-import globalContext from '../../../../contexts/GlobalContext';
+import globalContext from '../../../../../contexts/GlobalContext';
 
 const UserSettingsModifyAvatar = (props) => {
 

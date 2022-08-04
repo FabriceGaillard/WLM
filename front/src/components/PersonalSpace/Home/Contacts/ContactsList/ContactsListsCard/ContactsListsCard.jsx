@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 // COMPONENTS
 import { ContactsListsCardContextMenu, ContactsListsCardButtonDetails, ContactsListsCardButtonSimple } from "../../contactsIndex";
 // CONTEXT
-import homeContext from '../../../../../contexts/homeContext';
+import homeContext from '../../../../../../contexts/homeContext';
 
 const ContactsListsCard = ({ data }) => {
 

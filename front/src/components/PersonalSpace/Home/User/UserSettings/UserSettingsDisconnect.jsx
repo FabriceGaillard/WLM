@@ -2,12 +2,12 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 // DATA
-import statusList from '../../../../data/login/statusList';
+import statusList from '../../../../../data/login/statusList';
 // CONTEXT 
-import globalContext from '../../../../contexts/GlobalContext';
+import globalContext from '../../../../../contexts/GlobalContext';
 // HELPERS
-import { fetchLogout } from '../../../../helpers/fetchMethods/home';
-import { getLocalStorageUsers, removeStorageCurrent } from '../../../../helpers/handleStorage';
+import { fetchLogout } from '../../../../../helpers/fetchMethods/home';
+import { getLocalStorageUsers, removeStorageCurrent } from '../../../../../helpers/handleStorage';
 
 const UserSettingsDisconnect = (props) => {
 

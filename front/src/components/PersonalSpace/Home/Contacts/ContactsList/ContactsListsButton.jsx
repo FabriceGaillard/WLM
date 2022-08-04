@@ -1,5 +1,5 @@
 // ICONS
-import DropDownContactsList from '../../../../icons/DropDownContactsList';
+import DropDownContactsList from '../../../../../icons/DropDownContactsList';
 
 const ContactsListsButton = ({ data }) => {
 

@@ -1,11 +1,11 @@
 // HOOKS
 import { useRef, useEffect, useContext, useCallback } from 'react';
 // CONTEXT
-import globalContext from '../../../../contexts/GlobalContext';
+import globalContext from '../../../../../contexts/GlobalContext';
 // HELPERS
-import clickOutside from '../../../../helpers/clickOutside';
+import clickOutside from '../../../../../helpers/clickOutside';
 // DATA
-import statusList from '../../../../data/login/statusList';
+import statusList from '../../../../../data/login/statusList';
 // COMPONENTS
 import {
   UserSettingsModifyAvatar,

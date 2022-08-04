@@ -3,11 +3,11 @@ import { useRef, useEffect, useContext } from 'react';
 // HELPERS
 import clickOutside from '/src/helpers/clickOutside';
 // DATA
-import menuSortShowOptions from '../../../../../data/home/contacts/menuSortShowOptions';
+import menuSortShowOptions from '../../../../../../data/home/contacts/menuSortShowOptions';
 // CONTEXT
-import homeContext from '../../../../../contexts/homeContext';
+import homeContext from '../../../../../../contexts/homeContext';
 // ICON
-import CheckedOption from '../../../../../icons/checkedOption';
+import CheckedOption from '../../../../../../icons/checkedOption';
 
 const ContactsManageSortShowMenu = (props) => {
 
