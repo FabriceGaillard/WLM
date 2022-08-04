@@ -1,5 +1,19 @@
 .taskbar {
   margin-top: auto;
-  height: 50px;
-  background-color: #245dda;
+  height: 30px;
+  background: url("/assets/taskbar/taskbar-gradient.png");
+
+  .start-button {
+    height: 100%;
+    width: 100px;
+    border: none;
+    color: white;
+    font-weight: 500;
+    font-size: 20px;
+    border-radius: 0 10px 10px 0;
+    background: url("/assets/taskbar/taskbar-logo.png") no-repeat 5px center;
+    background-color: green;
+    border: solid 1px #004f1a;
+    box-shadow: 0 1px 0 1px #041f0d6b;
+  }
 }
