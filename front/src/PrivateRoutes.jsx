@@ -6,7 +6,8 @@ import Loader from './components/Loader';
 // CONTEXT
 import globalContext from './contexts/GlobalContext';
 // HELPERS
-import { fetchMe, fetchContacts } from './helpers/fetchMethods/home';
+import { fetchMe } from './helpers/fetchMethods/home';
+import { fetchContacts } from './helpers/fetchMethods/general';
 
 const PrivateRoutes = () => {
 

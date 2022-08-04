@@ -6,7 +6,7 @@ import loginContext from '/src/contexts/LoginContext';
 import globalContext from '/src/contexts/GlobalContext';
 // HELPERS
 import { fetchLogin, fetchMeFromLogin } from '../../helpers/fetchMethods/login';
-import { fetchContacts } from '../../helpers/fetchMethods/home';
+import { fetchContacts } from '../../helpers/fetchMethods/general';
 import { handleStorageWhenAuthenticated } from '/src/helpers/handleStorage';
 
 const LoginSubmit = () => {

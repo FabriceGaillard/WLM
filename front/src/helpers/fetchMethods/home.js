@@ -1,9 +1,4 @@
-import {
-  userInfosApiUrl,
-  userRelationshipsApiUrl,
-  logoutApiUrl
-} from '../../data/apiUrls';
-
+import { userInfosApiUrl, logoutApiUrl } from '../../data/apiUrls';
 import options from '../../data/fetchOptions';
 
 export const fetchMe = async () => {
@@ -14,12 +9,6 @@ export const fetchMe = async () => {
 
   const userData = await response.json();
   return userData;
-};
-
-export const fetchContacts = async () => {
-  const response = await fetch(userRelationshipsApiUrl, options);
-  const users = await response.json();
-  return users;
 };
 
 export const fetchLogout = async () => {
