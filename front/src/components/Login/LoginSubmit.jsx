@@ -6,12 +6,13 @@ import loginContext from '/src/contexts/LoginContext';
 import globalContext from '/src/contexts/GlobalContext';
 // HELPERS
 import { fetchLogin, fetchMeFromLogin } from '../../helpers/fetchMethods/login';
+import { fetchContacts } from '../../helpers/fetchMethods/home';
 import { handleStorageWhenAuthenticated } from '/src/helpers/handleStorage';
 
 const LoginSubmit = () => {
 
   const { isConnecting, setIsConnecting, formUpdate, storageData } = useContext(loginContext);
-  const { userDataFromDb, setUserDataFromDb } = useContext(globalContext);
+  const { userDataFromDb, setUserDataFromDb, setContacts } = useContext(globalContext);
   const abortControllerRef = useRef(null);
   const timerStartRef = useRef(null);
   const timerEndRef = useRef(null);
@@ -35,6 +36,9 @@ const LoginSubmit = () => {
     if (requestChoice === "me") {
       userFetchRef.current = await fetchMeFromLogin(abortControllerRef.current);
     }
+
+    const userContacts = await fetchContacts();
+    setContacts(userContacts);
 
     userFetchRef.current.status = formUpdate.status;
 
