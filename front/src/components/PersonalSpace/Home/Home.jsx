@@ -28,7 +28,7 @@ const Home = () => {
 
   return (
     <homeContext.Provider value={{ settings, setSettings, emptySearchResult, setEmptySearchResult }}>
-      <div className={`home ${showMenu ? "" : "hide"}`} showMenu>
+      <div className={`home ${showMenu ? "" : "hide"}`}>
         <HeaderWithLogo />
         <User />
         <Contacts />
