@@ -3,13 +3,13 @@ import { useState, useContext } from 'react';
 // COMPONENTS
 import { ContactsListsCardContextMenu, ContactsListsCardButtonDetails, ContactsListsCardButtonSimple } from "../../contactsIndex";
 // CONTEXT
-import homeContext from '../../../../../../contexts/homeContext';
+import PersonalSpaceContext from '../../../../../../contexts/PersonalSpaceContext';
 
 const ContactsListsCard = ({ data }) => {
 
   const { relatedUser, id, contactsContextMenu, setContactsContextMenu } = data;
 
-  const { settings } = useContext(homeContext);
+  const { settings } = useContext(PersonalSpaceContext);
   const { showDetails } = settings.sortShowOptions;
 
   const [contextMenuPosition, setContextMenuPostion] = useState(null);

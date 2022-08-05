@@ -5,13 +5,13 @@ import clickOutside from '/src/helpers/clickOutside';
 // DATA
 import menuSortShowOptions from '../../../../../../data/home/contacts/menuSortShowOptions';
 // CONTEXT
-import homeContext from '../../../../../../contexts/homeContext';
+import PersonalSpaceContext from '../../../../../../contexts/PersonalSpaceContext';
 // ICON
 import CheckedOption from '../../../../../../icons/checkedOption';
 
 const ContactsManageSortShowMenu = (props) => {
 
-  const { settings, setSettings } = useContext(homeContext);
+  const { settings, setSettings } = useContext(PersonalSpaceContext);
 
 
   const { dropDownButtonTarget, setShowContactsSortMenu } = props;

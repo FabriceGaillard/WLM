@@ -2,7 +2,7 @@
 import { useEffect, useState, useContext } from 'react';
 // CONTEXT
 import globalContext from '../../../../../contexts/GlobalContext';
-import homeContext from '../../../../../contexts/homeContext';
+import PersonalSpaceContext from '../../../../../contexts/PersonalSpaceContext';
 // COMPONENTS
 import {
   ContactsListCard,
@@ -14,7 +14,7 @@ import {
 const ContactsLists = () => {
 
   const { contacts } = useContext(globalContext);
-  const { emptySearchResult } = useContext(homeContext);
+  const { emptySearchResult } = useContext(PersonalSpaceContext);
 
   const [showContacts, setShowContacts] = useState(true);
   const [contactsContextMenu, setContactsContextMenu] = useState(null);

@@ -5,12 +5,12 @@ import resetInputIcon from "/assets/icons/contactsManageIcons/contacts-manage-se
 import resetInputIconHover from "/assets/icons/contactsManageIcons/contacts-manage-search-reset-hover.png";
 // CONTEXT
 import globalContext from '../../../../../contexts/GlobalContext';
-import homeContext from '../../../../../contexts/homeContext';
+import PersonalSpaceContext from '../../../../../contexts/PersonalSpaceContext';
 
 const ContactsManageSearch = () => {
 
   const { contacts, setContacts } = useContext(globalContext);
-  const { setEmptySearchResult } = useContext(homeContext);
+  const { setEmptySearchResult } = useContext(PersonalSpaceContext);
   const inputRef = useRef(null);
 
   const [searchInputValue, setSearchInputValue] = useState("");
