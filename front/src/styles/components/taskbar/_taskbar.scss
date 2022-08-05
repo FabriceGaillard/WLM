@@ -1,7 +1,11 @@
+@use "../../abstracts/index" as *;
+
 .taskbar {
   margin-top: auto;
   height: 30px;
   background: url("/assets/taskbar/taskbar-gradient.png");
+  @include flex($align: center);
+  gap: 10px;
 
   .start-button {
     height: 100%;
@@ -15,5 +19,27 @@
     background-color: green;
     border: solid 1px #004f1a;
     box-shadow: 0 1px 0 1px #041f0d6b;
+  }
+
+  .menu-button {
+    @include flex($align: center);
+    gap: 5px;
+    border: none;
+    box-shadow: 0 0 1px black;
+    padding: 3px 10px;
+    height: 22px;
+    background: url("/assets/taskbar/taskbar-menu-button-gradient.png") repeat-x;
+
+    &.focus {
+      background: url("/assets/taskbar/taskbar-menu-button-gradient-focus.png") repeat-x;
+    }
+
+    p {
+      color: white;
+    }
+
+    img {
+      height: 18px;
+    }
   }
 }
