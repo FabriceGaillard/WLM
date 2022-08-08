@@ -1,0 +1,42 @@
+/messages/unredead:
+  post:
+    summary: Get all unreaded messages
+    tags:
+      - Messages
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnreadedMessage'
+    responses:
+      '200':
+        description: Return all unreaded messages
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example:
+                          oneOf:
+                            - Invalid credentials.
+                            - Invalid account.
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'

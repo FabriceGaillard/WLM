@@ -538,6 +538,136 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntity"
+  /messages/history:
+    get:
+      summary: Return 10 last readed messages with at least one user
+      tags:
+        - Messages
+      responses:
+        "200":
+          description: Return 10 last readed messages.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  /messages/mark-as-readed:
+    post:
+      summary: Update one or more message(s), change status to readed
+      tags:
+        - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/markAsReadedTransmittedMessageValidator"
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example:
+                            oneOf:
+                              - Invalid credentials.
+                              - Invalid account.
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+  /messages/store:
+    post:
+      summary: Store a message to at least one recipient
+      tags:
+        - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreMessage"
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example:
+                            oneOf:
+                              - Invalid credentials.
+                              - Invalid account.
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
+  /messages/unredead:
+    post:
+      summary: Get all unreaded messages
+      tags:
+        - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnreadedMessage"
+      responses:
+        "200":
+          description: Return all unreaded messages
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example:
+                            oneOf:
+                              - Invalid credentials.
+                              - Invalid account.
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntity"
   /user-relationships/index-of-authenticated-user:
     get:
       summary: Return all relationships of authenticated user
@@ -1155,46 +1285,6 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntity"
 components:
   schemas:
-    BlockedUserRelationshipLog:
-      type: object
-      properties:
-        relatingUserId:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-          maxLength: 36
-          readOnly: true
-        relatedUserId:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-          maxLength: 36
-          readOnly: true
-        relatingUser:
-          nullable: true
-          type: object
-          $ref: "#/components/schemas/User"
-        relatedUser:
-          nullable: true
-          type: object
-          $ref: "#/components/schemas/User"
-        startedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        endedAt:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
     ClientError:
       type: object
       properties:
@@ -1263,6 +1353,27 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
           maxLength: 36
           readOnly: true
+        userId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+        content:
+          type: string
+        type:
+          enum:
+            - message
+            - status
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        relatingUser:
+          $ref: "#/components/schemas/User"
+        relatedUsers:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
         email:
           type: string
           format: email
@@ -1338,16 +1449,12 @@ components:
           maxLength: 5
           pattern: /^(?:2A|2B|\d{2})\d{3}$/
           nullable: true
-          example: 42100
+          example: "42100"
         verifiedAt:
           type: string
           format: date-time
           readOnly: true
         updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        createdAt:
           type: string
           format: date-time
           readOnly: true
@@ -1523,6 +1630,62 @@ components:
         name:
           type: string
           maxLength: 255
+    latestMessageValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            userIds:
+              type: array
+              items:
+                type: string
+                format: uuid
+    markAsReadedTransmittedMessageValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            messageIds:
+              type: array
+              items:
+                type: string
+                format: uuid
+    updatePasswordUserValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            userIds:
+              type: array
+              items:
+                type: string
+                format: uuid
+            id:
+              type: string
+              format: uuid
+          content:
+            type: string
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          description: newPassword mus be different of oldPassword
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: testTest1234.
+        passwordConfirmation:
+          type: string
+          format: regex
+          maxLength: 180
+          minLength: 12
+          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
+          example: testTest1234.
+          description: Must be equal to password field
     updateEmailUserValidator:
       type: object
       properties:
@@ -1543,33 +1706,6 @@ components:
           example: exemple@domain.com
           maxLength: 74
           description: This field must be unique, an error will be thrown if it is not.
-    updatePasswordUserValidator:
-      type: object
-      properties:
-        params:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-        oldPassword:
-          type: string
-        newPassword:
-          type: string
-          format: regex
-          maxLength: 180
-          minLength: 12
-          description: newPassword mus be different of oldPassword
-          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
-          example: testTest1234.
-        passwordConfirmation:
-          type: string
-          format: regex
-          maxLength: 180
-          minLength: 12
-          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{12,}$/
-          example: testTest1234.
-          description: Must be equal to password field
     updateUserValidator:
       type: object
       properties:
@@ -1667,3 +1803,5 @@ tags:
     description: Everything about Groups
   - name: BlockedUserRelationshipLogs
     description: Everything about BlockedUserRelationshipLogs
+  - name: Messages
+    description: Everything about Messages

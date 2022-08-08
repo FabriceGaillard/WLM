@@ -1,0 +1,12 @@
+/messages/history:
+  get:
+    summary: Return 10 last readed messages with at least one user
+    tags:
+      - Messages
+    responses:
+      '200':
+        description: Return 10 last readed messages.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'

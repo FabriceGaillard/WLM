@@ -1,0 +1,38 @@
+/messages/mark-as-readed:
+  post:
+    summary: Update one or more message(s), change status to readed
+    tags:
+      - Messages
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/markAsReadedTransmittedMessageValidator'
+    responses:
+      '204':
+        description: No content
+      '400':
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example:
+                          oneOf:
+                            - Invalid credentials.
+                            - Invalid account.
+      '422':
+        description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnprocessableEntity'

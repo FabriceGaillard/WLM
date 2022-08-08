@@ -9,3 +9,5 @@ tags:
     description: Everything about Groups
   - name: BlockedUserRelationshipLogs
     description: Everything about BlockedUserRelationshipLogs
+  - name: Messages
+    description: Everything about Messages
