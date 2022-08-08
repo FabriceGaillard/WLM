@@ -2,16 +2,10 @@
 
 .chat {
   height: 500px;
-  width: 500px;
-  background-color: black;
-  font-size: 4rem;
-  font-weight: bold;
-  color: white;
-  background-image: url("https://images-cdn.9gag.com/photo/a6K3zrm_700b.jpg");
-
-  p {
-    background-color: black;
-    width: 100%;
-    text-align: center;
-  }
+  min-width: 390px;
+  max-width: 1000px;
+  width: 100%;
+  background-color: #ecf3f6;
+  border: #55759c;
+  border-radius: 5px;
 }

@@ -1,0 +1,17 @@
+.close-button,
+.extend-button,
+.reduce-button {
+  background-color: transparent;
+  border: none;
+  width: 15px;
+  aspect-ratio: 1/1;
+
+  &:hover .close-window__icon {
+    color: #0088e0;
+  }
+}
+
+.close-window__icon {
+  width: 10px;
+  color: #bec9c9;
+}

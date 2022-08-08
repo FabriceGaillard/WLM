@@ -1,0 +1,49 @@
+.chat__header {
+  display: grid;
+  column-gap: 5px;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 2fr;
+  grid-template-areas:
+    "logo pseudo manage"
+    "desc desc desc";
+  font-family: "Microsoft Sans Serif";
+  font-weight: 400;
+  padding: 5px;
+  border-bottom: solid 1px #bed6e0;
+  user-select: none;
+
+  &--logo {
+    grid-area: logo;
+  }
+
+  &--pseudo {
+    grid-area: pseudo;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  &--description {
+    grid-area: desc;
+    margin-left: 21px;
+    color: #777777;
+    font-size: 11px;
+  }
+
+  &--window-manage {
+    grid-area: manage;
+    display: flex;
+
+    svg {
+      color: #bec9c9;
+
+      &:nth-child(1) {
+        align-self: flex-start;
+      }
+    }
+
+    svg:hover {
+      color: #0088e0;
+    }
+  }
+}

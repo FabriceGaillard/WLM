@@ -6,6 +6,7 @@
 @use "./components/common/header_wlm";
 @use "./components/common/stripe_background";
 @use "./components/common/gradient_btn";
+@use "./components/common/manage_window_icons";
 
 // LOGIN
 @use "./components/login/login";
@@ -67,6 +68,7 @@
 
 //PERSONALSPACE CHAT
 @use "./components/personal_space/chat/chat";
+@use "./components/personal_space/chat/chat-header";
 
 // TASKBAR
 @use "./components/taskbar/taskbar";
