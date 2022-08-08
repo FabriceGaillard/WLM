@@ -9,7 +9,9 @@
   position: absolute;
   @include translate-center;
   @include flex($flow: nowrap column);
-  width: 400px;
+  max-width: 400px;
+  min-width: 200px;
+  width: 90%;
   height: 200px;
   background: $bg-contact-manage-add-menu;
   border: solid 1px #55759c;

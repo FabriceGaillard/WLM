@@ -6,13 +6,13 @@
   .contact-manage-sort__menu {
     @include flex($flow: column);
     position: absolute;
-    z-index: 1;
+    z-index: 10;
     gap: 5px;
-    right: 15px;
+    right: 4px;
     top: 22px;
     background-color: $bg-login-email-drop;
     border: 1px solid $border-login-img-container;
-    width: 341px;
+    min-width: 230px;
     padding: 2px;
 
     li {
