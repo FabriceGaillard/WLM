@@ -1,7 +1,7 @@
 // ICONS
-import closeIcon from "/assets/icons/close-icon.png";
-import closeIconHover from "/assets/icons/close-icon-hover.png";
 import addIcon from "/assets/icons/contactsManageIcons/contacts-manage-add-icon-hq.png";
+// COMPONENTS
+import CloseWindow from '../../../../../../../icons/closeWindow';
 
 const ContactsManageAddMenuHeader = ({ handleAbort }) => (
   <header className="add-contact-menu__header">
@@ -11,10 +11,7 @@ const ContactsManageAddMenuHeader = ({ handleAbort }) => (
       type="button"
       className="close-button"
       onClick={handleAbort}>
-      <div className="close-button__img--container">
-        <img src={closeIconHover} className="hover" alt="Icône de fermeture au survol" />
-        <img src={closeIcon} className="notHover" alt="Icône de fermeture" />
-      </div>
+      <CloseWindow />
     </button>
   </header>
 );

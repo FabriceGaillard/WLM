@@ -1,9 +1,10 @@
-import React from 'react';
+// ICONS
+import ChatHeader from './ChatHeader/ChatHeader';
 
 const Chat = () => {
   return (
     <div className="chat">
-      <p>Chat</p>
+      <ChatHeader />
     </div>
   );
 };
