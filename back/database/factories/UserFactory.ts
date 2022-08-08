@@ -2,9 +2,8 @@ import User, { gender, status } from 'App/Models/User'
 import Factory from '@ioc:Adonis/Lucid/Factory'
 import ArrayHelper from 'App/Helpers/ArrayHelper'
 import { DateTime } from 'luxon'
-import { BlockedUserRelationshipLogFactory } from './BlockedUserRelationshipLog'
-import { ChannelFactory } from './ChannelFactory'
 import { GroupFactory } from './GroupFactory'
+import { MessageFactory } from './MessageFactory'
 
 export const UserFactory = Factory
     .define(User, ({ faker }) => {
@@ -13,14 +12,14 @@ export const UserFactory = Factory
             password: faker.internet.password(),
             rememberMeToken: faker.random.alphaNumeric(20),
             username: faker.internet.userName(),
-            personalMessage: faker.lorem.sentences(),
+            personalMessage: faker.lorem.words(10),
             status: ArrayHelper.random(Object.values(status)),
             avatar: faker.lorem.words(),
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             gender: ArrayHelper.random(Object.values(gender)),
             birthYear: ArrayHelper.random(
-                Array.from(Array(130), (n) => n + DateTime.now().year - 130)
+                Array.from(Array(130).keys(), (n) => n + DateTime.now().year - 129)
             ),
             alternateEmail: faker.internet.email(undefined, undefined, 'hotmail.com'),
             country: faker.address.cityName(),
@@ -28,8 +27,6 @@ export const UserFactory = Factory
             verifiedAt: DateTime.fromISO(faker.date.past().toISOString()),
         }
     })
-    .relation('blockedUserRelationshipLogs', () => BlockedUserRelationshipLogFactory)
-    .relation('channels', () => ChannelFactory)
     .relation('groups', () => GroupFactory)
-    .relation('userRelationships', () => BlockedUserRelationshipLogFactory)
+    .relation('messages', () => MessageFactory)
     .build()

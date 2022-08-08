@@ -4,9 +4,8 @@ import { column, beforeSave, BaseModel, beforeCreate, hasMany, HasMany, manyToMa
 import { v4 as uuidv4 } from 'uuid'
 import UserRelationship from './UserRelationship'
 import Group from './Group'
-import BlockedUserRelationshipLog from './BlockedUserRelationshipLog'
 import Message from './Message'
-import Channel from './Channel'
+
 
 export enum gender {
     MALE = 'male',
@@ -87,17 +86,18 @@ export default class User extends BaseModel {
     @hasMany(() => UserRelationship, { foreignKey: 'relatingUserId' })
     public userRelationships: HasMany<typeof UserRelationship>
 
-    @hasMany(() => BlockedUserRelationshipLog, { foreignKey: 'relatingUserId' })
-    public blockedUserRelationshipLogs: HasMany<typeof BlockedUserRelationshipLog>
-
-    @manyToMany(() => Channel)
-    public channels: ManyToMany<typeof Channel>
-
     @hasMany(() => Group)
     public groups: HasMany<typeof Group>
 
-    @hasMany(() => Message)
-    public messages: HasMany<typeof Message>
+    @manyToMany(() => Message, {
+        pivotTable: 'transmitted_messages',
+        pivotTimestamps: {
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+        },
+        pivotColumns: ['status'],
+    })
+    public messages: ManyToMany<typeof Message>
 
     @beforeSave()
     public static async hashPassword(user: User) {

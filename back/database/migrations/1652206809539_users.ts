@@ -18,7 +18,7 @@ export default class UsersSchema extends BaseSchema {
             table.string('first_name', 255).notNullable()
             table.string('last_name', 255).notNullable()
             table.enum('gender', Object.values(gender)).notNullable()
-            table.integer('birth_year', 255).nullable()
+            table.integer('birth_year').nullable()
             table.string('alternate_email', 255).notNullable()
             table.string('country', 255).notNullable().defaultTo('france')
             table.string('state', 255).nullable()

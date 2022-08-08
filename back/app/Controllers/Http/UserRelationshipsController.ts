@@ -4,8 +4,6 @@ import User from 'App/Models/User';
 import ShowUserRelationshipValidator from 'App/Validators/UserRelationship/ShowUserRelationshipValidator';
 import StoreUserRelationshipValidator from 'App/Validators/UserRelationship/StoreUserRelationshipValidator';
 import UpdateUserRelationshipValidator from 'App/Validators/UserRelationship/UpdateUserRelationshipValidator';
-import BlockedUserRelationshipLog from 'App/Models/BlockedUserRelationshipLog';
-import { DateTime } from 'luxon';
 import BlockUserRelationshipValidator from 'App/Validators/UserRelationship/BlockUserRelationshipValidator';
 import UnblockUserRelationshipValidator from 'App/Validators/UserRelationship/UnblockUserRelationshipValidator copy';
 
@@ -49,6 +47,39 @@ export default class UserRelationshipsController {
         return response.ok(userRelationship)
     }
 
+    /*     public async storeOrMakesVisible2({ request, response, auth }: HttpContextContract) {
+            const payload = await request.validate(StoreUserRelationshipValidator)
+            const relatedUser = await User.findByOrFail('email', payload.relatedUserEmail)
+    
+            let userRelationship = await UserRelationship.query()
+                .where('relating_user', auth.user!.id)
+                .andWhere('related_user', relatedUser.id)
+                .first()
+    
+            try {
+                if (!userRelationship) {
+                    const userRelationships = await UserRelationship.createMany([{
+                        relatingUserId: auth.user!.id,
+                        relatedUserId: relatedUser.id,
+                    }, {
+                        relatedUserId: auth.user!.id,
+                        relatingUserId: relatedUser.id,
+                        isHidden: true
+                    }])
+    
+                    userRelationship = userRelationships[0]
+                } else {
+                    await userRelationship.merge({ isHidden: false }).save()
+                }
+    
+                await userRelationship.load('relatedUser')
+            } catch (err) {
+                return response.badRequest()
+            }
+    
+            return response.ok(userRelationship)
+        } */
+
     public async update({ request, response, bouncer }: HttpContextContract) {
         const { params, ...payload } = await request.validate(UpdateUserRelationshipValidator)
         const userRelationship = await UserRelationship.findOrFail(params.id)
@@ -74,11 +105,6 @@ export default class UserRelationshipsController {
 
         await userRelationship.merge({ isBlocked: true }).save()
 
-        await BlockedUserRelationshipLog.create({
-            relatedUserId: userRelationship.relatedUserId,
-            relatingUserId: userRelationship.relatingUserId,
-        })
-
         return response.noContent()
     }
 
@@ -93,14 +119,6 @@ export default class UserRelationshipsController {
         if (!userRelationship.isBlocked) return response.badRequest()
 
         await userRelationship.merge({ isBlocked: false }).save()
-
-        const lastBlockedUserRelationshipLog = await BlockedUserRelationshipLog.query()
-            .where('related_user_id', userRelationship.relatedUserId)
-            .andWhere('relating_user_id', userRelationship.relatingUserId)
-            .orderBy('started_at', 'desc')
-            .firstOrFail()
-
-        lastBlockedUserRelationshipLog.merge({ endedAt: DateTime.now() })
 
         return response.noContent()
     }
