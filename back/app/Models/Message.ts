@@ -1,8 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import { v4 as uuidv4 } from 'uuid'
 import User from './User'
-import Channel from './Channel'
 
 export enum Type {
     MESSAGE = 'message',
@@ -19,9 +18,6 @@ export default class Message extends BaseModel {
     public userId: string
 
     @column()
-    public channelId: string
-
-    @column()
     public content: string
 
     @column()
@@ -31,10 +27,17 @@ export default class Message extends BaseModel {
     public createdAt: DateTime
 
     @belongsTo(() => User)
-    public user: BelongsTo<typeof User>
+    public relatingUser: BelongsTo<typeof User>
 
-    @belongsTo(() => Channel)
-    public channel: BelongsTo<typeof Channel>
+    @manyToMany(() => User, {
+        pivotTable: 'transmitted_messages',
+        pivotTimestamps: {
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+        },
+        pivotColumns: ['status'],
+    })
+    public relatedUsers: ManyToMany<typeof User>
 
     @beforeCreate()
     public static setId(message: Message) {
