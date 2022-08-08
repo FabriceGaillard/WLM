@@ -3,6 +3,6 @@ import './routes/userRoutes'
 import './routes/authRoutes'
 import './routes/userRelationshipRoutes'
 import './routes/groupRoutes'
-import './routes/blockedUserRelationshipLogRoutes'
+import './routes/MessageRoutes'
 
 Route.get('/', ({ response }) => response.redirect().toPath('/api'))
