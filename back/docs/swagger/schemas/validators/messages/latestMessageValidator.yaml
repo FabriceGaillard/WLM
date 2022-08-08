@@ -1,0 +1,13 @@
+components:
+  schemas:
+    latestMessageValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            userIds:
+              type: array
+              items:
+                type: string
+                format: uuid

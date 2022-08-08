@@ -1,0 +1,28 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+          readOnly: true
+        userId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          maxLength: 36
+        content:
+          type: string
+        type:
+          enum: [message, status]
+        createdAt:
+          type: date-time
+        relatingUser:
+          $ref: '#/components/schemas/User'
+        relatedUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'

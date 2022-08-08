@@ -1,0 +1,13 @@
+components:
+  schemas:
+    markAsReadedTransmittedMessageValidator:
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            messageIds:
+              type: array
+              items:
+                type: string
+                format: uuid
