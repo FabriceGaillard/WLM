@@ -1,11 +1,32 @@
-// TEMPORARY DESIGN
+@use "../../../abstracts/index" as *;
 
 .chat {
+  // overflow: hidden;
+  position: relative;
   height: 500px;
   min-width: 390px;
   max-width: 1000px;
   width: 100%;
   background-color: #ecf3f6;
-  border: #55759c;
+  border: solid 2px #55759c;
   border-radius: 5px;
+
+  background: $bg-contact-manage-add-menu;
+  z-index: 2;
+
+  &::before,
+  &::after {
+    @include pseudo-element-inset;
+  }
+
+  &::before {
+    background: url("/assets/background_stripes_v2.jpg") no-repeat top right;
+    z-index: 0;
+  }
+
+  &::after {
+    background: url("/assets/icons/contactsManageIcons/contacts-manage-menu-header.png") repeat-x
+      top;
+    z-index: -1;
+  }
 }
