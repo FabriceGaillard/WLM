@@ -70,6 +70,8 @@
 @use "./components/personal_space/chat/chat";
 @use "./components/personal_space/chat/chat-header";
 @use "./components/personal_space/chat/chat-manage-contact";
+@use "./components/personal_space/chat/chat_feed";
+@use "./components/personal_space/chat/chat_entries";
 
 // TASKBAR
 @use "./components/taskbar/taskbar";

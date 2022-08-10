@@ -6,6 +6,8 @@ const Chat = () => {
     <div className="chat">
       <ChatHeader />
       <ChatManageContact />
+      <ChatFeed />
+      <ChatEntries />
     </div>
   );
 };
