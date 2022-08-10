@@ -1,11 +1,11 @@
 @use "../../../abstracts/index" as *;
 
 .chat {
-  .manage-contact {
+  &__manage-contact {
     position: relative;
     @include flex($align: center);
     padding: 6px;
-    background-color: red;
+    margin-left: -8px;
     height: 37px;
     border-top: solid 1px #bed6e0;
     border-bottom: solid 1px #bed6e0;
@@ -19,16 +19,13 @@
 
     button {
       @include flex($align: center, $justify: center);
+      position: relative;
       background-color: transparent;
       border: transparent;
       height: 33px;
       width: 44px;
-      border: solid 1px transparent;
 
-      &:hover {
-        border: solid 1px $bg-login-input-border;
-        background: linear-gradient(180deg, rgba(224, 240, 240, 1) 0%, rgba(200, 224, 240, 1) 100%);
-      }
+      @include hoverBorderAndBlueGradient;
     }
   }
 }

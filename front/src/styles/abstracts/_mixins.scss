@@ -69,3 +69,27 @@
     object-fit: cover;
   }
 }
+
+@mixin hoverBorderAndBlueGradient {
+  border: solid transparent 1px;
+
+  &:hover {
+    background: linear-gradient(
+      180deg,
+      rgba(224, 240, 240, 1) 0%,
+      rgba(200, 224, 232, 1) 25%,
+      rgba(176, 216, 232, 1) 33%,
+      rgba(176, 216, 232, 1) 88%,
+      rgba(192, 224, 232, 1) 93%,
+      rgba(192, 224, 232, 1) 100%
+    );
+    border-color: #4890c8;
+
+    &::before {
+      position: absolute;
+      content: "";
+      inset: 0;
+      border: solid white 1px;
+    }
+  }
+}
