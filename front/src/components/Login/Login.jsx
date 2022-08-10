@@ -3,12 +3,12 @@ import { useEffect, useRef, useState, useContext } from 'react';
 // COMPONENTS
 import {
   LoginAuth,
-  LoginImage,
   LoginRemember,
   LoginStatus,
   LoginSubmit,
   LoginResetPasswordButton,
 } from './loginIndex';
+import AvatarBig from '../Common/AvatarBig';
 import HeaderWithLogo from '../HeaderWithLogo';
 import FooterWindowsLiveId from '../FooterWindowsLiveId';
 // CONTEXT
@@ -85,7 +85,7 @@ const Login = () => {
             className={`login__form ${isConnecting ? "disabled" : ""}`}
             ref={formRef}
           >
-            <LoginImage />
+            <AvatarBig src={formUpdate.avatar} />
             <LoginAuth />
             <LoginStatus />
             <LoginRemember />

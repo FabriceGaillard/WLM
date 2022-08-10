@@ -1,35 +1,21 @@
 @use "../../abstracts/" as *;
 
-@keyframes fade-avatar {
-  0% {
-    background-color: white;
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-
-.img__container {
-  position: relative;
-  z-index: 1;
-  margin-inline: auto;
-  height: 100px;
-  width: 100px;
-  margin-bottom: 10px;
-  border: 1px solid $border-login-img-container;
-  padding: 1px;
-
-  &::before {
-    position: absolute;
-    inset: 0px;
-    content: "";
-    animation: fade-avatar 1.1s linear;
-    border: solid 2px white;
+.login {
+  @keyframes fade-avatar {
+    0% {
+      background-color: white;
+    }
+    100% {
+      background-color: transparent;
+    }
   }
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .avatar__big {
+    @include avatarBig;
+    margin-bottom: 10px;
+
+    &::before {
+      animation: fade-avatar 1.1s linear;
+    }
   }
 }
