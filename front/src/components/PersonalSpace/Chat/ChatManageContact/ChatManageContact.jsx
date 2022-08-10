@@ -3,7 +3,7 @@ import { ChatManageContactButtonAdd, ChatManageContactButtonBlock } from '../cha
 
 const ChatManageContact = () => {
   return (
-    <div className="manage-contact">
+    <div className="chat__manage-contact">
       <ChatManageContactButtonAdd />
       <ChatManageContactButtonBlock />
     </div>
