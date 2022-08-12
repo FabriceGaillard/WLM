@@ -1,4 +1,5 @@
 import imageToBlobToBase64 from './imageToBlobToBase64';
+import defaultUserSettings from '../data/home/defaultUserSettings';
 
 const getLocalStorageUsers = () => {
   const findUsersInStorage = localStorage.getItem("users");
@@ -24,7 +25,7 @@ const getLocalStorageSettings = () => {
     return JSON.parse(findSettingsInStorage);
   }
 
-  return findSettingsInStorage;
+  return defaultUserSettings;
 };
 
 const removeStorageCurrent = (users) => {
