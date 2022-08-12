@@ -6,7 +6,7 @@ const defaultUserSettings = {
     showEveryContacts: false
   },
   chat: {
-    hideAvatars: false,
+    hidePanel: false,
     contactAvatarSmall: false,
     userAvatarSmall: false
   }

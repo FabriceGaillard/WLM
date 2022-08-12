@@ -7,19 +7,20 @@ import Chat from "./Chat/Chat";
 import PersonalSpaceContext from '../../contexts/PersonalSpaceContext';
 // HELPERS
 import { getLocalStorageSettings, addStorageSettings } from '../../helpers/handleStorage';
-import defaultStorageSettings from '../../data/home/defaultStorageSettings';
 
 const PersonalSpace = () => {
 
-  const [settings, setSettings] = useState(null);
+  const [settings, setSettings] = useState((getLocalStorageSettings()));
   const [emptySearchResult, setEmptySearchResult] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => setFirstRender(false), []);
 
   useEffect(() => {
-    const localStorageSettings = getLocalStorageSettings();
-
-    addStorageSettings(localStorageSettings || defaultStorageSettings);
-    setSettings(localStorageSettings || defaultStorageSettings);
-  }, []);
+    if (firstRender === false) {
+      addStorageSettings(settings);
+    }
+  }, [settings]);
 
   return (
     <PersonalSpaceContext.Provider value={{ settings, setSettings, emptySearchResult, setEmptySearchResult }}>
