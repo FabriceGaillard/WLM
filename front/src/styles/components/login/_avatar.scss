@@ -10,8 +10,8 @@
     }
   }
 
-  .avatar__big {
-    @include avatarBig;
+  .avatar__container {
+    @include avatar;
     margin-bottom: 10px;
 
     &::before {

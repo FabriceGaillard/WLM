@@ -8,7 +8,7 @@ import {
   LoginSubmit,
   LoginResetPasswordButton,
 } from './loginIndex';
-import AvatarBig from '../Common/AvatarBig';
+import Avatar from '../Common/Avatar';
 import HeaderWithLogo from '../HeaderWithLogo';
 import FooterWindowsLiveId from '../FooterWindowsLiveId';
 // CONTEXT
@@ -85,7 +85,7 @@ const Login = () => {
             className={`login__form ${isConnecting ? "disabled" : ""}`}
             ref={formRef}
           >
-            <AvatarBig src={formUpdate.avatar} />
+            <Avatar src={formUpdate.avatar} />
             <LoginAuth />
             <LoginStatus />
             <LoginRemember />
