@@ -1,0 +1,89 @@
+@use "../../../../abstracts/index" as *;
+
+.chat__avatars--options-user {
+  @include flex($flow: column);
+  position: absolute;
+  z-index: 10;
+  gap: 2px;
+  left: -260px;
+  bottom: 1px;
+  background-color: white;
+  border: 1px solid #dedede;
+  width: 348px;
+  height: 186px;
+  padding: 5px 10px;
+  user-select: none;
+
+  .options-list-size {
+    left: -140px;
+    top: 100px;
+  }
+
+  .options-list-user {
+    position: relative;
+    line-height: 23px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+
+    &.my-avatars {
+      @include flex($align: center);
+      margin-bottom: 5px;
+
+      button {
+        font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+        color: #359bed;
+        border: none;
+
+        &:hover {
+          cursor: default;
+          text-decoration: underline;
+          background: transparent;
+        }
+      }
+    }
+
+    &:not(.my-avatars, .latest-avatars) {
+      color: #359bed;
+
+      &:hover {
+        cursor: default;
+        text-decoration: underline;
+      }
+    }
+
+    &.latest-avatars {
+      color: #767676;
+
+      &::before {
+        position: absolute;
+        content: "";
+        inset: -4px 0px 0 0px;
+        border-top: solid #d7d7d7 1px;
+      }
+
+      .avatars__container {
+        display: flex;
+
+        &--img {
+          @include avatar-container-small;
+          height: 36px;
+          width: 36px;
+
+          &::before {
+            border: solid 1px white;
+          }
+
+          &:hover {
+            border-color: #316ac5;
+
+            &::before {
+              border-color: #d8e3f4;
+            }
+          }
+        }
+        gap: 6px;
+      }
+    }
+  }
+}
