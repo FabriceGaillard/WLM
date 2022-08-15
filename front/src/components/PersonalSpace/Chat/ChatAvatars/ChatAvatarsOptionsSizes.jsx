@@ -5,7 +5,7 @@ import PersonalSpaceContext from '../../../../contexts/PersonalSpaceContext';
 // HELPERS
 import { handleAvatarSize } from '../../../../helpers/chat/avatars';
 
-const ChatAvatarsOptionsSizes = ({ setShowSizeOptions }) => {
+const ChatAvatarsOptionsSizes = ({ setShowSizeOptions, target }) => {
 
   const { setSettings } = useContext(PersonalSpaceContext);
 
@@ -15,8 +15,8 @@ const ChatAvatarsOptionsSizes = ({ setShowSizeOptions }) => {
       onMouseEnter={() => setShowSizeOptions(true)}
       onMouseLeave={() => setShowSizeOptions(false)}
     >
-      <li onClick={() => handleAvatarSize(false, setSettings)}>Moyenne</li>
-      <li onClick={() => handleAvatarSize(true, setSettings)}>Petite</li>
+      <li onClick={() => handleAvatarSize(false, setSettings, target)}>Moyenne</li>
+      <li onClick={() => handleAvatarSize(true, setSettings, target)}>Petite</li>
     </ul>
   );
 };
