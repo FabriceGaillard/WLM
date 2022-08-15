@@ -40,7 +40,7 @@ const ChatAvatarsContactOptions = (props) => {
 
   return (
     <ul
-      className="chat__avatars--options"
+      className="chat__avatars--options-contact"
       ref={settingsMenuRef}
       onClick={() => setShowOptions(false)}
     >
