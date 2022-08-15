@@ -44,21 +44,23 @@ const ChatAvatarsContactOptions = (props) => {
       ref={settingsMenuRef}
       onClick={() => setShowOptions(false)}
     >
-      <li className="options-list" onClick={blockContact}>
+      <li className="options-list-contact" onClick={blockContact}>
         Bloquer ce contact
       </li>
       <li
-        className="options-list"
+        className="options-list-contact"
         onMouseEnter={() => setShowSizeOptions(true)}
         onMouseLeave={() => setShowSizeOptions(false)}
         ref={sizeOptionsRef}
       >
         Taille
       </li>
-      <li className="options-list" onClick={() => hidePanel(setSettings)}>
+      <li className="options-list-contact" onClick={() => hidePanel(setSettings)}>
         Masquer les images persos
       </li>
-      {(showSizeOptions) && <ChatAvatarsOptionsSizes setShowSizeOptions={setShowSizeOptions} />}
+      {(showSizeOptions) && (
+        <ChatAvatarsOptionsSizes setShowSizeOptions={setShowSizeOptions} target="contact" />
+      )}
     </ul>
   );
 };
