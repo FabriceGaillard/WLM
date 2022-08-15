@@ -2,7 +2,7 @@
 import { useState, useRef, useContext } from 'react';
 // COMPONENTS
 import Avatar from '../../../../Common/Avatar';
-import { ChatAvatarsContactOptions } from '../../chatIndex';
+import { ChatAvatarsUserOptions } from '../../chatIndex';
 // DATA
 import defaultAvatarBase64 from "../../../../../data/defaultAvatarBase64";
 // ICON
@@ -39,7 +39,10 @@ const ChatAvatarsContact = () => {
         <ArrowIcon />
       </button>
       {showOptions && (
-        <p>IN PROGRESS</p>
+        <ChatAvatarsUserOptions
+          dropDownButtonTarget={dropDownButtonTarget}
+          setShowOptions={setShowOptions}
+        />
       )}
     </div>
   );

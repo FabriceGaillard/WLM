@@ -9,6 +9,9 @@ export { default as ChatManageContactButtonBlock } from "./ChatManageContact/Cha
 
 export { default as ChatAvatars } from "./ChatAvatars/ChatAvatars";
 export { default as ChatAvatarsUser } from "./ChatAvatars/ChatAvatarsUser/ChatAvatarsUser";
+export { default as ChatAvatarsUserOptions } from "./ChatAvatars/ChatAvatarsUser/ChatAvatarUserOptions/ChatAvatarUserOptions";
+export { default as ChatAvatarUserOptionsLatest } from "./ChatAvatars/ChatAvatarsUser/ChatAvatarUserOptions/ChatAvatarUserOptionsLatest";
+export { default as ChatAvatarUserOptionsModify } from "./ChatAvatars/ChatAvatarsUser/ChatAvatarUserOptions/ChatAvatarUserOptionsModify";
 export { default as ChatAvatarsContact } from "./ChatAvatars/ChatAvatarsContact/ChatAvatarsContact";
 export { default as ChatAvatarsContactOptions } from "./ChatAvatars/ChatAvatarsContact/ChatAvatarsContactOptions";
 export { default as ChatAvatarsOptionsSizes } from "./ChatAvatars/ChatAvatarsOptionsSizes";
