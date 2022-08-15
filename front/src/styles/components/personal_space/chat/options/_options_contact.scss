@@ -1,4 +1,4 @@
-@use "../../../abstracts/index" as *;
+@use "../../../../abstracts/index" as *;
 
 .chat__avatars {
   &--options-contact {
@@ -13,7 +13,12 @@
     min-width: 230px;
     padding: 2px;
 
-    .options-list {
+    .options-list-size {
+      right: 225px;
+      top: 30px;
+    }
+
+    .options-list-contact {
       position: relative;
       padding-left: 25px;
       height: 23px;
@@ -21,31 +26,6 @@
       font-size: 11px;
       font-weight: 500;
       font-family: "Segoe UI", "Trebuchet MS", sans-serif;
-
-      &-size {
-        position: absolute;
-        z-index: 11;
-        right: 225px;
-        top: 30px;
-        width: 140px;
-        background-color: $bg-login-email-drop;
-        border: 1px solid $border-login-img-container;
-        font-size: 11px;
-        font-weight: 500;
-        font-family: "Segoe UI", "Trebuchet MS", sans-serif;
-        padding: 2px;
-
-        li {
-          padding-left: 25px;
-          height: 25px;
-          line-height: 25px;
-
-          &:hover {
-            background-color: $bg-login-email-drop-hover;
-            cursor: default;
-          }
-        }
-      }
 
       &:not(:nth-child(1))::before {
         position: absolute;
